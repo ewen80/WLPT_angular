@@ -1,0 +1,34 @@
+<div id="speech-btn" class="btn-header transparent pull-right hidden-sm hidden-xs" #speechBtn>
+  <div>
+    <a title="Voice Command" id="voice-command-btn" [popover]="myPopover"><i
+      class="fa fa-microphone"></i></a>
+
+    <popover-content #myPopover
+                     title="Popover title"
+                     placement="bottom"
+                     [animation]="true" >
+      <div #popover class="popover bottom">
+        <div class="arrow"></div>
+        <div class="popover-content">
+          <h4 class="vc-title">Voice command activated <br />
+            <small>Please speak clearly into the mic</small>
+          </h4>
+          <h4 class="vc-title-error text-center">
+            <i class="fa fa-microphone-slash"></i> Voice command failed
+            <br />
+            <small class="txt-color-red">Must <strong>"Allow"</strong> Microphone</small>
+            <br />
+            <small class="txt-color-red">Must have <strong>Internet Connection</strong>
+            </small>
+          </h4>
+          <a href="#" class="btn btn-success" id="speech-help-btn">See Commands</a>
+          <a class="btn bg-color-purple txt-color-white"
+             (click)="hidePopover()" >Close Popup</a>
+        </div>
+      </div>
+    </popover-content>
+
+
+
+  </div>
+</div>
