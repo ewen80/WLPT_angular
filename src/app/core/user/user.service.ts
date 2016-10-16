@@ -4,6 +4,7 @@ import {Observable, Subject} from "rxjs/Rx";
 import {JsonApiService} from "../../shared/api/json-api.service";
 
 @Injectable()
+ //TODO:考虑UserService和Authentication合并
 export class UserService {
 
   public user: Subject<any>;
