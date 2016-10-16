@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../user.service";
-import {LayoutService} from "../../layout/layout.service";
+import {LayoutService} from "../../../shared/layout/layout.service";
 
 @Component({
 

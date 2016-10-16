@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from "rxjs/Rx";
 
-import {JsonApiService} from "../api/json-api.service";
+import {JsonApiService} from "../../shared/api/json-api.service";
 
 @Injectable()
 export class UserService {

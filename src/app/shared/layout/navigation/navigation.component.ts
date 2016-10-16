@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginInfoComponent} from "../../user/login-info/login-info.component";
+import {LoginInfoComponent} from "../../../core/user/login-info/login-info.component";
 
 
 @Component({
-
   selector: 'sa-navigation',
   templateUrl: 'navigation.component.html'
 })
