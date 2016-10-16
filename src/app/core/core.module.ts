@@ -4,10 +4,13 @@
 */
 import { NgModule } from '@angular/core';
 
+
 import { UserModule } from './user/user.module';
 
 @NgModule({
-    imports: [],
+    imports: [
+        UserModule.forRoot()
+    ],
     declarations: [],
     exports: [
         UserModule
@@ -15,5 +18,4 @@ import { UserModule } from './user/user.module';
     providers: []
 })
 export class CoreModule{
-
 }
