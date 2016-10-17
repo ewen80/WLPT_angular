@@ -10,7 +10,7 @@ import { ChatBodyComponent } from './chat/chat-body.component';
 import { ChatFormComponent } from './chat/chat-form.component';
 import {FormsModule} from "@angular/forms";
 import {UtilsModule} from "../utils/utils.module";
-import {UserModule} from "../user/user.module";
+import {UserModule} from "../../core/user/user.module";
 import { AsideChatComponent } from './aside-chat/aside-chat.component';
 import { AsideChatUserComponent } from './aside-chat-user/aside-chat-user.component';
 import {PopoverModule} from "ng2-popover/src/index";
