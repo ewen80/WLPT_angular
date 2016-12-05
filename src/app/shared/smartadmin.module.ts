@@ -82,8 +82,8 @@ import {UtilsModule} from "./utils/utils.module";
   providers: [JsonApiService, LayoutService]
 
 })
-export class SmartadminModule {
 
+export class SmartadminModule {
   static forRoot():ModuleWithProviders {
     return {
       ngModule: SmartadminModule,

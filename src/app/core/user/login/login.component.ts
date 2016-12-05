@@ -48,7 +48,5 @@ export class LoginComponent {
     });
   }
 
-  logout() {
-    this.authenticationService.logout();
-  }
+  
 }

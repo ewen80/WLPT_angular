@@ -31,7 +31,7 @@ export class AuthenticationService {
     this.token = currentUser && currentUser.token;  //当前用户对象和用户的令牌属性必须都有值
   }
 
-  //登录操作,post请求'/api/authenticate'路径
+  //登录操作,post请求'/api/authenticate'路径,写入token
   login(username, password): Observable<boolean> {
         return this.http.post('/api/authenticate', JSON.stringify({ username: username, password: password }))
             .map((response: Response) => {
@@ -54,10 +54,11 @@ export class AuthenticationService {
             });
     }
 
-    //登出操作
+    //登出操作,清空token
     logout(): void {
         // clear token remove user from local storage to log user out
         this.token = null;
+        this.isLoggedIn = false;
         localStorage.removeItem('currentUser');
     }
 }

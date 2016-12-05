@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 
+import { AuthenticationService }      from '../authentication/authentication.service';
+
 declare var $:any;
 
 @Component({
@@ -16,7 +18,7 @@ declare var $:any;
 })
 export class LogoutComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router , public authenticationService: AuthenticationService) { }
 
   showPopup(){
     $.SmartMessageBox({
@@ -31,8 +33,9 @@ export class LogoutComponent implements OnInit {
     });
   }
 
-  logout(){
-      this.router.navigate(['/auth/login'])
+  logout(){ //登出操作
+    this.authenticationService.logout();
+    this.router.navigate(['/login'])
   }
 
   ngOnInit() {
