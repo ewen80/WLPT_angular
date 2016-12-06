@@ -9,7 +9,7 @@ import { UserModule } from './user/user.module';
 
 @NgModule({
     imports: [
-        UserModule.forRoot()
+        UserModule
     ],
     declarations: [],
     exports: [

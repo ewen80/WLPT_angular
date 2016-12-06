@@ -15,16 +15,17 @@ import { AuthenticationGuard, AuthenticationService } from "./authentication/ind
   declarations: [LoginInfoComponent, LogoutComponent, LoginComponent ],
   exports: [LoginInfoComponent, LogoutComponent, LoginComponent ],
   providers:[
+    UserService,          //用户服务
     AuthenticationGuard,  //用户登录guard
     AuthenticationService //用户登录服务
   ]
 })
 export class UserModule{
 
-  static forRoot():ModuleWithProviders {
-    return {
-      ngModule: UserModule,
-      providers: [ UserService]
-    };
-  }
+  // static forRoot():ModuleWithProviders {
+  //   return {
+  //     ngModule: UserModule,
+  //     providers: [ UserService]
+  //   };
+  // }
 }

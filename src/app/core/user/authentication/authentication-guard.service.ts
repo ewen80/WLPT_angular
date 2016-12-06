@@ -22,6 +22,7 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
   constructor(private authenticationService: AuthenticationService, private router: Router) {
     //注入登录验证服务 authenticationService
     //注入Router
+    
   }
 
   //TODO:修改 ActivatedRouteSnapshot，RouterStateSnapshot 为可observable参数

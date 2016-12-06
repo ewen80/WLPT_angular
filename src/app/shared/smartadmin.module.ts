@@ -84,11 +84,11 @@ import {UtilsModule} from "./utils/utils.module";
 })
 
 export class SmartadminModule {
-  static forRoot():ModuleWithProviders {
-    return {
-      ngModule: SmartadminModule,
-      providers: [JsonApiService, LayoutService]
-    };
-  }
+  // static forRoot():ModuleWithProviders {
+  //   return {
+  //     ngModule: SmartadminModule,
+  //     providers: [JsonApiService, LayoutService]
+  //   };
+  // }
 
 }
