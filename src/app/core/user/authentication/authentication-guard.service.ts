@@ -46,8 +46,15 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
   //检查登录状态，如果已登录返回true，未登录跳转到登录页面
   checkLogin(url: string): boolean {
     //如果已经登录则直接返回
-    if (this.authenticationService.isLoggedIn) { return true; }
-
+    if (this.authenticationService.isLoggedIn) { 
+      return true; 
+    }//检查是否有本地存储信息，如果有读取并设置登录信息
+    else if( localStorage.getItem("currentUser")) {
+      this.authenticationService.isLoggedIn = true;
+      var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      this.authenticationService.token = currentUser && currentUser.token;
+      return true;
+    }
     // Store the attempted URL for redirecting
     this.authenticationService.redirectUrl = url;
 

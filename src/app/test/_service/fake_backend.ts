@@ -52,6 +52,16 @@ export let fakeBackendProvider = {
                     }
                 }
 
+                //获取用户信息
+                if(connection.request.url.endsWith('/api/getuserinfo')){
+                    let params = JSON.parse(connection.request.getBody());
+                    if(params.username === testUser.username){
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({ status:200, body: [testUser]})
+                        ))
+                    }
+                }
+
             }, 500);
 
         });

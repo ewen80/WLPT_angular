@@ -29,6 +29,9 @@ export class AuthenticationService {
     // set token if saved in local storage
     var currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.token = currentUser && currentUser.token;  //当前用户对象和用户的令牌属性必须都有值
+    if(this.token){
+        this.isLoggedIn = true;
+    }
   }
 
   //登录操作,post请求'/api/authenticate'路径,写入token
