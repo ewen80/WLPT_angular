@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
+
 import {UserService} from "../user.service";
 import {LayoutService} from "../../../shared/layout/layout.service";
+
+import { User } from "../user";
 
 @Component({
 
@@ -9,19 +12,22 @@ import {LayoutService} from "../../../shared/layout/layout.service";
 })
 export class LoginInfoComponent implements OnInit {
 
-  user:any;
+  user:User;
 
   constructor(
     private userService: UserService,
               private layoutService: LayoutService) {
+                
   }
 
   ngOnInit() {
-    this.userService.getLoginInfo().subscribe(user => {
-      this.user = user
-    })
-
+    // this.userService.getLoginInfo().subscribe(user => {
+    //   this.user = user
+    // })
+    this.userService.getLoginInfo().then( user => this.user = user);
   }
+
+
 
   toggleShortcut() {
     this.layoutService.onShortcutToggle()
