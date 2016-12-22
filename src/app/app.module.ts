@@ -13,7 +13,7 @@ import { fakeBackendProvider } from "./test/_service/fake_backend";
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
 
