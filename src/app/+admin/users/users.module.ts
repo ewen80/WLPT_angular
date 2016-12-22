@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { UsersComponent } from './users/users.component';
+import { NavigationModule } from '../../shared/layout/navigation/navigation.module';
+
+import { UsersComponent } from './users.component';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    NavigationModule
   ],
   declarations: [UsersComponent]
 })
