@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { NavigationModule } from '../../shared/layout/navigation/navigation.module';
+import { SmartadminModule } from '../../shared/smartadmin.module';
 
 import { UsersComponent } from './users.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    NavigationModule
+
+    SmartadminModule
   ],
   declarations: [UsersComponent]
 })

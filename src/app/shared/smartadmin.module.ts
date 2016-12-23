@@ -34,6 +34,7 @@ import {UtilsModule} from "./utils/utils.module";
 // import {InlineGraphsModule} from "./graphs/inline/inline-graphs.module";
 // import {SmartadminFormsLiteModule} from "./forms/smartadmin-forms-lite.module";
 // import {SmartProgressbarModule} from "./ui/smart-progressbar/smart-progressbar.module";
+import { SmartadminDatatableModule } from './ui/datatable/smartadmin-datatable.module';
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import {UtilsModule} from "./utils/utils.module";
     // ChatModule,
 
     // StatsModule,
+    SmartadminDatatableModule
 
   ],
   providers: [JsonApiService, LayoutService]

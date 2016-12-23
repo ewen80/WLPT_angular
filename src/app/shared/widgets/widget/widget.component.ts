@@ -16,7 +16,7 @@ export class WidgetComponent implements OnInit, AfterViewInit {
   public widgetId: string;
 
   @Input() public name: string;
-  @Input() public colorbutton: boolean = true;
+  @Input() public colorbutton: boolean = false;
   @Input() public editbutton: boolean = true;
   @Input() public togglebutton: boolean = true;
   @Input() public deletebutton: boolean = true;
