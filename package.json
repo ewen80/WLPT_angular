@@ -64,7 +64,10 @@
     "summernote": "^0.8.1",
     "to-markdown": "^3.0.1",
     "ts-helpers": "^1.1.1",
-    "zone.js": "^0.6.23"
+    "zone.js": "^0.6.23",
+
+    "ag-grid": "7.1.x",
+    "ag-grid-ng2": "7.1.x"
   },
   "devDependencies": {
     "@types/jasmine": "^2.2.30",

@@ -15,6 +15,9 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
+        "../node_modules/ag-grid/dist/styles/ag-grid.css",
+        "../node_modules/ag-grid/dist/styles/theme-fresh.css",
+        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
         "styles.css"
       ],
       "scripts": [],

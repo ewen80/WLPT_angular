@@ -34,17 +34,17 @@ import {UtilsModule} from "./utils/utils.module";
 // import {InlineGraphsModule} from "./graphs/inline/inline-graphs.module";
 // import {SmartadminFormsLiteModule} from "./forms/smartadmin-forms-lite.module";
 // import {SmartProgressbarModule} from "./ui/smart-progressbar/smart-progressbar.module";
-import { SmartadminDatatableModule } from './ui/datatable/smartadmin-datatable.module';
+//import { SmartadminDatatableModule } from './ui/datatable/smartadmin-datatable.module';
 
+// ag-grid
+import {AgGridModule} from "ag-grid-ng2/main";
 
 @NgModule({
   imports: [
     CommonModule, FormsModule, HttpModule, RouterModule,
-
+    AgGridModule.withComponents([])
   ],
-  declarations: [
-
-  ],
+  declarations: [],
   exports: [
     CommonModule, FormsModule, HttpModule, RouterModule,
 
@@ -78,7 +78,10 @@ import { SmartadminDatatableModule } from './ui/datatable/smartadmin-datatable.m
     // ChatModule,
 
     // StatsModule,
-    SmartadminDatatableModule
+    //SmartadminDatatableModule
+
+    
+    AgGridModule
 
   ],
   providers: [JsonApiService, LayoutService]
