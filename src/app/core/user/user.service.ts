@@ -59,10 +59,18 @@ export class UserService {
   //   }
   getLoginInfo(): Promise<User>{
     var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    return this.http.post('/api/getuserinfo', JSON.stringify({ username: currentUser.username }))
+    return this.http.post('/api/getuserinfo', JSON.stringify({ id: currentUser.id }))
                 .toPromise()
                 .then(response => response.json() as User)
                 .catch(this.handleError);
+  }
+
+  //获取全部用户信息
+  getUsers(): Promise<User[]>{
+    return this.http.get('/api/getusers')
+                      .toPromise()
+                      .then( response => response.json() as User[])
+                      .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any>{

@@ -1,6 +1,6 @@
 <div id="content">
   <div class="row">
-    <sa-big-breadcrumbs [items]="['Table', 'Data Tables']" icon="table" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+    <sa-big-breadcrumbs [items]="['后台管理', '用户管理']" icon="table" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
   </div>
 
   <sa-widgets-grid>
@@ -13,11 +13,13 @@
           </header>
           <div>
             <div class="widget-body no-padding">
-              <ag-grid-ng2 #usersGrid style="width: 100%; height: 350px;" 
+              <ag-grid-ng2 #usersGrid style="width: 100%; height: 350px;" class="ag-fresh"
                 [gridOptions]="gridOptions"
                 [columnDefs]="columnDefs"
                 [showToolPanel]="showToolPanel"
                 [rowData]="rowData"
+
+                debug
               >
               </ag-grid-ng2>
             </div>

@@ -22,8 +22,7 @@ export class LoginComponent {
 
   login() {
     this.loading = true;
-    //TODO:加上用户名和密码的参数
-    this.authenticationService.login(this.model.username, this.model.password).subscribe(() => {
+    this.authenticationService.login(this.model.userid, this.model.password).subscribe(() => {
       if (this.authenticationService.isLoggedIn) {
         // Get the redirect URL from our auth service
         // If no redirect has been set, use the default

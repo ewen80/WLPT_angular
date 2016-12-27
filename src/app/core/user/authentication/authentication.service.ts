@@ -35,8 +35,8 @@ export class AuthenticationService {
   }
 
   //登录操作,post请求'/api/authenticate'路径,写入token
-  login(username, password): Observable<boolean> {
-        return this.http.post('/api/authenticate', JSON.stringify({ username: username, password: password }))
+  login(userid, password): Observable<boolean> {
+        return this.http.post('/api/authenticate', JSON.stringify({ userid: userid, password: password }))
             .map((response: Response) => {
                 // login successful if there's a token in the response
                 let token = response.json() && response.json().token;
@@ -45,7 +45,7 @@ export class AuthenticationService {
                     this.token = token;
 
                     // store username and token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
+                    localStorage.setItem('currentUser', JSON.stringify({ id: userid, token: token }));
 
                     // return true to indicate successful login
                     this.isLoggedIn = true;

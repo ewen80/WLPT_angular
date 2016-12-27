@@ -14,13 +14,13 @@ export class UsersComponent implements OnInit {
 
   constructor() { 
     this.gridOptions = <GridOptions>{};
-    this.rowData = [{name:'a',old:'20'},{name:'b',old:'22'}];
+    this.rowData = 
     this.columnDefs = [
       {
-          headerName: 'Name', field: "name"
+          headerName: '用户名', field: "userid"
       },
       {
-          headerName: 'Old',  field: "old"
+          headerName: '姓名',  field: "name"
       }
     ];
   }

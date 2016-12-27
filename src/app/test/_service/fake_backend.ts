@@ -7,14 +7,34 @@
 import { Http, BaseRequestOptions, Response, ResponseOptions, RequestMethod } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
+import { User } from '../../core/user/user';
+
+
+const allUsers = [
+    {
+        "id":"test",
+        "name":"测试用户",
+        "password":"test",
+        "picture": "/assets/img/avatars/sunny.png"
+    },
+    {
+        "id":"user1",
+        "name":"用户1",
+        "password":"111111"
+    },
+    {
+        "id":"user2",
+        "name":"用户2",
+        "password":"111111"
+    }
+];
+
 export let fakeBackendProvider = {
     // use fake backend in place of Http service for backend-less development
     provide: Http,
     useFactory: (backend, options) => {
         // configure fake backend
         backend.connections.subscribe((connection: MockConnection) => {
-            let testUser = { username: 'test', password: 'test', firstName: 'Test', lastName: 'User', picture: '/assets/img/avatars/sunny.png' };
-
             // wrap in timeout to simulate server api call
             setTimeout(() => {
 
@@ -24,16 +44,18 @@ export let fakeBackendProvider = {
                     let params = JSON.parse(connection.request.getBody());
 
                     // check user credentials and return fake token if valid
-                    //如果是testuser返回token，否则不返回token
-                    if (params.username === testUser.username && params.password === testUser.password) {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({ status: 200, body: { token: 'fake-authenticate-token' } })
-                        ));
-                    } else {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({ status: 200 })
-                        ));
+                    for(let i=0; i<allUsers.length; i++){
+                        let user = allUsers[i];
+                        if(params.userid === user.id && params.password === user.password){
+                            connection.mockRespond(new Response(
+                                new ResponseOptions({ status: 200, body: { token: 'fake-authenticate-token' } })
+                            ));
+                            break;
+                        }
                     }
+                    connection.mockRespond(new Response(
+                                new ResponseOptions({ status: 200 })
+                            ));
                 }
 
                 // fake users api end point
@@ -42,7 +64,7 @@ export let fakeBackendProvider = {
                     // in a real application
                     if (connection.request.headers.get('Authorization') === 'Bearer fake-authencate-token') {
                         connection.mockRespond(new Response(
-                            new ResponseOptions({ status: 200, body: [testUser] })
+                            new ResponseOptions({ status: 200, body: allUsers })
                         ));
                     } else {
                         // return 401 not authorised if token is null or invalid
@@ -52,14 +74,24 @@ export let fakeBackendProvider = {
                     }
                 }
 
-                //获取用户信息
-                if(connection.request.url.endsWith('/api/getuserinfo')){
+                //获取单个用户信息,/api/getuserinfo
+                if(connection.request.url.endsWith('/api/getuserinfo') && connection.request.method === RequestMethod.Post ){
                     let params = JSON.parse(connection.request.getBody());
-                    if(params.username === testUser.username){
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({ status:200, body: testUser})
-                        ))
+                    for(let i=0; i<allUsers.length; i++){
+                        if(params.id === allUsers[i].id){
+                            connection.mockRespond(new Response(
+                            new ResponseOptions({ status:200, body: allUsers[i]})
+                        ));
+                            break;
+                        }
                     }
+                }
+
+                //获取所有用户信息,/api/getusers
+                if(connection.request.url.endsWith('api/getusers')){
+                    connection.mockRespond(new Response(
+                            new ResponseOptions({ status: 200,body: JSON.stringify(allUsers) })
+                        ));
                 }
 
             }, 500);
