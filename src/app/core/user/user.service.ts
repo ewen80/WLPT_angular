@@ -14,10 +14,6 @@ export class UserService {
   // public user: Subject<any>;
   public user: User;
 
-  public userInfo = {
-    username: 'Guest'
-  };
-
   // constructor(private jsonApiService:JsonApiService) {
   //   this.user = new Subject();
   // }

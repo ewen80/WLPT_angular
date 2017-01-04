@@ -88,7 +88,7 @@ export let fakeBackendProvider = {
                 }
 
                 //获取所有用户信息,/api/getusers
-                if(connection.request.url.endsWith('api/getusers')){
+                if(connection.request.url.endsWith('/api/getusers')){
                     connection.mockRespond(new Response(
                             new ResponseOptions({ status: 200,body: JSON.stringify(allUsers) })
                         ));

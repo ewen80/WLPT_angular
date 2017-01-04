@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { UserService } from '../../core/user/user.service';
 import {GridOptions} from 'ag-grid/main';
 
 @Component({
@@ -12,9 +13,9 @@ export class UsersComponent implements OnInit {
   public columnDefs:any[];
   public rowData:any[];
 
-  constructor() { 
+  constructor(private userservice:UserService) { 
     this.gridOptions = <GridOptions>{};
-    this.rowData = 
+    userservice.getUsers().then( user => this.rowData.push(user));
     this.columnDefs = [
       {
           headerName: '用户名', field: "userid"
