@@ -19,12 +19,12 @@ export const routes: Routes = [
             },
             {
                 path: 'home',
-                loadChildren: 'app/+home/home.module#HomeModule',    //延迟加载home模块
+                loadChildren: './+home/home.module#HomeModule',    //延迟加载home模块
                 canLoad: [ AuthenticationGuard ]    //登录用户延迟加载home模块
             },
             {
                 path: 'admin',
-                loadChildren: 'app/+admin/admin.module#AdminModule'    //延迟加载admin模块
+                loadChildren: './+admin/admin.module#AdminModule'    //延迟加载admin模块
             }
         ]
     },

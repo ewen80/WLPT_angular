@@ -4,7 +4,7 @@ declare var $:any;
 
 @Component({
   selector: 'sa-full-screen',
-  templateUrl: 'full-screen.component.html'
+  templateUrl: './full-screen.component.html'
 })
 export class FullScreenComponent implements OnInit {
 

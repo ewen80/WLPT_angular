@@ -51,28 +51,28 @@
     "jvectormap": "^2.0.4",
     "markdown": "^0.5.0",
     "morris.js": "^0.5.0",
-    "ng2-bootstrap": "^1.1.5",
+    "ng2-bootstrap": "^1.1.16",
     "ng2-popover": "git+https://github.com/griga/ng2-popover.git",
     "ng2-redux": "^4.0.0-beta.0",
     "nouislider": "^8.5.1",
     "raphael": "^2.2.1",
     "redux": "^3.6.0",
-    "rxjs": "5.0.0-beta.12",
+    "rxjs": "^5.0.1",
     "scriptjs": "^2.5.8",
     "select2": "^4.0.3",
     "smartadmin-plugins": "^1.0.13",
     "summernote": "^0.8.1",
     "to-markdown": "^3.0.1",
     "ts-helpers": "^1.1.1",
-    "zone.js": "^0.6.23",
+    "zone.js": "^0.7.0",
 
     "ag-grid": "7.1.x",
     "ag-grid-ng2": "7.1.x"
   },
   "devDependencies": {
     "@types/jasmine": "^2.2.30",
-    "angular-cli": "^1.0.0-beta.19-3",
-    "codelyzer": "~0.0.26",
+    "angular-cli": "^1.0.0-beta.24",
+    "codelyzer": "^2.0.0-beta",
     "expose-loader": "^0.7.1",
     "imports-loader": "^0.6.5",
     "jasmine-core": "2.5.1",
@@ -85,7 +85,7 @@
     "protractor": "4.0.9",
     "script-loader": "^0.7.0",
     "ts-node": "1.2.1",
-    "tslint": "3.13.0",
-    "typescript": "2.0.2"
+    "tslint": "^4.0.0",
+    "typescript": "^2.0.2"
   }
 }

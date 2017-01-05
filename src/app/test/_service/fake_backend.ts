@@ -4,7 +4,7 @@
 
 */
 
-import { Http, BaseRequestOptions, Response, ResponseOptions, RequestMethod } from '@angular/http';
+import { Http, BaseRequestOptions, Response, ResponseOptions, RequestMethod, ConnectionBackend } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
 import { User } from '../../core/user/user';
@@ -29,11 +29,8 @@ const allUsers = [
     }
 ];
 
-export let fakeBackendProvider = {
-    // use fake backend in place of Http service for backend-less development
-    provide: Http,
-    useFactory: (backend, options) => {
-        // configure fake backend
+export function httpFactory(backend: MockBackend, options: BaseRequestOptions){
+    // configure fake backend
         backend.connections.subscribe((connection: MockConnection) => {
             // wrap in timeout to simulate server api call
             setTimeout(() => {
@@ -100,6 +97,11 @@ export let fakeBackendProvider = {
         });
 
         return new Http(backend, options);
-    },
+}
+
+export let fakeBackendProvider = {
+    // use fake backend in place of Http service for backend-less development
+    provide: Http,
+    useFactory: httpFactory,
     deps: [MockBackend, BaseRequestOptions]
 };

@@ -8,7 +8,7 @@ import { User } from "../user";
 @Component({
 
   selector: 'sa-login-info',
-  templateUrl: 'login-info.component.html',
+  templateUrl: './login-info.component.html',
 })
 export class LoginInfoComponent implements OnInit {
 

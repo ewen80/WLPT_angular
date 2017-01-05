@@ -9,7 +9,7 @@ import { Router,
 import { AuthenticationService }      from '../authentication/authentication.service';
 
 @Component({
-  templateUrl: 'login.component.html'
+  templateUrl: './login.component.html'
 })
 export class LoginComponent {
   loading = false;

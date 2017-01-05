@@ -5,7 +5,7 @@ declare var $: any;
 
 @Component({
   selector: 'sa-collapse-menu',
-  templateUrl: 'collapse-menu.component.html'
+  templateUrl: './collapse-menu.component.html'
 })
 export class CollapseMenuComponent {
 

@@ -5,7 +5,7 @@ declare var $: any;
 
 @Component({
   selector: 'sa-activities',
-  templateUrl: 'activities.component.html',
+  templateUrl: './activities.component.html',
   providers: [ActivitiesService],
 })
 export class ActivitiesComponent implements OnInit, OnDestroy {

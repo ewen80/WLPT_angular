@@ -14,7 +14,7 @@ import {LayoutService} from "../layout.service";
 
 @Component({
   selector: 'sa-shortcut',
-  templateUrl: 'shortcut.component.html',
+  templateUrl: './shortcut.component.html',
   animations: [
     trigger('shortcutState', [
       state('out', style({

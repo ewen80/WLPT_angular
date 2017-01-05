@@ -2,7 +2,7 @@ import {Component, OnInit, Input} from '@angular/core';
 
 @Component({
   selector: '[activitiesTask]',
-  templateUrl: 'activities-task.component.html',
+  templateUrl: './activities-task.component.html',
 })
 export class ActivitiesTaskComponent implements OnInit {
 

@@ -2,7 +2,7 @@ import {Component, OnInit, Input, EventEmitter, Output} from '@angular/core';
 
 @Component({
   selector: 'on-off-switch',
-  templateUrl: 'on-off-switch.component.html',
+  templateUrl: './on-off-switch.component.html',
 })
 export class OnOffSwitchComponent implements OnInit {
 

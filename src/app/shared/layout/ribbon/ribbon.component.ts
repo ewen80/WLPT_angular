@@ -3,7 +3,7 @@ import {LayoutService} from "../layout.service";
 
 @Component({
   selector: 'sa-ribbon',
-  templateUrl: 'ribbon.component.html'
+  templateUrl: './ribbon.component.html'
 })
 export class RibbonComponent implements OnInit {
 
