@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { adminRouting } from './admin.routing';
 import { UsersModule } from './users/users.module';
+import { fakeBackendProvider } from "../test/_service/fake_backend";
 
 @NgModule({
   imports: [
@@ -12,8 +13,9 @@ import { UsersModule } from './users/users.module';
     UsersModule
   ],
   declarations: [  ],
-  // exports:[
-  //   UsersModule
-  // ]
+  providers:[
+    // fakeBackendProvider
+  ]
+  
 })
 export class AdminModule { }

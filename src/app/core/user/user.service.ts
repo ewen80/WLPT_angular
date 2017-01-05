@@ -4,21 +4,21 @@ import { Http, Response } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import{ User } from './user';
+import { User } from './user';
 
 // import {JsonApiService} from "../../shared/api/json-api.service";
 
 @Injectable()
 export class UserService {
 
+  public id:number;
   // public user: Subject<any>;
-  public user: User;
 
   // constructor(private jsonApiService:JsonApiService) {
   //   this.user = new Subject();
   // }
   constructor(private http:Http){
-
+    this.id = Math.random();
   }
 
   // getLoginInfo():Observable<any> {

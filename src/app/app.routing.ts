@@ -9,6 +9,8 @@ import {MainLayoutComponent} from "./shared/layout/app-layouts/main-layout.compo
 import { AuthenticationGuard } from "./core/user/authentication/authentication-guard.service";
 import { LoginComponent } from './core/user/login/login.component';
 
+import { UsersComponent } from './+admin/users/users.component';
+
 export const routes: Routes = [
     {
         path: '',
@@ -24,6 +26,7 @@ export const routes: Routes = [
             },
             {
                 path: 'admin',
+                // component: UsersComponent
                 loadChildren: './+admin/admin.module#AdminModule'    //延迟加载admin模块
             }
         ]

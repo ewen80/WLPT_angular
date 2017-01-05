@@ -10,6 +10,8 @@ import { CoreModule } from "./core/core.module";
 
 import { fakeBackendProvider } from "./test/_service/fake_backend";
 
+// import { AdminModule } from './+admin/admin.module';
+
 
 @NgModule({
   declarations: [
@@ -22,8 +24,9 @@ import { fakeBackendProvider } from "./test/_service/fake_backend";
     routing,
     CoreModule,
 
+    // AdminModule,
+
     SmartadminModule //系统所有用到的模块及provider
-    // SmartadminModule.forRoot(),  
   ],
   providers: [
     MockBackend,  
