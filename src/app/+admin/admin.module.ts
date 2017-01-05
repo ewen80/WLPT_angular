@@ -11,6 +11,9 @@ import { UsersModule } from './users/users.module';
 
     UsersModule
   ],
-  declarations: [  ]
+  declarations: [  ],
+  // exports:[
+  //   UsersModule
+  // ]
 })
 export class AdminModule { }

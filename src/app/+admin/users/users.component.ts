@@ -13,22 +13,22 @@ export class UsersComponent implements OnInit {
   public columnDefs:any[];
   public rowData:any[];
 
-  constructor(private userservice:UserService) { 
+  constructor(private userService:UserService) { 
+    
+  }
+
+  ngOnInit() {
+    //初始化用户表格
     this.gridOptions = <GridOptions>{};
-    userservice.getUsers().then( user => this.rowData.push(user));
+    this.userService.getUsers().then( users => this.rowData = users);
     this.columnDefs = [
       {
-          headerName: '用户名', field: "userid"
+          headerName: '用户名', field: "id"
       },
       {
           headerName: '姓名',  field: "name"
       }
     ];
-  }
-
-  ngOnInit() {
-    //初始化用户表格
-
   }
 
 }
