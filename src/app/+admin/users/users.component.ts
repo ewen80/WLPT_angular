@@ -14,7 +14,7 @@ export class UsersComponent implements OnInit {
   public rowData:any[];
 
   constructor(private userService:UserService) { 
-    
+    console.log('users.components created');
   }
 
   ngOnInit() {

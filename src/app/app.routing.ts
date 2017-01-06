@@ -7,7 +7,7 @@ import {Routes, RouterModule} from '@angular/router';
 
 import {MainLayoutComponent} from "./shared/layout/app-layouts/main-layout.component";
 import { AuthenticationGuard } from "./core/user/authentication/authentication-guard.service";
-import { LoginComponent } from './core/user/login/login.component';
+import { LoginComponent } from './shared/user/login/login.component';
 
 import { UsersComponent } from './+admin/users/users.component';
 

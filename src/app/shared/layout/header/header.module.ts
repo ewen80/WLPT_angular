@@ -19,7 +19,7 @@ import {I18nModule} from "../../i18n/i18n.module";
 import {DropdownModule} from "ng2-bootstrap/ng2-bootstrap";
 import { SpeechButtonComponent } from './speech-button/speech-button.component';
 import {FormsModule} from "@angular/forms";
-import {UserModule} from "../../../core/user/user.module";
+import {UserModule} from "../../user/user.module";
 import {PopoverModule} from "ng2-popover/src/index";
 
 
@@ -31,7 +31,7 @@ import {PopoverModule} from "ng2-popover/src/index";
 
     DropdownModule,
 
-    UtilsModule, I18nModule, UserModule, PopoverModule
+    UtilsModule, I18nModule, UserModule, PopoverModule,UserModule
   ],
   declarations: [
     ActivitiesMessageComponent,

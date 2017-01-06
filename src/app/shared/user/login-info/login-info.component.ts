@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 
-import {UserService} from "../user.service";
+import {UserService} from "../../../core/user/user.service";
 import {LayoutService} from "../../../shared/layout/layout.service";
-
-import { User } from "../user";
+import { User } from "../../../core/user/user";
 
 @Component({
 

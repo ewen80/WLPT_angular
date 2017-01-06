@@ -13,21 +13,12 @@ import {
 */
 
 import {PopoverModule} from "ng2-popover/src/index";
-
 import {JsonApiService} from './api'
-
 import {LayoutService} from './layout/layout.service'
-
 import {SmartadminLayoutModule} from './layout'
-
-// import {UserService} from './user'
-
-
 import {I18nModule} from "./i18n/i18n.module";
-// import {UserModule} from "./user/user.module";
-
+import {UserModule} from "./user/user.module";
 import {SmartadminWidgetsModule} from "./widgets/smartadmin-widgets.module";
-
 import {UtilsModule} from "./utils/utils.module";
 // import {ChatModule} from "./chat/chat.module";
 // import {StatsModule} from "./stats/stats.module";
@@ -43,12 +34,22 @@ import {AgGridModule} from "ag-grid-ng2/main";
   imports: [
     CommonModule, FormsModule, RouterModule,
     //HttpModule,
-    AgGridModule.withComponents([])
+    AgGridModule.withComponents([]),
+    UserModule
   ],
   declarations: [],
   exports: [
     CommonModule, FormsModule, RouterModule,
     //HttpModule,
+
+    PopoverModule,
+    SmartadminLayoutModule,
+    I18nModule,
+    UtilsModule,
+    SmartadminWidgetsModule,
+    AgGridModule,
+    UserModule
+
 
     // ModalModule,
     // ButtonsModule,
@@ -59,43 +60,22 @@ import {AgGridModule} from "ag-grid-ng2/main";
     // TabsModule,
     // AccordionModule,
     // CarouselModule,
-
-    PopoverModule,
-
-    SmartadminLayoutModule,
-
-    I18nModule,
-
-    UtilsModule,
-
-
     // SmartadminFormsLiteModule,
-
     // SmartProgressbarModule,
-
     // InlineGraphsModule,
-
-    SmartadminWidgetsModule,
-
     // ChatModule,
-
     // StatsModule,
     //SmartadminDatatableModule
-
-    
-    AgGridModule
-
-  ],
-  providers: [LayoutService]
+  ]
 
 })
 
 export class SmartadminModule {
-  // static forRoot():ModuleWithProviders {
-  //   return {
-  //     ngModule: SmartadminModule,
-  //     providers: [JsonApiService, LayoutService]
-  //   };
-  // }
+  static forRoot():ModuleWithProviders {
+    return {
+      ngModule: SmartadminModule,
+      providers: [JsonApiService, LayoutService]
+    };
+  }
 
 }

@@ -6,19 +6,13 @@ import { FormsModule } from "@angular/forms";
 
 import {LoginInfoComponent} from "./login-info/login-info.component";
 import {LogoutComponent} from "./logout/logout.component";
-import {UserService} from "./user.service";
 import { LoginComponent } from "./login/login.component";
-import { AuthenticationGuard, AuthenticationService } from "./authentication/index";
 
 @NgModule({
   imports: [CommonModule, FormsModule ],
   declarations: [LoginInfoComponent, LogoutComponent, LoginComponent ],
   exports: [LoginInfoComponent, LogoutComponent, LoginComponent ],
-  providers:[
-    UserService,          //用户服务
-    AuthenticationGuard,  //用户登录guard
-    AuthenticationService //用户登录服务
-  ]
+  
 })
 export class UserModule{
 

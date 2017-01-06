@@ -24,11 +24,8 @@ import { CoreModule } from "./core/core.module";
 
     // AdminModule,
 
-    SmartadminModule //系统所有用到的模块及provider
+    SmartadminModule.forRoot() //系统所有用到的模块及provider
   ],
-  providers: [
-    
-    ], 
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 
-import { AuthenticationService }      from '../authentication/authentication.service';
+import { AuthenticationService }      from '../../../core/user/authentication/authentication.service';
 
 declare var $:any;
 

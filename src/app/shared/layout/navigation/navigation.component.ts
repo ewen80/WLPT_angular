@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginInfoComponent} from "../../../core/user/login-info/login-info.component";
+import {LoginInfoComponent} from "../../user/login-info/login-info.component";
 
 
 @Component({

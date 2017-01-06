@@ -6,21 +6,23 @@ import { NgModule } from '@angular/core';
 import { MockBackend } from '@angular/http/testing';
 import { BaseRequestOptions } from "@angular/http";
 
-import { UserModule } from './user/user.module';
 import { fakeBackendProvider } from "../test/_service/fake_backend";
+import { AuthenticationGuard, AuthenticationService } from './user/authentication/index';
+import { UserService } from './user/user.service'
 
 @NgModule({
     imports: [
-        UserModule
     ],
     declarations: [],
      exports: [
-        // UserModule
     ],
     providers: [
         MockBackend,  
         BaseRequestOptions,
-        fakeBackendProvider     //提供自定义模拟后台功能服务
+        fakeBackendProvider,     //提供自定义模拟后台功能服务
+        AuthenticationGuard,
+        AuthenticationService,
+        UserService
     ]
 })
 export class CoreModule{
