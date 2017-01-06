@@ -41,12 +41,14 @@ import {AgGridModule} from "ag-grid-ng2/main";
 
 @NgModule({
   imports: [
-    CommonModule, FormsModule, HttpModule, RouterModule,
+    CommonModule, FormsModule, RouterModule,
+    //HttpModule,
     AgGridModule.withComponents([])
   ],
   declarations: [],
   exports: [
-    CommonModule, FormsModule, HttpModule, RouterModule,
+    CommonModule, FormsModule, RouterModule,
+    //HttpModule,
 
     // ModalModule,
     // ButtonsModule,
@@ -84,7 +86,7 @@ import {AgGridModule} from "ag-grid-ng2/main";
     AgGridModule
 
   ],
-  providers: [JsonApiService, LayoutService]
+  providers: [LayoutService]
 
 })
 
