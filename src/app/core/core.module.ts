@@ -14,7 +14,7 @@ import { UserService } from './user/user.service'
     imports: [
     ],
     declarations: [],
-     exports: [
+    exports: [
     ],
     providers: [
         MockBackend,  

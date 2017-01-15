@@ -5,12 +5,12 @@ import {HttpModule} from '@angular/http';
 import {RouterModule} from '@angular/router';
 
 
-/*
-import {
-  ModalModule, ButtonsModule, TooltipModule, DropdownModule, ProgressbarModule, AlertModule, TabsModule,
-  AccordionModule, CarouselModule
-} from 'ng2-bootstrap'
-*/
+
+// import {
+//   ModalModule, ButtonsModule, TooltipModule, DropdownModule, ProgressbarModule, AlertModule, TabsModule,
+//   AccordionModule, CarouselModule
+// } from 'ng2-bootstrap'
+
 
 import {PopoverModule} from "ng2-popover/src/index";
 import {JsonApiService} from './api'
@@ -20,6 +20,7 @@ import {I18nModule} from "./i18n/i18n.module";
 import {UserModule} from "./user/user.module";
 import {SmartadminWidgetsModule} from "./widgets/smartadmin-widgets.module";
 import {UtilsModule} from "./utils/utils.module";
+// import {SmartadminFormsModule} from "./forms/smartadmin-forms.module";
 // import {ChatModule} from "./chat/chat.module";
 // import {StatsModule} from "./stats/stats.module";
 // import {InlineGraphsModule} from "./graphs/inline/inline-graphs.module";
@@ -48,9 +49,9 @@ import {AgGridModule} from "ag-grid-ng2/main";
     UtilsModule,
     SmartadminWidgetsModule,
     AgGridModule,
-    UserModule
+    UserModule,
 
-
+    // SmartadminFormsModule
     // ModalModule,
     // ButtonsModule,
     // TooltipModule,

@@ -1,0 +1,66 @@
+         <!--Widget ID (each widget will need unique ID)-->
+        <sa-widget [colorbutton]="false" 
+                    [editbutton]="false" 
+                    [deletebutton]="false"
+                    [fullscreenbutton]="false">
+          <!-- widget options:
+          usage: <sa-widget [editbutton]="false">
+
+          [colorbutton]="false"
+          [editbutton]="false"
+          [togglebutton]="false"
+          [deletebutton]="false"
+          [fullscreenbutton]="false"
+          [custombutton]="false"
+          [collapsed]="true"
+          [sortable]="false"
+
+          -->
+          <header>
+            <span class="widget-icon"> <i class="fa fa-user"></i> </span>
+            <h2>用户信息</h2>
+          </header>
+          <!-- widget div-->
+          <div>
+            <!-- widget content -->
+            <div class="widget-body">
+              <form  #userDetailForm="ngForm" novalidate (ngSubmit)="onSubmit()">
+                <fieldset>
+                  <div class="form-group">
+                    <label>用户名：</label>
+                    <input name="id" class="form-control"  type="text" [(ngModel)]="user.id" [readonly]="infoReadOnly" required>
+                    <div *ngIf="formErrors.id" class="alert alert-danger">
+                      {{ formErrors.id }}
+                    </div>
+                  </div>
+                  <div class="form-group" *ngIf = "!infoReadOnly" >
+                    <label>密码：</label>
+                    <input class="form-control" name="password" [(ngModel)]="user.password"  type="password" required>
+                    <div *ngIf="formErrors.password" class="alert alert-danger">
+                      {{ formErrors.password }}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>姓名：</label>
+                    <input class="form-control"  type="text" name="name" [(ngModel)]="user.name" [readonly]="infoReadOnly" required>
+                    <div *ngIf="formErrors.name" class="alert alert-danger">
+                      {{ formErrors.name }}
+                    </div>
+                  </div>
+                </fieldset>
+                <div *ngIf = "!infoReadOnly" class="form-actions">
+                  <button class="btn btn-primary" type="submit" [disabled]="!userDetailForm.form.valid">
+                    <i class="fa fa-save"></i>
+                    保存
+                  </button>
+                </div>
+              </form>
+
+            </div>
+            <!-- end widget content -->
+
+          </div>
+          <!-- end widget div -->
+
+        </sa-widget>
+        <!-- end widget -->

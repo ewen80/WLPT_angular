@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import {
+  ModalModule
+} from 'ng2-bootstrap'
+
 import { SmartadminModule } from '../../shared/smartadmin.module';
 
 import { UsersComponent } from './users.component';
@@ -9,7 +13,9 @@ import { UsersComponent } from './users.component';
   imports: [
     CommonModule,
 
-    SmartadminModule
+    SmartadminModule,
+    ModalModule
+
   ],
   declarations: [UsersComponent]
 })

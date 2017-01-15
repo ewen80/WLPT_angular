@@ -9,25 +9,14 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 
 import { User } from '../../core/user/user';
 
+let allUsers = new Array<User>();
+let user = new User();
+user.id = "test";
+user.name="测试用户";
+user.password="test";
+user.picture="/assets/img/avatars/sunny.png";
+allUsers.push(user);
 
-const allUsers = [
-    {
-        "id":"test",
-        "name":"测试用户",
-        "password":"test",
-        "picture": "/assets/img/avatars/sunny.png"
-    },
-    {
-        "id":"user1",
-        "name":"用户1",
-        "password":"111111"
-    },
-    {
-        "id":"user2",
-        "name":"用户2",
-        "password":"111111"
-    }
-];
 
 export function httpFactory(backend: MockBackend, options: BaseRequestOptions){
     // configure fake backend
@@ -87,10 +76,22 @@ export function httpFactory(backend: MockBackend, options: BaseRequestOptions){
                 //获取所有用户信息,/api/getusers
                 if(connection.request.url.endsWith('/api/getusers') && connection.request.method === RequestMethod.Get ){
                     connection.mockRespond(new Response(
-                            new ResponseOptions({ status: 200,body: allUsers })
+                            new ResponseOptions({ status: 200,body: allUsers})
                         ));
                 }
                 
+                //添加新用户,/api/adduser
+                if(connection.request.url.endsWith('/api/adduser') && connection.request.method === RequestMethod.Post){
+                    let userDetail = JSON.parse(connection.request.getBody());
+                    let user = new User();
+                    user.id = userDetail.id;
+                    user.name = userDetail.name;
+                    user.password = userDetail.password;
+                    allUsers.push(user);
+                    connection.mockRespond(new Response(
+                        new ResponseOptions({ status:200,body:{sucess:true}})
+                    ))
+                }
 
             }, 500);
 

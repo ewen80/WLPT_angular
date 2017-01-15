@@ -13,9 +13,13 @@ export class BootstrapValidatorDirective implements OnInit {
   @HostListener('submit')  s = ()=>{
     const bootstrapValidator = this.$form.data('bootstrapValidator');
     bootstrapValidator.validate();
-    if(bootstrapValidator.isValid())
+    if(bootstrapValidator.isValid()){
+      console.log("isvalid");
       this.$form.submit();
-    else return;
+    }else{
+      console.log("notvalid");
+      return false;
+    }
   }
 
   constructor(private el:ElementRef) {

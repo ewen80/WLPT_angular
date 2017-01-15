@@ -51,7 +51,7 @@
     "jvectormap": "^2.0.4",
     "markdown": "^0.5.0",
     "morris.js": "^0.5.0",
-    "ng2-bootstrap": "^1.1.16",
+    "ng2-bootstrap": "^1.1.16-11",
     "ng2-popover": "git+https://github.com/griga/ng2-popover.git",
     "ng2-redux": "^4.0.0-beta.0",
     "nouislider": "^8.5.1",
