@@ -217,7 +217,7 @@ if (config.voice_command) {
         'show widgets' : function() { window.location.hash = "widgets" },
         'show gallery' : function() { window.location.hash = "gallery" },
         'show maps' : function() { window.location.hash = "gmap-xml" },
-        'go back' :  function() { history.back(1); },
+        'go back' :  function() { window.history.back(1); },
         'scroll up' : function () { jQuery('html, body').animate({ scrollTop: 0 }, 100); },
         'scroll down' : function () { jQuery('html, body').animate({ scrollTop: jQuery(document).height() }, 100);},
         'hide navigation' : function() {
