@@ -60,17 +60,16 @@ export function httpFactory(backend: MockBackend, options: BaseRequestOptions){
                     }
                 }
 
-                //获取单个用户信息,/api/getuserinfo
-                if(connection.request.url.endsWith('/api/getuserinfo') && connection.request.method === RequestMethod.Post ){
-                    let params = JSON.parse(connection.request.getBody());
-                    for(let i=0; i<allUsers.length; i++){
-                        if(params.id === allUsers[i].id){
-                            connection.mockRespond(new Response(
-                            new ResponseOptions({ status:200, body: allUsers[i]})
-                        ));
-                            break;
-                        }
-                    }
+                //获取单个用户信息,/api/getusers/:id
+                if(connection.request.url.match(/\/api\/users\/\s+$/)  && connection.request.method === RequestMethod.Get ){
+                    // find user by id in users array
+                    let urlParts = connection.request.url.split('/');
+                    let id = urlParts[urlParts.length - 1];
+                    let matchedUsers = allUsers.filter(user => { return user.id === id; });
+                    let user = matchedUsers.length ? matchedUsers[0] : null;
+
+                    // respond 200 OK with user
+                    connection.mockRespond(new Response(new ResponseOptions({ status: 200, body: user })));
                 }
 
                 //获取所有用户信息,/api/getusers

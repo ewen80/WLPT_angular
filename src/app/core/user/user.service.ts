@@ -71,8 +71,8 @@ export class UserService {
   }
 
   //获取用户信息
-  getUserInfo(): Promise<User>{
-    return this.http.get('/api/getuserinfo')
+  getUserInfo(id: string): Promise<User>{
+    return this.http.get('/api/users/'+id)
                       .toPromise()
                       .then( response => response.json() as User)
                       .catch(this.handleError);

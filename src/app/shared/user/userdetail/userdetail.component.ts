@@ -68,7 +68,8 @@ export class UserDetailComponent implements OnInit{
 
     validationMessages = {
         'id': {
-            'required': '用户名不能为空'
+            'required': '用户名不能为空',
+            'userExist': '用户名重复'
         },
         'password': {
             'required': '密码不能为空'
