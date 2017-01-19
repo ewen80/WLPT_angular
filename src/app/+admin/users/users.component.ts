@@ -21,6 +21,7 @@ export class UsersComponent implements OnInit {
   public rowData:any[];
 
   @ViewChild("userDetailModal") private userDetailModal;
+  @ViewChild("userDetail") private userDetail;
   public modalTitle: string;
 
 
@@ -65,5 +66,12 @@ export class UsersComponent implements OnInit {
     this.userService.getUsers().then( users => {
                                         this.gridOptions.api.setRowData(users);
                                     }); 
+  }
+
+  //对话框关闭事件
+  private ModelonHide(){
+    if(this.userDetail){
+      this.userDetail.Reset();
+    }
   }
 }

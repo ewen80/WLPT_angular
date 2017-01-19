@@ -25,8 +25,11 @@ export class UserDetailComponent implements OnInit{
 
     constructor(private userService: UserService){    }
 
-    getUserInfo(){
-
+    //重置用户表状态
+    public Reset(): void{
+        if(this.userDetailForm){
+            this.userDetailForm.resetForm();
+        }
     }
 
     ngOnInit(){
@@ -34,48 +37,6 @@ export class UserDetailComponent implements OnInit{
             this.infoReadOnly = true;
         }else{
             this.infoReadOnly = false;
-        }
-
-        if (this.userDetailForm) {
-            this.userDetailForm.valueChanges
-                .subscribe(data => this.onValueChanged(data));
-        }
-    }
-
-    onValueChanged(data:any){
-        if (!this.userDetailForm) { return; }
-        const form = this.userDetailForm.form;
-
-        for (const field in this.formErrors) {
-            // clear previous error message (if any)
-            this.formErrors[field] = '';
-            const control = form.get(field);
-
-            if (control && control.dirty && !control.valid) {
-                const messages = this.validationMessages[field];
-                for (const key in control.errors) {
-                this.formErrors[field] += messages[key] + ' ';
-                }
-            }
-        }
-    }
-
-    formErrors = {
-        'id': '',
-        'password': '',
-        'name':''
-    };
-
-    validationMessages = {
-        'id': {
-            'required': '用户名不能为空',
-            'userExist': '用户名重复'
-        },
-        'password': {
-            'required': '密码不能为空'
-        },
-        'name':{
-            'required': '姓名不能为空'
         }
     }
 

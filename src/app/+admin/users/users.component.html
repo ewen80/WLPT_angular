@@ -29,7 +29,7 @@
   </sa-widgets-grid>
 
  
-  <div class="modal fade" bsModal #userDetailModal="bs-modal" [config]="{backdrop: true}"
+  <div class="modal fade" bsModal #userDetailModal="bs-modal" [config]="{backdrop: true}" (onHide)="ModelonHide()"
       tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -40,7 +40,7 @@
           <h4 class="modal-title">添加用户</h4>
         </div>
         <div class="modal-body">
-          <user-detail [userSaveMode]="userSaveMode.add" (onSaveFinished)="saveFinished($event)"></user-detail>
+          <user-detail #userDetail [userSaveMode]="userSaveMode.add" (onSaveFinished)="saveFinished($event)"></user-detail>
         </div>
         
       </div>

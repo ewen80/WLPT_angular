@@ -61,7 +61,7 @@ export function httpFactory(backend: MockBackend, options: BaseRequestOptions){
                 }
 
                 //获取单个用户信息,/api/getusers/:id
-                if(connection.request.url.match(/\/api\/users\/\s+$/)  && connection.request.method === RequestMethod.Get ){
+                if(connection.request.url.match(/\/api\/users\/\w+$/)  && connection.request.method === RequestMethod.Get ){
                     // find user by id in users array
                     let urlParts = connection.request.url.split('/');
                     let id = urlParts[urlParts.length - 1];
