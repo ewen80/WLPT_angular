@@ -19,9 +19,7 @@ export class UserDetailComponent implements OnInit{
     
     @ViewChild('userDetailForm') userDetailForm: NgForm;
 
-    private user = new User();
-
-    public infoReadOnly: boolean;
+    public user: User;
 
     constructor(private userService: UserService){    }
 
@@ -33,15 +31,34 @@ export class UserDetailComponent implements OnInit{
     }
 
     ngOnInit(){
-        if(this.userSaveMode === saveMode.no){
-            this.infoReadOnly = true;
-        }else{
-            this.infoReadOnly = false;
-        }
+        this.user = new User();
+    }
+
+    private addUser(){
+        //调用UserService服务添加用户,激活保存完成事件
+        this.userService.addUser(this.user).
+            then(response => this.onSaveFinished.emit({
+                                                    saveMode: this.userSaveMode,
+                                                    sucess: response.sucess, 
+                                                    message: response.message}));
+    }
+
+    private updateUser(){
+        this.userService.updateUser(this.user).
+            then(response => this.onSaveFinished.emit({
+                                                    saveMode: this.userSaveMode,
+                                                    sucess: response.sucess, 
+                                                    message: response.message}));
     }
 
     onSubmit(){
-        //调用UserService服务添加用户,激活保存完成事件
-        this.userService.addUser(this.user).then(response => this.onSaveFinished.emit({saveMode: this.userSaveMode,sucess: response.sucess, message: response.message}));
+        switch(this.userSaveMode){
+            case saveMode.add:
+                this.addUser();
+                break;
+            case saveMode.update:
+                this.updateUser();
+                break;
+        }
     }
 }

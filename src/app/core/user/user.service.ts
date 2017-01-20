@@ -86,6 +86,14 @@ export class UserService {
                       .catch(this.handleError);
   }
 
+  //更新用户
+  updateUser(user:User): Promise<{sucess:boolean,message:string}>{
+    return this.http.put('/api/updateuser',JSON.stringify(user))
+                    .toPromise()
+                    .then(response => response.json())
+                    .catch(this.handleError);
+  }
+
   private handleError(error: any): Promise<any>{
     console.error('发生一个错误：', error);
     return Promise.reject(error.message || error);

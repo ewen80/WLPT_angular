@@ -45,20 +45,20 @@ export function httpFactory(backend: MockBackend, options: BaseRequestOptions){
                 }
 
                 // fake users api end point
-                if (connection.request.url.endsWith('/api/users') && connection.request.method === RequestMethod.Get) {
-                    // check for fake authenticate token in header and return test users if valid, this security is implemented server side
-                    // in a real application
-                    if (connection.request.headers.get('Authorization') === 'Bearer fake-authencate-token') {
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({ status: 200, body: allUsers })
-                        ));
-                    } else {
-                        // return 401 not authorised if token is null or invalid
-                        connection.mockRespond(new Response(
-                            new ResponseOptions({ status: 401 })
-                        ));
-                    }
-                }
+                // if (connection.request.url.endsWith('/api/users') && connection.request.method === RequestMethod.Get) {
+                //     // check for fake authenticate token in header and return test users if valid, this security is implemented server side
+                //     // in a real application
+                //     if (connection.request.headers.get('Authorization') === 'Bearer fake-authencate-token') {
+                //         connection.mockRespond(new Response(
+                //             new ResponseOptions({ status: 200, body: allUsers })
+                //         ));
+                //     } else {
+                //         // return 401 not authorised if token is null or invalid
+                //         connection.mockRespond(new Response(
+                //             new ResponseOptions({ status: 401 })
+                //         ));
+                //     }
+                // }
 
                 //获取单个用户信息,/api/getusers/:id
                 if(connection.request.url.match(/\/api\/users\/\w+$/)  && connection.request.method === RequestMethod.Get ){
@@ -90,6 +90,26 @@ export function httpFactory(backend: MockBackend, options: BaseRequestOptions){
                     connection.mockRespond(new Response(
                         new ResponseOptions({ status:200,body:{sucess:true}})
                     ))
+                }
+
+                //修改用户,/api/updateuser
+                if(connection.request.url.endsWith('/api/updateuser') && connection.request.method === RequestMethod.Put){
+                    console.log(allUsers);
+                    // let userDetail = JSON.parse(connection.request.getBody()) as User;
+                    // let found =false;
+                    // for(let i=0; i<allUsers.length; i++){
+                    //     if(allUsers[i].id === userDetail.id){
+                    //         allUsers[i].name = 'userDetail.name';
+                    //         allUsers[i].password = 'userDetail.password';
+
+                            connection.mockRespond(new Response(new ResponseOptions({ status: 200, body: {sucess:true} })));
+                    //         found = true;
+                    //         break;
+                    //     }
+                    // }
+                    // if(!found){
+                    //     connection.mockRespond(new Response(new ResponseOptions({ status: 404, body: {sucess:false,message:'用户不存在'} })));
+                    // }
                 }
 
             }, 500);

@@ -18,7 +18,11 @@
           </header>
           <div>
             <div class="widget-body no-padding">
-              <ag-grid-ng2 #usersGrid style="width: 100%; height: 350px;" class="ag-fresh"    [gridOptions]="gridOptions" [columnDefs]="columnDefs"  [rowData]="rowData"
+              <ag-grid-ng2 #usersGrid style="width: 100%; height: 350px;" class="ag-fresh"    
+                  [gridOptions]="gridOptions" 
+                  [columnDefs]="columnDefs"  
+                  [rowData]="rowData"
+                  (rowDoubleClicked)="DblClickRow($event)"
               >
               </ag-grid-ng2>
             </div>
@@ -29,7 +33,7 @@
   </sa-widgets-grid>
 
  
-  <div class="modal fade" bsModal #userDetailModal="bs-modal" [config]="{backdrop: true}" (onHide)="ModelonHide()"
+  <div class="modal fade" bsModal #userDetailModal="bs-modal" [config]="{backdrop: true}"
       tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -37,10 +41,10 @@
           <button type="button" class="close" aria-label="Close" (click)="userDetailModal.hide()">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title">添加用户</h4>
+          <h4 class="modal-title">{{modalTitle}}</h4>
         </div>
         <div class="modal-body">
-          <user-detail #userDetail [userSaveMode]="userSaveMode.add" (onSaveFinished)="saveFinished($event)"></user-detail>
+          <user-detail #userDetail  (onSaveFinished)="saveFinished($event)"></user-detail>
         </div>
         
       </div>

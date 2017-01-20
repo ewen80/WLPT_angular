@@ -4,6 +4,7 @@ import {GridOptions} from 'ag-grid/main';
 
 import { UserService } from '../../core/user/user.service';
 import { saveMode } from '../../enums';
+import { User } from '../../core/user/user';
 
 
 declare var $: any;
@@ -45,6 +46,9 @@ export class UsersComponent implements OnInit {
 
   public addUserModalShow():void{
     this.modalTitle = "添加用户";
+    this.userDetail.userSaveMode = saveMode.add;
+    this.userDetail.Reset();
+    this.userDetail.user = new User();
     this.userDetailModal.show();
   }
 
@@ -57,21 +61,24 @@ export class UsersComponent implements OnInit {
       title: "提示消息",
       content: "保存成功",
       color: "#296191",
-      //timeout: 8000,
-      // icon: "fa fa-info swing ",
       iconSmall: "fa fa-info",
       timeout: 4000
     });
+    //重置对话框
+    // if(this.userDetail){
+    //   this.userDetail.Reset();
+    // }
     //刷新用户列表
     this.userService.getUsers().then( users => {
                                         this.gridOptions.api.setRowData(users);
                                     }); 
   }
 
-  //对话框关闭事件
-  private ModelonHide(){
-    if(this.userDetail){
-      this.userDetail.Reset();
-    }
+  //双击用户列表行事件
+  public DblClickRow(event){
+    this.modalTitle = "编辑用户";
+    this.userDetail.userSaveMode = saveMode.update;
+    this.userDetail.user = event.data as User;
+    this.userDetailModal.show();
   }
 }
