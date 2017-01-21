@@ -14,6 +14,9 @@
               <button class="btn btn-default" (click)="addUserModalShow()">
                 <i class="fa fa-plus"></i> <span class="hidden-mobile">添加用户</span>
               </button>
+              <button #delUsersButton class="btn btn-default" (click)="deleteButtonClick()" [disabled]="delUsersButtonDisabled">
+                <i class="fa fa-minus"></i> <span class="hidden-mobile">删除用户</span>
+              </button>
             </div>
           </header>
           <div>
@@ -22,7 +25,10 @@
                   [gridOptions]="gridOptions" 
                   [columnDefs]="columnDefs"  
                   [rowData]="rowData"
-                  (rowDoubleClicked)="DblClickRow($event)"
+                  (rowDoubleClicked)="dblClickRow($event)"
+                  (rowSelected)="setDelUserButtonStatus()"
+                  (modelUpdated)="setDelUserButtonStatus()"
+                  
               >
               </ag-grid-ng2>
             </div>

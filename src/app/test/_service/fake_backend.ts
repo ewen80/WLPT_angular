@@ -10,12 +10,19 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import { User } from '../../core/user/user';
 
 let allUsers = new Array<User>();
-let user = new User();
-user.id = "test";
-user.name="测试用户";
-user.password="test";
-user.picture="/assets/img/avatars/sunny.png";
-allUsers.push(user);
+
+function createUsers(){
+    for(let i=0;i<100;i++){
+        let user = new User();
+        user.id = "test"+i.toString();
+        user.name="测试用户"+i.toString();
+        user.password="test";
+        user.picture="/assets/img/avatars/sunny.png";
+        allUsers.push(user);
+    }
+}
+
+createUsers();
 
 
 export function httpFactory(backend: MockBackend, options: BaseRequestOptions){
@@ -60,7 +67,7 @@ export function httpFactory(backend: MockBackend, options: BaseRequestOptions){
                 //     }
                 // }
 
-                //获取单个用户信息,/api/getusers/:id
+                //获取单个用户信息,/api/users/:id
                 if(connection.request.url.match(/\/api\/users\/\w+$/)  && connection.request.method === RequestMethod.Get ){
                     // find user by id in users array
                     let urlParts = connection.request.url.split('/');
@@ -73,9 +80,28 @@ export function httpFactory(backend: MockBackend, options: BaseRequestOptions){
                 }
 
                 //获取所有用户信息,/api/getusers
-                if(connection.request.url.endsWith('/api/getusers') && connection.request.method === RequestMethod.Get ){
+                if(connection.request.url.match(/\/api\/getusers\?.+$/) && connection.request.method === RequestMethod.Get ){
+                    const urlSplit = connection.request.url.split('?');
+                    const params = urlSplit[1].split('&');
+                    let startPage,endPage;
+
+                    for(let i=0;i<params.length;i++){
+                        let kv = params[i].split('=');
+                        switch(kv[0]){
+                            case 'startPage':
+                                startPage = kv[1];
+                                break;
+                            case 'endPage':
+                                endPage = kv[1];
+                                break;
+                        }
+                    }
+                    
                     connection.mockRespond(new Response(
-                            new ResponseOptions({ status: 200,body: allUsers})
+                            new ResponseOptions({ status: 200,body: {
+                                rows:allUsers.slice(startPage,endPage),
+                                rowCount:allUsers.length
+                            }})
                         ));
                 }
                 
@@ -88,28 +114,44 @@ export function httpFactory(backend: MockBackend, options: BaseRequestOptions){
                     user.password = userDetail.password;
                     allUsers.push(user);
                     connection.mockRespond(new Response(
-                        new ResponseOptions({ status:200,body:{sucess:true}})
+                        new ResponseOptions({ status:200,body:{sucess:true, message:'保存成功'}})
                     ))
                 }
 
                 //修改用户,/api/updateuser
                 if(connection.request.url.endsWith('/api/updateuser') && connection.request.method === RequestMethod.Put){
-                    console.log(allUsers);
-                    // let userDetail = JSON.parse(connection.request.getBody()) as User;
-                    // let found =false;
-                    // for(let i=0; i<allUsers.length; i++){
-                    //     if(allUsers[i].id === userDetail.id){
-                    //         allUsers[i].name = 'userDetail.name';
-                    //         allUsers[i].password = 'userDetail.password';
+                    let userDetail = JSON.parse(connection.request.getBody()) as User;
+                    let found =false;
+                    for(let i=0; i<allUsers.length; i++){
+                        if(allUsers[i].id === userDetail.id){
+                            allUsers[i].name = userDetail.name;
+                            allUsers[i].password = userDetail.password;
 
-                            connection.mockRespond(new Response(new ResponseOptions({ status: 200, body: {sucess:true} })));
-                    //         found = true;
-                    //         break;
-                    //     }
-                    // }
-                    // if(!found){
-                    //     connection.mockRespond(new Response(new ResponseOptions({ status: 404, body: {sucess:false,message:'用户不存在'} })));
-                    // }
+                            connection.mockRespond(new Response(new ResponseOptions({ status: 200, body: {sucess:true, message:'保存成功'} })));
+                            found = true;
+                            break;
+                        }
+                    }
+                    if(!found){
+                        connection.mockRespond(new Response(new ResponseOptions({ status: 404, body: {sucess:false, message:'用户不存在'} })));
+                    }
+                }
+
+                if(connection.request.url.match(/\/api\/deleteusers\/.+$/) && connection.request.method === RequestMethod.Delete){
+                   // find user by id in users array
+                    let urlParts = connection.request.url.split('/');
+                    let ids = urlParts[urlParts.length - 1];
+                    let newUsers = new Array<User>();
+                    let existIndexs = ids.split(',');
+                    
+                    for(let k=0;k<allUsers.length;k++){
+                        if(existIndexs.indexOf(allUsers[k].id) < 0){
+                            newUsers.push(allUsers[k]);
+                        }
+                    }
+
+                    allUsers = newUsers;
+                    connection.mockRespond(new Response(new ResponseOptions({ status: 200, body: {sucess:true, message:'删除成功'} })));
                 }
 
             }, 500);

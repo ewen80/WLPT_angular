@@ -63,10 +63,10 @@ export class UserService {
   }
 
   //获取全部用户信息
-  getUsers(): Promise<User[]>{
-    return this.http.get('/api/getusers')
+  getUsers(startRow:number,endRow:number): Promise<{rows:User[],rowCount:number}>{
+    return this.http.get('/api/getusers?startPage='+startRow.toString()+"&endPage="+endRow.toString())
                       .toPromise()
-                      .then( response => response.json() as User[])
+                      .then( response => response.json())
                       .catch(this.handleError);
   }
 
@@ -89,6 +89,19 @@ export class UserService {
   //更新用户
   updateUser(user:User): Promise<{sucess:boolean,message:string}>{
     return this.http.put('/api/updateuser',JSON.stringify(user))
+                    .toPromise()
+                    .then(response => response.json())
+                    .catch(this.handleError);
+  }
+
+  //删除用户
+  deleteUsers(users:User[]): Promise<{sucess:boolean,message:string}>{
+    let ids = "";
+    for(let i=0;i<users.length;i++){
+      ids += users[i].id + ',';
+    }
+    ids = ids.substring(0,ids.length-1);
+    return this.http.delete('/api/deleteusers/'+ids)
                     .toPromise()
                     .then(response => response.json())
                     .catch(this.handleError);
