@@ -34,8 +34,10 @@ export class AuthenticationService {
     }
   }
 
-  //登录操作,post请求'/api/authenticate'路径,写入token
+  //登录操作,Basic Auth认证方式，post请求'/api/authenticate'路径,写入token
   login(userid, password): Observable<boolean> {
+        let basicAuthStr = window.btoa(userid + ":" + password);
+        
         return this.http.post('/api/authenticate', JSON.stringify({ userid: userid, password: password }))
             .map((response: Response) => {
                 // login successful if there's a token in the response
