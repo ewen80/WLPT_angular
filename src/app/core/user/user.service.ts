@@ -5,6 +5,7 @@ import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { User } from './user';
+import { AppConfig } from '../app-config.service';
 
 // import {JsonApiService} from "../../shared/api/json-api.service";
 
@@ -17,7 +18,7 @@ export class UserService {
   // constructor(private jsonApiService:JsonApiService) {
   //   this.user = new Subject();
   // }
-  constructor(private http:Http){
+  constructor(private http:Http,private appconfig:AppConfig){
     this.id = Math.random();
     console.log('UserService created');
   }
@@ -64,7 +65,8 @@ export class UserService {
 
   //获取全部用户信息
   getUsers(startRow:number,endRow:number): Promise<{rows:User[],rowCount:number}>{
-    return this.http.get('/api/getusers?startPage='+startRow.toString()+"&endPage="+endRow.toString())
+    // return this.http.get('/api/getusers?startPage='+startRow.toString()+"&endPage="+endRow.toString())
+        return this.http.get(this.appconfig.setting.serverUrl+'/users?startPage='+startRow.toString()+"&endPage="+endRow.toString())
                       .toPromise()
                       .then( response => response.json())
                       .catch(this.handleError);
@@ -108,7 +110,7 @@ export class UserService {
   }
 
   private handleError(error: any): Promise<any>{
-    console.error('发生一个错误：', error);
+    // console.error('发生一个错误：', error);
     return Promise.reject(error.message || error);
   }
 

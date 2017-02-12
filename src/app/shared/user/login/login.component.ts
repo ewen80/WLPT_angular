@@ -17,7 +17,7 @@ export class LoginComponent {
   model: any = {};
 
   constructor(public authenticationService: AuthenticationService, public router: Router) {
-   
+      
   }
 
   login() {

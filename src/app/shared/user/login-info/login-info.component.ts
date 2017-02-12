@@ -23,6 +23,7 @@ export class LoginInfoComponent implements OnInit {
     // this.userService.getLoginInfo().subscribe(user => {
     //   this.user = user
     // })
+
     this.userService.getLoginInfo().then( user => this.user = user);
   }
 
