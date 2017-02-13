@@ -1,3 +1,7 @@
 {
-    "serverUrl":"http://localhost:8080"
+    "Server":{
+        "Url":"http://localhost:8080",
+        "AuthenticationApi":"/authentication"
+    }
+    
 }

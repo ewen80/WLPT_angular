@@ -16,6 +16,8 @@ import 'rxjs/add/operator/map';
 
 import { Http, Response } from '@angular/http';
 
+import { AppConfig } from '../../app-config.service';
+
 @Injectable()
 export class AuthenticationService {
   isLoggedIn: boolean = false;
@@ -25,7 +27,7 @@ export class AuthenticationService {
 
   token: string;    //登录令牌
 
-  constructor(private http: Http) {
+  constructor(private http: Http,private appConfig: AppConfig) {
     // set token if saved in local storage
     var currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.token = currentUser && currentUser.token;  //当前用户对象和用户的令牌属性必须都有值
@@ -37,8 +39,9 @@ export class AuthenticationService {
   //登录操作,Basic Auth认证方式，post请求'/api/authenticate'路径,写入token
   login(userid, password): Observable<boolean> {
         let basicAuthStr = window.btoa(userid + ":" + password);
-        
-        return this.http.post('/api/authenticate', JSON.stringify({ userid: userid, password: password }))
+
+        //Basic Auth认证方式访问服务器一个单独认证页面，如果能访问表示认证成功
+        return this.http.put(this.appConfig.setting.Server.Url+this.appConfig.setting.Server.AuthenticationApi, "userId="+userid+"&authBase64String="+basicAuthStr)
             .map((response: Response) => {
                 // login successful if there's a token in the response
                 let token = response.json() && response.json().token;

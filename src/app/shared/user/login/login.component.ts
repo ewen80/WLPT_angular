@@ -27,7 +27,6 @@ export class LoginComponent {
         // Get the redirect URL from our auth service
         // If no redirect has been set, use the default
 
-        //TODO：修改登录后的默认跳转路径
         let redirect = this.authenticationService.redirectUrl ? this.authenticationService.redirectUrl : '/home';
 
         // Set our navigation extras object

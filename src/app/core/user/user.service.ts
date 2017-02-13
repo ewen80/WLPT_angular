@@ -18,7 +18,7 @@ export class UserService {
   // constructor(private jsonApiService:JsonApiService) {
   //   this.user = new Subject();
   // }
-  constructor(private http:Http,private appconfig:AppConfig){
+  constructor(private http:Http,private appConfig:AppConfig){
     this.id = Math.random();
     console.log('UserService created');
   }
@@ -66,7 +66,7 @@ export class UserService {
   //获取全部用户信息
   getUsers(startRow:number,endRow:number): Promise<{rows:User[],rowCount:number}>{
     // return this.http.get('/api/getusers?startPage='+startRow.toString()+"&endPage="+endRow.toString())
-        return this.http.get(this.appconfig.setting.serverUrl+'/users?startPage='+startRow.toString()+"&endPage="+endRow.toString())
+        return this.http.get(this.appConfig.setting.Server.Url+'/users?startPage='+startRow.toString()+"&endPage="+endRow.toString())
                       .toPromise()
                       .then( response => response.json())
                       .catch(this.handleError);
