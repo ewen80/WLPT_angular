@@ -65,7 +65,6 @@ export class UserService {
 
   //获取全部用户信息
   getUsers(startRow:number,endRow:number): Promise<{rows:User[],rowCount:number}>{
-    // return this.http.get('/api/getusers?startPage='+startRow.toString()+"&endPage="+endRow.toString())
         return this.http.get(this.appConfig.setting.Server.Url+'/users?startPage='+startRow.toString()+"&endPage="+endRow.toString())
                       .toPromise()
                       .then( response => response.json())
