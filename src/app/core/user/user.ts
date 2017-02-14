@@ -2,11 +2,7 @@ export class User{
     private _id:string;
     private _name: string;
     private _password: string;
-    private _picture: string;
-
-    constructor(){
-        this._picture = "picture.png";
-    }
+    public _picture?: string;
 
     get id(){
         return this._id;
@@ -21,7 +17,7 @@ export class User{
     }
 
     get picture(){
-        return '/assets/img/avatars/444444.png';
+        return this._picture;
     }
 
     set id(value:string){

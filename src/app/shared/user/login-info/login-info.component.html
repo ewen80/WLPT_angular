@@ -1,6 +1,6 @@
 <div class="login-info">
   <span *ngIf="user?.id"><a (click)="toggleShortcut()">
-	   <img [src]="user.picture" alt="me"
+	   <img [src]="user.picture ? user.picture : appConfig.setting.User.DefaultPicture" alt="me"
           class="online"/><span>{{user.name }}</span> <i class="fa fa-angle-down"></i>
     </a>
    </span>

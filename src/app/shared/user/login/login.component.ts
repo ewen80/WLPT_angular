@@ -22,22 +22,12 @@ export class LoginComponent {
 
   login() {
     this.loading = true;
-    this.authenticationService.login(this.model.userid, this.model.password).subscribe(() => {
-      if (this.authenticationService.isLoggedIn) {
-        // Get the redirect URL from our auth service
-        // If no redirect has been set, use the default
 
+    this.authenticationService.login(this.model.userid, this.model.password).subscribe((authResult) => {
+      if (authResult) {
         let redirect = this.authenticationService.redirectUrl ? this.authenticationService.redirectUrl : '/home';
-
-        // Set our navigation extras object
-        // that passes on our global query params and fragment
-        let navigationExtras: NavigationExtras = {
-          // preserveQueryParams: true,
-          // preserveFragment: true
-        };
-
         // Redirect the user
-        this.router.navigate([redirect], navigationExtras);
+        this.router.navigate([redirect]);
       }
       else{
         this.loading = false;

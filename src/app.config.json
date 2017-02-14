@@ -2,6 +2,9 @@
     "Server":{
         "Url":"http://localhost:8080",
         "AuthenticationApi":"/authentication"
+    },
+    "User":{
+        "DefaultPicture":"/assets/img/avatars/4.png"
     }
     
 }

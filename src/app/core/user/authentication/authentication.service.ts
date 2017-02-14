@@ -40,26 +40,31 @@ export class AuthenticationService {
 
   //登录操作,Basic Auth认证方式
   login(userid, password): Observable<boolean> {
-        this.authToken = window.btoa(userid + ":" + password);
-        //Basic Auth认证方式访问服务器一个单独认证页面，如果能访问表示认证成功
-        return this.http.put(this.appConfig.setting.Server.Url+this.appConfig.setting.Server.AuthenticationApi, 
-                                JSON.stringify({userId:userid,authToken:this.authToken}),
-                                {headers:new Headers({'Content-Type':'application/json'})})
-            .map((response: Response) => {
-                // login successful if there's a token in the response
-                let authResult = response.json();
-                if (authResult) {
-                    // store username and token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify({ id: userid, token: this.authToken }));
+      if(!this.isLoggedIn){
+          this.authToken = window.btoa(userid + ":" + password);
+            //Basic Auth认证方式访问服务器一个单独认证页面，如果能访问表示认证成功
+            return this.http.put(this.appConfig.setting.Server.Url+this.appConfig.setting.Server.AuthenticationApi, 
+                                    JSON.stringify({userId:userid,authToken:this.authToken}),
+                                    {headers:new Headers({'Content-Type':'application/json'})})
+                .map((response: Response) => {
+                    // login successful if there's a token in the response
+                    let authResult = response.json();
+                    if (authResult) {
+                        // store username and token in local storage to keep user logged in between page refreshes
+                        localStorage.setItem('currentUser', JSON.stringify({ id: userid, token: this.authToken }));
 
-                    // return true to indicate successful login
-                    this.isLoggedIn = true;
-                    return true;
-                } else {
-                    // return false to indicate failed login
-                    return false;
-                }
-            });
+                        // return true to indicate successful login
+                        this.isLoggedIn = true;
+                        return true;
+                    } else {
+                        // return false to indicate failed login
+                        return false;
+                    }
+                });
+      }else{
+          Observable.of(true);
+      }
+        
     }
 
     //登出操作,清空token
