@@ -52,7 +52,7 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
     else if( localStorage.getItem("currentUser")) {
       this.authenticationService.isLoggedIn = true;
       var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-      this.authenticationService.token = currentUser && currentUser.token;
+      this.authenticationService.authToken = currentUser && currentUser.token;
       return true;
     }
     // Store the attempted URL for redirecting

@@ -24,7 +24,7 @@ export class LoginInfoComponent implements OnInit {
     //   this.user = user
     // })
 
-    this.userService.getLoginInfo().then( user => this.user = user);
+    this.userService.getLoginUser().then( user => this.user = user);
   }
 
 

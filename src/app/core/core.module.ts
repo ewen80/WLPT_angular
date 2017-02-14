@@ -4,13 +4,14 @@
 */
 import { NgModule, ErrorHandler } from '@angular/core';
 import { MockBackend } from '@angular/http/testing';
-import { HttpModule, BaseRequestOptions } from "@angular/http";
+import { Http, HttpModule, BaseRequestOptions } from "@angular/http";
 
 import { fakeBackendProvider } from "../test/_service/fake_backend";
 import { AuthenticationGuard, AuthenticationService } from './user/authentication/index';
 import { UserService } from './user/user.service';
 import { MyErrorHandler } from './my-error-handler';
-import { AppConfig } from './app-config.service';
+import { AppConfigService } from './app-config.service';
+import { BasicAuthenticationHttp } from './basic-authentication-http.service';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import { AppConfig } from './app-config.service';
         AuthenticationGuard,
         AuthenticationService,
         UserService,
-        AppConfig,
+        AppConfigService,
+        BasicAuthenticationHttp,
         {provide:ErrorHandler,useClass:MyErrorHandler}
     ]
 })

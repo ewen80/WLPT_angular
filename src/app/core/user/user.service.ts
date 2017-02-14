@@ -5,7 +5,8 @@ import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { User } from './user';
-import { AppConfig } from '../app-config.service';
+import { AppConfigService } from '../app-config.service';
+import { BasicAuthenticationHttp } from '../basic-authentication-http.service';
 
 // import {JsonApiService} from "../../shared/api/json-api.service";
 
@@ -18,7 +19,7 @@ export class UserService {
   // constructor(private jsonApiService:JsonApiService) {
   //   this.user = new Subject();
   // }
-  constructor(private http:Http,private appConfig:AppConfig){
+  constructor(private http:BasicAuthenticationHttp,private appConfig:AppConfigService){
     this.id = Math.random();
     console.log('UserService created');
   }
@@ -55,12 +56,12 @@ export class UserService {
   //         return null;
   //       } 
   //   }
-  getLoginInfo(): Promise<User>{
-    var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    return this.http.post('/api/getuserinfo', JSON.stringify({ id: currentUser.id }))
-                .toPromise()
-                .then(response => response.json() as User)
-                .catch(this.handleError);
+  getLoginUser(): Promise<User>{
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if(currentUser)
+      return this.getUser(currentUser.id)
+    else
+      return this.handleError("Found no Logged User");
   }
 
   //获取全部用户信息
@@ -72,8 +73,8 @@ export class UserService {
   }
 
   //获取用户信息
-  getUserInfo(id: string): Promise<User>{
-    return this.http.get('/api/users/'+id)
+  getUser(id: string): Promise<User>{
+    return this.http.get(this.appConfig.setting.Server.Url+'/users/'+id)
                       .toPromise()
                       .then( response => response.json() as User)
                       .catch(this.handleError);
