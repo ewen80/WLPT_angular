@@ -4,47 +4,47 @@ import { ModalModule } from 'ng2-bootstrap';
 
 
 
-import { UserService } from '../../../core/user/user.service';
-import { User } from '../../../core/entity/user';
+import { RoleService } from '../../../core/role/role.service';
+import { Role } from '../../../core/entity/role';
 import { saveMode } from '../../../enums';
 
 @Component({
-    selector: 'user-detail',
-    templateUrl: './userdetail.component.html'
+    selector: 'role-detail',
+    templateUrl: './roledetail.component.html'
 })
-export class UserDetailComponent implements OnInit{
+export class RoleDetailComponent implements OnInit{
 
     @Input() saveMode: saveMode; //保存模式（只读，修改，新增）
     @Output() onSaveFinished = new EventEmitter<{saveMode:saveMode,sucess:boolean,message:string}>(); //保存完成后激活事件，参数包含保存类型（新增，修改）和保存结果以及附加消息
     
-    @ViewChild('userDetailForm') userDetailForm: NgForm;
+    @ViewChild('roleDetailForm') roleDetailForm: NgForm;
 
-    public user: User;
+    public role: Role;
 
-    constructor(private userService: UserService){    }
+    constructor(private roleService: RoleService){    }
 
     //重置用户表状态
     public Reset(): void{
-        if(this.userDetailForm){
-            this.userDetailForm.resetForm();
+        if(this.roleDetailForm){
+            this.roleDetailForm.resetForm();
         }
     }
 
     ngOnInit(){
-        this.user = new User();
+        this.role = new Role();
     }
 
-    private addUser(){
-        //调用UserService服务添加用户,激活保存完成事件
-        this.userService.addUser(this.user).
+    private addRole(){
+        //调用RoleService服务添加用户,激活保存完成事件
+        this.roleService.addRole(this.role).
             then(response => this.onSaveFinished.emit({
                                                     saveMode: this.saveMode,
                                                     sucess: response.sucess, 
                                                     message: response.message}));
     }
 
-    private updateUser(){
-        this.userService.updateUser(this.user).
+    private updateRole(){
+        this.roleService.updateRole(this.role).
             then(response => this.onSaveFinished.emit({
                                                     saveMode: this.saveMode,
                                                     sucess: response.sucess, 
@@ -54,10 +54,10 @@ export class UserDetailComponent implements OnInit{
     onSubmit(){
         switch(this.saveMode){
             case saveMode.add:
-                this.addUser();
+                this.addRole();
                 break;
             case saveMode.update:
-                this.updateUser();
+                this.updateRole();
                 break;
         }
     }

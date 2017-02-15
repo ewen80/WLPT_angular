@@ -2,27 +2,27 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 
 import {GridOptions} from 'ag-grid/main';
 
-import { UserService } from '../../core/user/user.service';
+import { RoleService } from '../../core/role/role.service';
 import { saveMode } from '../../enums';
-import { User } from '../../core/entity/user';
+import { Role } from '../../core/entity/role';
 
 
 declare var $: any;
 
 @Component({
-  selector: 'usersadmin',
-  templateUrl: './users.component.html'
+  selector: 'rolesadmin',
+  templateUrl: './roles.component.html'
 })
-export class UsersComponent implements OnInit,  AfterViewInit{
+export class RolesComponent implements OnInit,  AfterViewInit{
 
-  public userSaveMode = saveMode;//对话框保存模式（更新，新增)
+  public roleSaveMode = saveMode;//对话框保存模式（更新，新增)
 
   public gridOptions:GridOptions;
   public columnDefs:any[];
   public rowData:any[];
 
-  @ViewChild("userDetailModal") private userDetailModal;
-  @ViewChild("userDetail") private userDetail;
+  @ViewChild("roleDetailModal") private roleDetailModal;
+  @ViewChild("roleDetail") private roleDetail;
   
   public modalTitle: string;
   public delUsersButtonDisabled = true;
@@ -30,7 +30,7 @@ export class UsersComponent implements OnInit,  AfterViewInit{
   private startRow = 0;
 
 
-  constructor(private userService:UserService) { 
+  constructor(private roleService:RoleService) { 
     // console.log('users.components created:'+userService);
   }
 
@@ -56,10 +56,10 @@ export class UsersComponent implements OnInit,  AfterViewInit{
         } 
       },
       {
-        headerName: '用户名', field: "id"
+        headerName: '角色Id', field: "id"
       },
       {
-        headerName: '姓名',  field: "name"
+        headerName: '角色名',  field: "name"
       }
     ];
   }
@@ -70,10 +70,10 @@ export class UsersComponent implements OnInit,  AfterViewInit{
 
    //用户列表数据源
   setUserDataSource(){
-    let userDataSource = {
+    let dataSource = {
       getRows:(params: any) => {
         let pageIndex = Math.floor(params.startRow / this.gridOptions.paginationPageSize);
-        this.userService.getUsersWithPage(pageIndex,this.gridOptions.paginationPageSize)
+        this.roleService.getRolesWithPage(pageIndex,this.gridOptions.paginationPageSize)
           .then( data => {
             params.successCallback(data.rows, data.rowCount);
           });
@@ -81,10 +81,10 @@ export class UsersComponent implements OnInit,  AfterViewInit{
       }
                   
     }
-    this.gridOptions.api.setDatasource(userDataSource);
+    this.gridOptions.api.setDatasource(dataSource);
   } 
 
-  public addUserModalShow():void{
+  public addRoleModalShow():void{
     this.modalTitle = "添加用户";
     this.userDetail.userSaveMode = saveMode.add;
     this.userDetail.Reset();

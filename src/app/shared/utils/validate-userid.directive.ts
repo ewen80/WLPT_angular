@@ -5,7 +5,7 @@ import { UserService } from '../../core/user/user.service';
 
 function validateUseridFactory(userid: string,userService: UserService){
     return new Promise( resolve => {
-         if(userid && userid ){
+         if(userid){
            userService.getUser(userid).then( user => {
                if(user){
                    resolve( {'userExist': true});

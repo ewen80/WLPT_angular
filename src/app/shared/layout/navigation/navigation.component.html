@@ -19,10 +19,16 @@
 
       <li routerLinkActive="active">
         <a  title="Admin">
-          <i class="fa fa-lg fa-fw fa-cog" aria-hidden="true"></i> <span class="menu-item-parent">{{'后台管理' | i18n}}</span></a>
+          <i class="fa fa-lg fa-fw fa-cog" aria-hidden="true"></i> <span class="menu-item-parent">{{'后台管理' | i18n}}</span>
+        </a>
         <ul>
           <li routerLinkActive="active">
             <a routerLink="/admin/users">{{'用户管理' | i18n}}</a>
+          </li>
+        </ul>
+        <ul>
+          <li routerLinkActive="active">
+            <a routerLink="/admin/roles">{{'角色管理' | i18n}}</a>
           </li>
         </ul>
       </li>

@@ -4,7 +4,7 @@ import { Http, Response } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { User } from './user';
+import { User } from '../entity/user';
 import { AppConfigService } from '../app-config.service';
 import { BasicAuthenticationHttp } from '../basic-authentication-http.service';
 
@@ -64,11 +64,17 @@ export class UserService {
       return this.handleError("Found no Logged User");
   }
 
-  //获取全部用户信息
-  getUsers(startRow:number,endRow:number): Promise<{rows:User[],rowCount:number}>{
-        return this.http.get(this.appConfig.setting.Server.Url+'/users?startPage='+startRow.toString()+"&endPage="+endRow.toString())
+  //获取用户信息（分页）
+  getUsersWithPage(pageIndex:number,pageSize:number): Promise<{rows:User[],rowCount:number}>{
+        return this.http.get(this.appConfig.setting.Server.Url+'/users?pageIndex='+pageIndex.toString()+"&pageSize="+pageSize.toString())
                       .toPromise()
-                      .then( response => response.json())
+                      .then( response => {
+                                let returnData = response.json();
+                                return {
+                                  rows:returnData.content,
+                                  rowCount:returnData.totalElements
+                                }
+                      })
                       .catch(this.handleError);
   }
 
