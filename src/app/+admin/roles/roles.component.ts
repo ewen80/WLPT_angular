@@ -25,7 +25,7 @@ export class RolesComponent implements OnInit,  AfterViewInit{
   @ViewChild("roleDetail") private roleDetail;
   
   public modalTitle: string;
-  public delUsersButtonDisabled = true;
+  public delRolesButtonDisabled = true;
 
   private startRow = 0;
 
@@ -65,11 +65,11 @@ export class RolesComponent implements OnInit,  AfterViewInit{
   }
 
   ngAfterViewInit(){
-    this.setUserDataSource();
+    this.setDataSource();
   }
 
-   //用户列表数据源
-  setUserDataSource(){
+   //角色列表数据源
+  setDataSource(){
     let dataSource = {
       getRows:(params: any) => {
         let pageIndex = Math.floor(params.startRow / this.gridOptions.paginationPageSize);
@@ -85,17 +85,17 @@ export class RolesComponent implements OnInit,  AfterViewInit{
   } 
 
   public addRoleModalShow():void{
-    this.modalTitle = "添加用户";
-    this.userDetail.userSaveMode = saveMode.add;
-    this.userDetail.Reset();
-    this.userDetail.user = new User();
-    this.userDetailModal.show();
+    this.modalTitle = "添加角色";
+    this.roleDetail.saveMode = saveMode.add;
+    this.roleDetail.Reset();
+    this.roleDetail.role = new Role();
+    this.roleDetailModal.show();
   }
 
   //保存结束
   public saveFinished(event:any){
     //关闭对话框
-    this.userDetailModal.hide();
+    this.roleDetailModal.hide();
     //提示保存成功或失败
     let boxTitle: string;
     let boxColor: string;
@@ -114,41 +114,41 @@ export class RolesComponent implements OnInit,  AfterViewInit{
       timeout: 4000
     });
     //重置对话框
-    if(this.userDetail){
-      this.userDetail.Reset();
+    if(this.roleDetail){
+      this.roleDetail.Reset();
     }
-    //刷新用户列表
+    //刷新角色列表
     this.refreshUserList();
   }
 
-  //双击用户列表行事件
+  //双击角色列表行事件
   public dblClickRow(event){
     this.modalTitle = "编辑用户";
-    this.userDetail.userSaveMode = saveMode.update;
-    this.userDetail.user = (event.data as User).clone();
-    this.userDetailModal.show();
+    this.roleDetail.saveMode = saveMode.update;
+    this.roleDetail.user = (event.data as Role).clone();
+    this.roleDetailModal.show();
   }
 
   //单击删除按钮
   public deleteButtonClick(){
     var selectedRows = this.gridOptions.api.getSelectedRows();
     if(confirm("确认删除选中的"+selectedRows.length.toString()+"条记录吗？")){
-      this.userService.deleteUsers(selectedRows).then(() => {
+      this.roleService.deleteRoles(selectedRows).then(() => {
                                                               this.refreshUserList();
                                                             });
     }
   }
 
-  //刷新用户列表
+  //刷新角色列表
   private refreshUserList(){
-    this.setUserDataSource();
+    this.setDataSource();
   }
 
-  setDelUserButtonStatus(){
+  setDelButtonStatus(){
     if(this.gridOptions.api.getSelectedRows().length > 0){
-      this.delUsersButtonDisabled = false;
+      this.delRolesButtonDisabled = false;
     }else{
-      this.delUsersButtonDisabled = true;
+      this.delRolesButtonDisabled = true;
     }
     
   }

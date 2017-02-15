@@ -86,7 +86,7 @@ export class UsersComponent implements OnInit,  AfterViewInit{
 
   public addUserModalShow():void{
     this.modalTitle = "添加用户";
-    this.userDetail.userSaveMode = saveMode.add;
+    this.userDetail.saveMode = saveMode.add;
     this.userDetail.Reset();
     this.userDetail.user = new User();
     this.userDetailModal.show();
@@ -124,7 +124,7 @@ export class UsersComponent implements OnInit,  AfterViewInit{
   //双击用户列表行事件
   public dblClickRow(event){
     this.modalTitle = "编辑用户";
-    this.userDetail.userSaveMode = saveMode.update;
+    this.userDetail.saveMode = saveMode.update;
     this.userDetail.user = (event.data as User).clone();
     this.userDetailModal.show();
   }

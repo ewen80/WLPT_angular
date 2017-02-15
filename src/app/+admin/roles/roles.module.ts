@@ -7,7 +7,7 @@ import {
 
 import { SmartadminModule } from '../../shared/smartadmin.module';
 
-import { UsersComponent } from './users.component';
+import { RolesComponent } from './roles.component';
 
 @NgModule({
   imports: [
@@ -17,6 +17,6 @@ import { UsersComponent } from './users.component';
     ModalModule
 
   ],
-  declarations: [UsersComponent]
+  declarations: [RolesComponent]
 })
-export class UsersModule { }
+export class RolesModule { }
