@@ -3,9 +3,12 @@ import { NG_ASYNC_VALIDATORS, FormControl, ValidatorFn, AbstractControl, Validat
 
 import { RoleService } from '../../core/role/role.service';
 
-function validateRoleidFactory(roleid: string,roleService: RoleService){
+/*
+    自定义角色名验证指令，角色名不能重复
+*/
+function validateRoleNameFactory(roleName: string,roleService: RoleService){
     return new Promise( resolve => {
-         if(roleid){
+         if(roleName){
            roleService.getRole(roleid).then( role => {
                if(role){
                    resolve( {'roleExist': true});

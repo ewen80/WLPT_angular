@@ -28,7 +28,14 @@ export class RoleService {
                                   rowCount:returnData.totalElements
                                 }
                       })
-                      .catch(this.handleError);
+                      
+  }
+
+  //获取角色通过角色名称
+  getRolesByName(name:string):Promise<Role>{
+    return this.http.get(this.appConfig.setting.Server.Url+"/roles/byname/"+name)
+            .toPromise()
+            .then( response => response.json());
   }
 
   //获取角色信息
