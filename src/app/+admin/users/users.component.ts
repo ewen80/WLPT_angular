@@ -125,7 +125,8 @@ export class UsersComponent implements OnInit,  AfterViewInit{
   public dblClickRow(event){
     this.modalTitle = "编辑用户";
     this.userDetail.saveMode = saveMode.update;
-    this.userDetail.user = (event.data as User).clone();
+    // this.userDetail.user = (event.data as User).clone();
+    this.userDetail.user = event.data as User;
     this.userDetailModal.show();
   }
 

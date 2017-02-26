@@ -34,31 +34,41 @@ export class RoleDetailComponent implements OnInit{
         this.role = new Role();
     }
 
-    private addRole(){
-        //调用RoleService服务添加用户,激活保存完成事件
-        this.roleService.addRole(this.role).
-            then(response => this.onSaveFinished.emit({
-                                                    saveMode: this.saveMode,
-                                                    sucess: response.sucess, 
-                                                    message: response.message}));
+    private saveRole(){
+        //调用RoleService服务保存角色,激活保存完成事件
+        this.roleService.saveRole(this.role)
+            .then(response => {
+                if(response){
+                    this.onSaveFinished.emit({
+                                            saveMode: this.saveMode,
+                                            sucess: true, 
+                                            message: '保存成功'})
+                }else{
+                    this.onSaveFinished.emit({
+                                            saveMode: this.saveMode,
+                                            sucess: false, 
+                                            message: '保存失败'})
+                }
+            });
     }
 
-    private updateRole(){
-        this.roleService.updateRole(this.role).
-            then(response => this.onSaveFinished.emit({
-                                                    saveMode: this.saveMode,
-                                                    sucess: response.sucess, 
-                                                    message: response.message}));
-    }
+    // private updateRole(){
+    //     this.roleService.updateRole(this.role).
+    //         then(response => this.onSaveFinished.emit({
+    //                                                 saveMode: this.saveMode,
+    //                                                 sucess: response.sucess, 
+    //                                                 message: response.message}));
+    // }
 
     onSubmit(){
-        switch(this.saveMode){
-            case saveMode.add:
-                this.addRole();
-                break;
-            case saveMode.update:
-                this.updateRole();
-                break;
-        }
+        // switch(this.saveMode){
+        //     case saveMode.add:
+        //         this.addRole();
+        //         break;
+        //     case saveMode.update:
+        //         this.updateRole();
+        //         break;
+        // }
+        this.saveRole();
     }
 }

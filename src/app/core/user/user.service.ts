@@ -13,14 +13,12 @@ import { BasicAuthenticationHttp } from '../basic-authentication-http.service';
 @Injectable()
 export class UserService {
 
-  public id:number;
   // public user: Subject<any>;
 
   // constructor(private jsonApiService:JsonApiService) {
   //   this.user = new Subject();
   // }
   constructor(private http:BasicAuthenticationHttp,private appConfig:AppConfigService){
-    this.id = Math.random();
     console.log('UserService created');
   }
 
@@ -82,24 +80,24 @@ export class UserService {
   getUser(id: string): Promise<User>{
     return this.http.get(this.appConfig.setting.Server.Url+'/users/'+id)
                       .toPromise()
-                      .then( response => response.json() as User)
+                      .then( response => {
+                        //如果找不到用户，服务器端返回body为空转换json会报错
+                        try{
+                          return response.json() as User
+                        }catch(err){
+                          return null;
+                        }
+                      })
                       .catch(this.handleError);
+                      // .catch(reason => console.log("catch response is" + reason))
   }
 
-  //添加用户
-  addUser(user:User): Promise<{sucess:boolean,message:string}>{
-    return this.http.post('/api/adduser',JSON.stringify(user))
+  //保存用户
+  saveUser(user:User): Promise<{sucess:boolean,message:string}>{
+    return this.http.post(this.appConfig.setting.Server.Url+'/users',JSON.stringify(user))
                       .toPromise()
                       .then( response => response.json())
                       .catch(this.handleError);
-  }
-
-  //更新用户
-  updateUser(user:User): Promise<{sucess:boolean,message:string}>{
-    return this.http.put('/api/updateuser',JSON.stringify(user))
-                    .toPromise()
-                    .then(response => response.json())
-                    .catch(this.handleError);
   }
 
   //删除用户
@@ -109,9 +107,9 @@ export class UserService {
       ids += users[i].id + ',';
     }
     ids = ids.substring(0,ids.length-1);
-    return this.http.delete('/api/deleteusers/'+ids)
+    return this.http.delete(this.appConfig.setting.Server.Url+'/users/'+ids)
                     .toPromise()
-                    .then(response => response.json())
+                    // .then(response => response.json())
                     .catch(this.handleError);
   }
 

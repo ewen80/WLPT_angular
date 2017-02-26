@@ -42,25 +42,32 @@ export class RoleService {
   getRole(id: string): Promise<Role>{
     return this.http.get(this.appConfig.setting.Server.Url+'/roles/'+id)
                       .toPromise()
-                      .then( response => response.json() as Role)
+                      .then( response => {
+                        //如果找不到角色，服务器端返回body为空转换json会报错
+                        try{
+                          return response.json() as Role
+                        }catch(err){
+                          return null;
+                        }
+                      })
                       .catch(this.handleError);
   }
 
-  //添加角色
-  addRole(role:Role): Promise<{sucess:boolean,message:string}>{
-    return this.http.post('/api/adduser',JSON.stringify(Role))
+  //保存角色
+  saveRole(role:Role): Promise<{sucess:boolean,message:string}>{
+    return this.http.post(this.appConfig.setting.Server.Url+'/roles',JSON.stringify(role))
                       .toPromise()
                       .then( response => response.json())
                       .catch(this.handleError);
   }
 
-  //更新角色
-  updateRole(role:Role): Promise<{sucess:boolean,message:string}>{
-    return this.http.put('/api/updateuser',JSON.stringify(role))
-                    .toPromise()
-                    .then(response => response.json())
-                    .catch(this.handleError);
-  }
+  // //更新角色
+  // updateRole(role:Role): Promise<{sucess:boolean,message:string}>{
+  //   return this.http.put('/api/updateuser',JSON.stringify(role))
+  //                   .toPromise()
+  //                   .then(response => response.json())
+  //                   .catch(this.handleError);
+  // }
 
   //删除角色
   deleteRoles(roles:Role[]): Promise<{sucess:boolean,message:string}>{
@@ -69,9 +76,9 @@ export class RoleService {
       ids += roles[i].id + ',';
     }
     ids = ids.substring(0,ids.length-1);
-    return this.http.delete('/api/deleteroles/'+ids)
+    return this.http.delete(this.appConfig.setting.Server.Url+'/roles/'+ids)
                     .toPromise()
-                    .then(response => response.json())
+                    // .then(response => response.json())
                     .catch(this.handleError);
   }
 

@@ -62,7 +62,7 @@ export class AuthenticationService {
                     }
                 });
       }else{
-          Observable.of(true);
+          return Observable.of(true);
       }
         
     }

@@ -28,7 +28,18 @@
                 <fieldset>
                   <div class="form-group">
                     <label for="id">角色Id：</label>
-                    <div>
+                    <div *ngIf="saveMode === 1">
+                      <input name="id" class="form-control"  type="text" [(ngModel)]="role.id" #id="ngModel"  validateRoleId >
+                      <div *ngIf="id.errors && (id.dirty)" class="alert alert-danger">
+                          <div [hidden]="!id.errors.roleIdEmpty">
+                            角色Id不能为空
+                          </div>
+                          <div [hidden]="!id.errors.roleExist">
+                            角色Id已存在，请尝试其他角色Id
+                          </div>
+                      </div>
+                    </div>
+                    <div *ngIf="saveMode != 1">
                       {{role.id}}
                     </div>
                   </div>

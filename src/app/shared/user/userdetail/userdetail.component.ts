@@ -34,31 +34,33 @@ export class UserDetailComponent implements OnInit{
         this.user = new User();
     }
 
-    private addUser(){
+    private saveUser(){
         //调用UserService服务添加用户,激活保存完成事件
-        this.userService.addUser(this.user).
-            then(response => this.onSaveFinished.emit({
-                                                    saveMode: this.saveMode,
-                                                    sucess: response.sucess, 
-                                                    message: response.message}));
-    }
-
-    private updateUser(){
-        this.userService.updateUser(this.user).
-            then(response => this.onSaveFinished.emit({
-                                                    saveMode: this.saveMode,
-                                                    sucess: response.sucess, 
-                                                    message: response.message}));
+        this.userService.saveUser(this.user).
+            then(response => {
+                if(response){
+                    this.onSaveFinished.emit({
+                                            saveMode: this.saveMode,
+                                            sucess: true, 
+                                            message: '保存成功'})
+                }else{
+                    this.onSaveFinished.emit({
+                                            saveMode: this.saveMode,
+                                            sucess: false, 
+                                            message: '保存失败'})
+                }
+            })
     }
 
     onSubmit(){
-        switch(this.saveMode){
-            case saveMode.add:
-                this.addUser();
-                break;
-            case saveMode.update:
-                this.updateUser();
-                break;
-        }
+        // switch(this.saveMode){
+        //     case saveMode.add:
+        //         this.addUser();
+        //         break;
+        //     case saveMode.update:
+        //         this.updateUser();
+        //         break;
+        // }
+        this.saveUser();
     }
 }

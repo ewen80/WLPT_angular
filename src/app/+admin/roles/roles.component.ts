@@ -118,14 +118,14 @@ export class RolesComponent implements OnInit,  AfterViewInit{
       this.roleDetail.Reset();
     }
     //刷新角色列表
-    this.refreshUserList();
+    this.refreshRoleList();
   }
 
   //双击角色列表行事件
   public dblClickRow(event){
     this.modalTitle = "编辑用户";
     this.roleDetail.saveMode = saveMode.update;
-    this.roleDetail.user = (event.data as Role).clone();
+    this.roleDetail.role = event.data as Role;
     this.roleDetailModal.show();
   }
 
@@ -134,13 +134,13 @@ export class RolesComponent implements OnInit,  AfterViewInit{
     var selectedRows = this.gridOptions.api.getSelectedRows();
     if(confirm("确认删除选中的"+selectedRows.length.toString()+"条记录吗？")){
       this.roleService.deleteRoles(selectedRows).then(() => {
-                                                              this.refreshUserList();
+                                                              this.refreshRoleList();
                                                             });
     }
   }
 
   //刷新角色列表
-  private refreshUserList(){
+  private refreshRoleList(){
     this.setDataSource();
   }
 

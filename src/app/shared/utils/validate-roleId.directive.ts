@@ -4,12 +4,12 @@ import { NG_ASYNC_VALIDATORS, FormControl, ValidatorFn, AbstractControl, Validat
 import { RoleService } from '../../core/role/role.service';
 
 /*
-    自定义角色名验证指令，角色名不能重复
+    自定义角色Id验证指令，角色Id不能重复
 */
-function validateRoleNameFactory(roleName: string,roleService: RoleService){
+function validateRoleIdFactory(roleId: string,roleService: RoleService){
     return new Promise( resolve => {
-         if(roleName){
-           roleService.getRole(roleid).then( role => {
+         if(roleId){
+           roleService.getRole(roleId).then( role => {
                if(role){
                    resolve( {'roleExist': true});
                }
@@ -18,13 +18,13 @@ function validateRoleNameFactory(roleName: string,roleService: RoleService){
                }
            });
        }else{
-           resolve( {'roleidEmpty': true});
+           resolve( {'roleIdEmpty': true});
        }
     })
 }
 
 @Directive({
-    selector:'[validateRoleid]',
+    selector:'[validateRoleId]',
     providers:[
         { provide: NG_ASYNC_VALIDATORS, useExisting: RoleidValidator, multi: true}
     ]
@@ -34,6 +34,6 @@ export class RoleidValidator implements Validator{
     }
 
     validate(control: AbstractControl): Promise<{[key: string]: any}> {
-        return validateRoleidFactory(control.value, this.roleService);
+        return validateRoleIdFactory(control.value, this.roleService);
     }
 }
