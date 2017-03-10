@@ -1,8 +1,11 @@
+import { Role } from './role';
+
 export class User{
     public id:string;
     public name: string;
     public password: string;
     public picture?: string;
+    public role: Role;
 
     clone():User{
         let user = new User();
@@ -10,6 +13,7 @@ export class User{
         user.name = this.name;
         user.password = this.password;
         user.picture = this.picture;
+        user.role = this.role;
         return user;
     }
 }
