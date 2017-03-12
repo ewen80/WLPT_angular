@@ -5,7 +5,9 @@ import { ModalModule } from 'ng2-bootstrap';
 
 
 import { UserService } from '../../../core/user/user.service';
+import { RoleService } from '../../../core/role/role.service';
 import { User } from '../../../core/entity/user';
+import { Role } from '../../../core/entity/role';
 import { saveMode } from '../../../enums';
 
 @Component({
@@ -19,23 +21,46 @@ export class UserDetailComponent implements OnInit{
     
     @ViewChild('userDetailForm') userDetailForm: NgForm;
 
-    public user: User;
+    public user: User = new User();
+    public allRoles: Array<Role> = [];
+    public selectedRole: Role = new Role();
 
-    constructor(private userService: UserService){    }
+    constructor(private userService: UserService, private roleService: RoleService){    }
 
     //重置用户表状态
     public Reset(): void{
         if(this.userDetailForm){
             this.userDetailForm.resetForm();
+            this.selectedRole = new Role();
+        }
+    }
+
+    //改变当前选择角色
+    public changeRole(roleId:string){
+        let foundRole = this.allRoles.find( r => r.id == roleId);
+        if(foundRole){
+            this.selectedRole = foundRole;
         }
     }
 
     ngOnInit(){
-        this.user = new User();
+        this.loadRoles();
+    }
+
+    //读取角色信息角色填充选择框
+    private loadRoles(){
+        this.roleService.getAllRoles()
+            .then( response => {
+                if(response){
+                    this.allRoles = response;
+                    // this.selectedRole = this.allRoles[0];
+                }
+            })
     }
 
     private saveUser(){
         //调用UserService服务添加用户,激活保存完成事件
+        this.user.role = this.selectedRole;
         this.userService.saveUser(this.user).
             then(response => {
                 if(response){

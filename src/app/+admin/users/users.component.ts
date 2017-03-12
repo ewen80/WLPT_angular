@@ -125,9 +125,14 @@ export class UsersComponent implements OnInit,  AfterViewInit{
   public dblClickRow(event){
     this.modalTitle = "编辑用户";
     this.userDetail.saveMode = saveMode.update;
-    // this.userDetail.user = (event.data as User).clone();
-    this.userDetail.user = event.data as User;
+    this.userDetail.Reset();
+    let selectedUser: User = new User();
+    selectedUser.clone(event.data);
+    this.userDetail.user = selectedUser;
+    // this.userDetail.user = event.data as User;
     this.userDetailModal.show();
+
+    console.log(selectedUser);
   }
 
   //单击删除按钮

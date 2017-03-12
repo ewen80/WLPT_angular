@@ -5,15 +5,15 @@ export class User{
     public name: string;
     public password: string;
     public picture?: string;
-    public role: Role;
+    public role: Role = new Role();
 
-    clone():User{
-        let user = new User();
-        user.id = this.id;
-        user.name = this.name;
-        user.password = this.password;
-        user.picture = this.picture;
-        user.role = this.role;
-        return user;
+    public clone(user:User){
+        this.id = user.id;
+        this.name = user.name;
+        this.password = user.password;
+        this.picture = user.picture;
+        let role = new Role();
+        role.clone(user.role);
+        this.role = role;
     }
 }
