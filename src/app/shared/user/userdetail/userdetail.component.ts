@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, Input, Output, EventEmitter, ViewChild} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalModule } from 'ng2-bootstrap';
 
@@ -25,14 +25,19 @@ export class UserDetailComponent implements OnInit{
     public allRoles: Array<Role> = [];
     public selectedRole: Role = new Role();
 
-    constructor(private userService: UserService, private roleService: RoleService){    }
+    constructor(private changeDetectorRef: ChangeDetectorRef, private userService: UserService, private roleService: RoleService){    }
 
     //重置用户表状态
-    public Reset(): void{
+    public reset(): void{
         if(this.userDetailForm){
             this.userDetailForm.resetForm();
-            this.selectedRole = new Role();
+            this.loadRoles();
+            this.selectedRole = null;
         }
+    }
+
+    public refresh(): void{
+        this.changeDetectorRef.detectChanges();
     }
 
     //改变当前选择角色
@@ -52,9 +57,7 @@ export class UserDetailComponent implements OnInit{
         this.roleService.getAllRoles()
             .then( response => {
                 if(response){
-                    this.allRoles = response;
-                    // this.selectedRole = this.allRoles[0];
-                }
+                    this.allRoles = response;                }
             })
     }
 

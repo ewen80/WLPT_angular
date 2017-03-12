@@ -11,7 +11,9 @@ export class User{
         this.id = user.id;
         this.name = user.name;
         this.password = user.password;
-        this.picture = user.picture;
+        if(user.picture){
+            this.picture = user.picture;
+        }
         let role = new Role();
         role.clone(user.role);
         this.role = role;

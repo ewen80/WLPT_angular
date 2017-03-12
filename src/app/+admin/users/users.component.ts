@@ -60,6 +60,9 @@ export class UsersComponent implements OnInit,  AfterViewInit{
       },
       {
         headerName: '姓名',  field: "name"
+      },
+      {
+        headerName: '角色名', field: 'role.name'
       }
     ];
   }
@@ -87,7 +90,7 @@ export class UsersComponent implements OnInit,  AfterViewInit{
   public addUserModalShow():void{
     this.modalTitle = "添加用户";
     this.userDetail.saveMode = saveMode.add;
-    this.userDetail.Reset();
+    this.userDetail.reset();
     this.userDetail.user = new User();
     this.userDetailModal.show();
   }
@@ -115,7 +118,7 @@ export class UsersComponent implements OnInit,  AfterViewInit{
     });
     //重置对话框
     if(this.userDetail){
-      this.userDetail.Reset();
+      this.userDetail.reset();
     }
     //刷新用户列表
     this.refreshUserList();
@@ -125,14 +128,10 @@ export class UsersComponent implements OnInit,  AfterViewInit{
   public dblClickRow(event){
     this.modalTitle = "编辑用户";
     this.userDetail.saveMode = saveMode.update;
-    this.userDetail.Reset();
-    let selectedUser: User = new User();
-    selectedUser.clone(event.data);
-    this.userDetail.user = selectedUser;
-    // this.userDetail.user = event.data as User;
+    let user: User = new User();
+    user.clone(event.data);
+    this.userDetail.user = user;
     this.userDetailModal.show();
-
-    console.log(selectedUser);
   }
 
   //单击删除按钮
