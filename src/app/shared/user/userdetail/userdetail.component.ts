@@ -27,7 +27,7 @@ export class UserDetailComponent implements OnInit{
 
     constructor(private changeDetectorRef: ChangeDetectorRef, private userService: UserService, private roleService: RoleService){    }
 
-    //重置用户表状态
+    //重置用户表状态11111111111
     public reset(): void{
         if(this.userDetailForm){
             this.userDetailForm.resetForm();
