@@ -24,62 +24,24 @@
           <div>
             <!-- widget content -->
             <div class="widget-body">
-              <form  #userDetailForm="ngForm" novalidate (ngSubmit)="onSubmit()">
-                <fieldset>
-                  <div class="form-group">
-                    <label for="id">用户名：</label>
-                    <div *ngIf="saveMode === 1">
-                      <input name="id" id="id" class="form-control"  type="text" [(ngModel)]="user.id" #id="ngModel"  validateUserid >
-                      <div *ngIf="id.errors && (id.dirty)" class="alert alert-danger">
-                          <div [hidden]="!id.errors.useridEmpty">
-                            用户名不能为空
-                          </div>
-                          <div [hidden]="!id.errors.userExist">
-                            用户名已存在，请尝试其他用户名
-                          </div>
-                      </div>
-                    </div>
-                    <div *ngIf="saveMode != 1">
-                      {{user.id}}
-                    </div>
-                  </div>
-                  <div class="form-group" *ngIf = "saveMode !== 0" >
-                    <label for="password">密码：</label>
-                    <input class="form-control" name="password" id="password" #password="ngModel" [(ngModel)]="user.password"  type="password" required>
-                    <div *ngIf="password.errors && (password.dirty)" class="alert alert-danger">
-                      <div [hidden]="!password.errors.required">
-                        密码不能为空
-                      </div>
-                    </div>
-                  </div>
+              <form [formGroup]="userDetailForm" novalidate>
+                <fieldset>                   
                   <div class="form-group">
                     <label for="name">姓名：</label>
-                    <input class="form-control"  type="text" name="name" id="name" #name="ngModel" [(ngModel)]="user.name"  required>
-                    <div *ngIf="name.errors && (name.dirty)" class="alert alert-danger">
-                      <div [hidden]="!name.errors.required">
-                        姓名不能为空
-                      </div>
-                    </div>
+                    <input class="form-control"  type="text" formControlName="name" id="name">
+                    
                   </div>
-                  <div class="form-group">
-                    <label for="roleId">角色Id：</label>
-                    <select class="form-control" name="roleId" id="roleId" #roleId required [(ngModel)]="user.role.id" (change)="changeRole(roleId.value)">
-                      <option *ngFor="let role of allRoles" [value]="role.id">{{role.id}}</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label>角色名：</label>
-                    <label>{{selectedRole.name || user.role.name}}</label>
-                  </div>
+                 
                 </fieldset>
                 <div *ngIf = "saveMode!==0" class="form-actions">
-                  <button class="btn btn-primary" type="submit" [disabled]="!userDetailForm.form.valid">
+                  <button class="btn btn-primary" type="submit">
                     <i class="fa fa-save"></i>
                     保存
                   </button>
                 </div>
               </form>
-
+              <p>Form value: {{ userDetailForm.value | json }}</p>
+              <p>Form status: {{ userDetailForm.status | json }}</p>
             </div>
             <!-- end widget content -->
 
