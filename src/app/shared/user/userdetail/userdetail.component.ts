@@ -9,6 +9,7 @@ import { RoleService } from '../../../core/role/role.service';
 import { User } from '../../../core/entity/user';
 import { Role } from '../../../core/entity/role';
 import { saveMode } from '../../../enums';
+import { useridValidator } from '../../validators/userid-validatior';
 
 @Component({
     selector: 'user-detail',
@@ -32,6 +33,7 @@ export class UserDetailComponent implements OnInit{
 
     private createForm(){
         this.userDetailForm = this.fb.group({
+            id: ['',,useridValidator(userService)],
             name: ['', Validators.required],
         })
     }
