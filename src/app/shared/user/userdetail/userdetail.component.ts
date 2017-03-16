@@ -9,7 +9,7 @@ import { RoleService } from '../../../core/role/role.service';
 import { User } from '../../../core/entity/user';
 import { Role } from '../../../core/entity/role';
 import { saveMode } from '../../../enums';
-import { useridValidator } from '../../validators/userid-validatior';
+import { UseridValidator } from '../../validators/userid-validator';
 
 @Component({
     selector: 'user-detail',
@@ -31,9 +31,12 @@ export class UserDetailComponent implements OnInit{
         this.createForm();
     }
 
+
+
     private createForm(){
         this.userDetailForm = this.fb.group({
-            id: ['',,useridValidator(userService)],
+            // When you reference a method you lose the object it's attached on. You can force this using the bind method
+            id: ['',,(new UseridValidator(this.userService)).validate.bind(this)],
             name: ['', Validators.required],
         })
     }

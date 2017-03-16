@@ -28,20 +28,11 @@
                 <fieldset>     
                   <div class="form-group">
                     <label for="id">用户名：</label>
-                    <div *ngIf="saveMode === 1">
+                    <div >
                       <input formControlName="id" id="id" class="form-control"  type="text">
-                      <div *ngIf="id.errors && (id.dirty)" class="alert alert-danger">
-                          <div [hidden]="!id.errors.useridEmpty">
-                            用户名不能为空
-                          </div>
-                          <div [hidden]="!id.errors.userExist">
-                            用户名已存在，请尝试其他用户名
-                          </div>
-                      </div>
+                      
                     </div>
-                    <div *ngIf="saveMode != 1">
-                      {{user.id}}
-                    </div>
+                   
                   </div>              
                   <div class="form-group">
                     <label for="name">姓名：</label>
@@ -50,12 +41,7 @@
                   </div>
                  
                 </fieldset>
-                <div *ngIf = "saveMode!==0" class="form-actions">
-                  <button class="btn btn-primary" type="submit">
-                    <i class="fa fa-save"></i>
-                    保存
-                  </button>
-                </div>
+                
               </form>
               <p>Form value: {{ userDetailForm.value | json }}</p>
               <p>Form status: {{ userDetailForm.status | json }}</p>
