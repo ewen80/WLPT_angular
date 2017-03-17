@@ -50,7 +50,7 @@
           <h4 class="modal-title">{{modalTitle}}</h4>
         </div>
         <div class="modal-body">
-          <user-detail #userDetail  (onSaveFinished)="saveFinished($event)"></user-detail>
+          <user-detail #userDetail [user]="selectedUser" [saveMode]="userSaveMode"  (onSaveFinished)="saveFinished($event)"></user-detail>
         </div>
         
       </div>

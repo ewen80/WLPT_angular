@@ -15,7 +15,8 @@ declare var $: any;
 })
 export class UsersComponent implements OnInit,  AfterViewInit{
 
-  public userSaveMode = saveMode;//对话框保存模式（更新，新增)
+  public userSaveMode: saveMode;//对话框保存模式（更新，新增)
+  public selectedUser: User = new User(); //当前用户
 
   public gridOptions:GridOptions;
   public columnDefs:any[];
@@ -89,9 +90,7 @@ export class UsersComponent implements OnInit,  AfterViewInit{
 
   public addUserModalShow():void{
     this.modalTitle = "添加用户";
-    this.userDetail.saveMode = saveMode.add;
-    this.userDetail.reset();
-    this.userDetail.user = new User();
+    this.userSaveMode = saveMode.add;
     this.userDetailModal.show();
   }
 
@@ -118,7 +117,7 @@ export class UsersComponent implements OnInit,  AfterViewInit{
     });
     //重置对话框
     if(this.userDetail){
-      this.userDetail.reset();
+      this.userDetail.reset(new User());
     }
     //刷新用户列表
     this.refreshUserList();
@@ -127,10 +126,8 @@ export class UsersComponent implements OnInit,  AfterViewInit{
   //双击用户列表行事件
   public dblClickRow(event){
     this.modalTitle = "编辑用户";
-    this.userDetail.saveMode = saveMode.update;
-    let user: User = new User();
-    user.clone(event.data);
-    this.userDetail.user = user;
+    this.userSaveMode = saveMode.update;
+    this.selectedUser = event.data as User;
     this.userDetailModal.show();
   }
 

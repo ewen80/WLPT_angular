@@ -24,14 +24,27 @@
           <div>
             <!-- widget content -->
             <div class="widget-body">
-              <form [formGroup]="userDetailForm" novalidate>
-                <fieldset>     
-                  <div *ngIf="saveMode === 1">
-                      <input formControlName="id" id="id" class="form-control"  type="text">
-                      <div *ngIf="formErrors.id" class="alert alert-danger">
-                         {{ formErrors.id }}
-                      </div>
-                    </div>              
+              <form [formGroup]="userDetailForm" (ngSubmit)="onSubmit()" novalidate>
+                <fieldset>  
+                  <div class="form-group">  
+                    <label for="id">用户名：</label> 
+                    <div *ngIf="saveMode === 1">
+                        <input formControlName="id" id="id" class="form-control"  type="text">
+                        <div *ngIf="formErrors.id" class="alert alert-danger">
+                          {{ formErrors.id }}
+                        </div>
+                    </div> 
+                    <div *ngIf="user && saveMode != 1">
+                        {{user.id}}
+                    </div> 
+                  </div>            
+                  <div class="form-group" *ngIf = "saveMode !== 0" >
+                    <label for="password">密码：</label>
+                    <input class="form-control" formControlName="password" id="password"   type="password">
+                    <div *ngIf="formErrors.password" class="alert alert-danger">
+                      {{ formErrors.password }}
+                    </div>
+                  </div>
                   <div class="form-group">
                     <label for="name">姓名：</label>
                     <input class="form-control"  type="text" formControlName="name" id="name">
@@ -39,12 +52,26 @@
                       {{ formErrors.name }}
                     </div>  
                   </div>
-                 
+                  <div class="form-group">
+                    <label for="roleId">角色Id：</label>
+                    <select class="form-control" formControlName="roleId" id="roleId" (change)="changeRole()" >
+                      <option *ngFor="let role of allRoles" [value]="role.id">{{role.id}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>角色名：</label>
+                    <label *ngIf="selectedRole">{{ selectedRole.name }}</label>
+                  </div>
+                  <div *ngIf = "saveMode!==0" class="form-actions">
+                    <button class="btn btn-primary" type="submit" [disabled]="!userDetailForm.valid">
+                    <i class="fa fa-save"></i>
+                    保存
+                    </button>
+                  </div>
                 </fieldset>
                 
               </form>
-              <p>Form value: {{ userDetailForm.value | json }}</p>
-              <p>Form status: {{ userDetailForm.status | json }}</p>
+              
             </div>
             <!-- end widget content -->
 
