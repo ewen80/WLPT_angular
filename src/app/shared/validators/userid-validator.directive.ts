@@ -19,10 +19,7 @@ export function validateUseridFactory(userid: string,userService: UserService):P
                    resolve(null);
                }
            });
-       }else{
-           //fixbug001:userid如果是空的也认为是无效的（解决和 required 同步验证bug问题）
-           resolve( {'useridEmpty': true});
-       }
+         }
     })
 }
 

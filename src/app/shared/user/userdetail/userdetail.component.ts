@@ -33,13 +33,51 @@ export class UserDetailComponent implements OnInit{
 
 
 
-    private createForm(){
+    private createForm():void{
         this.userDetailForm = this.fb.group({
             // When you reference a method you lose the object it's attached on. You can force this using the bind method
             id: ['',,(new UseridValidator(this.userService)).validate.bind(this)],
             name: ['', Validators.required],
-        })
+        });
+        this.userDetailForm.valueChanges.subscribe(data => this.onValueChanged(data));
+        this.onValueChanged();
     }
+
+    //form中字段发生变化
+    onValueChanged(data?: any){
+        if(!this.userDetailForm) { return; }
+        const form = this.userDetailForm;
+
+        for(const field in this.formErrors){
+            //清除之前的错误信息
+            this.formErrors[field] = '';
+            const control = form.get(field);
+
+            if(control && control.dirty && !control.valid){
+                const messages = this.validationMessages[field];
+                for(const key in control.errors){
+                    this.formErrors[field] += messages[key] + '';
+                }
+            }
+            
+        }
+        
+    }
+
+    formErrors = {
+        'id': '',
+        'name': ''
+    }
+
+    validationMessages = {
+        'id': {
+            'required': '该字段不能为空',
+            'userExist': 'id已经存在'
+        },
+        'name': {
+            'required': '姓名不能为空'
+        }
+    };
 
     //重置用户表状态
     public reset(): void{
