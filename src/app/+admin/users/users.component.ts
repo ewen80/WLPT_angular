@@ -98,9 +98,7 @@ export class UsersComponent implements OnInit,  AfterViewInit{
   public saveFinished(event:any){
     //关闭对话框
     this.userDetailModal.hide();
-    //提示保存成功或失败
-    let boxTitle: string;
-    let boxColor: string;
+    let boxTitle:string,boxColor:string;
     if(event.sucess){
       boxTitle = "提示";
       boxColor = "#296191";
@@ -108,19 +106,24 @@ export class UsersComponent implements OnInit,  AfterViewInit{
       boxTitle = "错误";
       boxColor = "#c00";
     }
-    $.smallBox({
-      title: boxTitle,
-      content: event.message,
-      color: boxColor,
-      iconSmall: "fa fa-info",
-      timeout: 4000
-    });
+    this.showHint(boxTitle, boxColor, event.message);
     //重置对话框
     if(this.userDetail){
       this.userDetail.reset(new User());
     }
     //刷新用户列表
     this.refreshUserList();
+  }
+
+  //弹出提示框
+  private showHint(boxTitle, boxColor, message){
+    $.smallBox({
+      title: boxTitle,
+      content: message,
+      color: boxColor,
+      iconSmall: "fa fa-info",
+      timeout: 4000
+    });
   }
 
   //双击用户列表行事件

@@ -35,8 +35,9 @@ export class MyErrorHandler extends ErrorHandler {
                     handled = true;
                     this.authenticationService.redirectUrl = error.rejection._body ? JSON.parse(error.rejection._body).path : '';
                     this.gotoLogin();
-                   
                     break;
+                case 500:
+                    handled = true;
             }
         }
 

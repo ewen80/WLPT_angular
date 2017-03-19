@@ -1,0 +1,65 @@
+         <!--Widget ID (each widget will need unique ID)-->
+        <sa-widget  [colorbutton]="false" 
+                    [editbutton]="false" 
+                    [deletebutton]="false"
+                    [fullscreenbutton]="false">
+          <!-- widget options:
+          usage: <sa-widget [editbutton]="false">
+
+          [colorbutton]="false"
+          [editbutton]="false"
+          [togglebutton]="false"
+          [deletebutton]="false"
+          [fullscreenbutton]="false"
+          [custombutton]="false"
+          [collapsed]="true"
+          [sortable]="false"
+
+          -->
+          <header>
+            <span class="widget-icon"> <i class="fa fa-user"></i> </span>
+            <h2>资源信息</h2>
+          </header>
+          <!-- widget div-->
+          <div>
+            <!-- widget content -->
+            <div class="widget-body">
+              <form [formGroup]="resourceDetailForm" (ngSubmit)="onSubmit()" novalidate>
+                <fieldset>  
+                  <div class="form-group">  
+                    <label for="id">资源名：</label> 
+                    <div *ngIf="saveMode === 1">
+                        <input formControlName="name" id="name" class="form-control"  type="text">
+                        <div *ngIf="formErrors.name" class="alert alert-danger">
+                          {{ formErrors.name }}
+                        </div>
+                    </div> 
+                    <div *ngIf="user && saveMode != 1">
+                        {{user.id}}
+                    </div> 
+                  </div>         
+                  <div class="form-group">
+                    <label for="name">类全限定名：</label>
+                    <input class="form-control"  type="text" formControlName="className" id="name">
+                    <div *ngIf="formErrors.className" class="alert alert-danger">
+                      {{ formErrors.name }}
+                    </div>  
+                  </div>
+                  <div *ngIf = "saveMode!==0" class="form-actions">
+                    <button class="btn btn-primary" type="submit" [disabled]="!resourceDetailForm.valid">
+                    <i class="fa fa-save"></i>
+                    保存
+                    </button>
+                  </div>
+                </fieldset>
+                
+              </form>
+              
+            </div>
+            <!-- end widget content -->
+
+          </div>
+          <!-- end widget div -->
+
+        </sa-widget>
+        <!-- end widget -->

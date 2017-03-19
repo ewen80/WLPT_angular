@@ -8,11 +8,11 @@ export const adminRoutes: Routes = [
         path: '',
         children:[
             {
-                path: 'users',component: UsersComponent
+                path: 'users', component: UsersComponent
             },
             {
-                path: 'roles',component: RolesComponent
-            }
+                path: 'roles', component: RolesComponent
+            },
         ]
         
     }

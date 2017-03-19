@@ -4,7 +4,7 @@ import { ModalModule } from 'ng2-bootstrap';
 
 
 
-import { RoleService } from '../../../core/role/role.service';
+import { RoleService } from '../../../core/services/role.service';
 import { Role } from '../../../core/entity/role';
 import { saveMode } from '../../../enums';
 

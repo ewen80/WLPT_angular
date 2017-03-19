@@ -2,14 +2,9 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges } 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalModule } from 'ng2-bootstrap';
 
-
-
-import { UserService } from '../../../core/services/user.service';
 import { RoleService } from '../../../core/services/role.service';
-import { User } from '../../../core/entity/user';
 import { Role } from '../../../core/entity/role';
 import { saveMode } from '../../../enums';
-import { UseridValidator } from '../../validators/userid-validator';
 
 @Component({
     selector: 'user-detail',

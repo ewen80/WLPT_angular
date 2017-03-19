@@ -1,17 +1,13 @@
 
 /*
   created by wenliang
-  角色管理页面组建
-  TODO: 打开对话框编辑框自动获得焦点
+  资源管理页面组建
 */
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 
 import {GridOptions} from 'ag-grid/main';
 
-import { RoleService } from '../../core/role/role.service';
-import { saveMode } from '../../enums';
-import { Role } from '../../core/entity/role';
-
+import { RoleService } from '../../core/services/role.service';
 
 declare var $: any;
 

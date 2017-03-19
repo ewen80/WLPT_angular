@@ -34,9 +34,9 @@ export class RoleService {
 
   //获取所有角色信息
   getAllRoles(): Promise<Role[]>{
-    return this.http.get(this.serverUrl+"/roles/all")
+      return this.http.get(this.serverUrl+"/roles/all")
             .toPromise()
-            .then( response => response.json() );
+            .then( response => response.json());
   }
 
   //获取角色通过角色名称
@@ -69,7 +69,7 @@ export class RoleService {
                       .catch(this.handleError);
   }
 
-  //删除角色
+  //删除角色(如果角色下面有用户则不允许删除)
   deleteRoles(roles:Role[]): Promise<{sucess:boolean,message:string}>{
     let ids = "";
     for(let i=0;i<roles.length;i++){
