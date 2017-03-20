@@ -26,22 +26,31 @@
             <div class="widget-body">
               <form [formGroup]="resourceDetailForm" (ngSubmit)="onSubmit()" novalidate>
                 <fieldset>  
+                  <div class="form-group">
+                    <label for="className">类全限定名：</label>
+                    <input class="form-control"  type="text" formControlName="className" id="className">
+                    <div *ngIf="formErrors.className" class="alert alert-danger">
+                      {{ formErrors.className }}
+                    </div>  
+                  </div>
                   <div class="form-group">  
-                    <label for="id">资源类型名：</label> 
+                    <label for="name">资源类型名：</label> 
                     <div>
                         <input formControlName="name" id="name" class="form-control"  type="text">
                         <div *ngIf="formErrors.name" class="alert alert-danger">
                           {{ formErrors.name }}
                         </div>
                     </div> 
-                  </div>         
-                  <div class="form-group">
-                    <label for="name">类全限定名：</label>
-                    <input class="form-control"  type="text" formControlName="className" id="name">
-                    <div *ngIf="formErrors.className" class="alert alert-danger">
-                      {{ formErrors.name }}
-                    </div>  
-                  </div>
+                  </div>  
+                  <div class="form-group">  
+                    <label for="description">资源描述：</label> 
+                    <div>
+                        <input formControlName="description" id="description" class="form-control"  type="text">
+                        <div *ngIf="formErrors.description" class="alert alert-danger">
+                          {{ formErrors.description }}
+                        </div>
+                    </div> 
+                  </div>  
                   <div *ngIf = "saveMode!==0" class="form-actions">
                     <button class="btn btn-primary" type="submit" [disabled]="!resourceDetailForm.valid">
                     <i class="fa fa-save"></i>

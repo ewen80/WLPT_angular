@@ -8,8 +8,9 @@ import { Http, HttpModule, BaseRequestOptions } from "@angular/http";
 
 import { fakeBackendProvider } from "../test/_service/fake_backend";
 import { AuthenticationGuard, AuthenticationService } from './user/authentication/index';
-import { UserService } from './user/user.service';
-import { RoleService } from './role/role.service';
+import { UserService } from './services/user.service';
+import { RoleService } from './services/role.service';
+import { ResourceService } from './services/resource.service';
 import { MyErrorHandler } from './my-error-handler';
 import { AppConfigService } from './app-config.service';
 import { BasicAuthenticationHttp } from './basic-authentication-http.service';
@@ -28,6 +29,7 @@ import { BasicAuthenticationHttp } from './basic-authentication-http.service';
         AuthenticationService,
         UserService,
         RoleService,
+        ResourceService,
         AppConfigService,
         BasicAuthenticationHttp,
         {provide:ErrorHandler,useClass:MyErrorHandler}

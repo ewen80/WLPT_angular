@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 
-import {UserService} from "../../../core/user/user.service";
+import {UserService} from "../../../core/services/user.service";
 import {LayoutService} from "../../../shared/layout/layout.service";
 import { User } from "../../../core/entity/user";
 import { AppConfigService } from '../../../core/app-config.service';

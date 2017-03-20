@@ -28,6 +28,7 @@ import {UtilsModule} from "./utils/utils.module";
 // import {SmartProgressbarModule} from "./ui/smart-progressbar/smart-progressbar.module";
 //import { SmartadminDatatableModule } from './ui/datatable/smartadmin-datatable.module';
 
+import { ResourceModule } from './resources/resourcedetail/resource.module';
 // ag-grid
 import {AgGridModule} from "ag-grid-ng2/main";
 
@@ -36,9 +37,10 @@ import {AgGridModule} from "ag-grid-ng2/main";
     CommonModule, FormsModule, RouterModule,
     //HttpModule,
     AgGridModule.withComponents([]),
-    UserModule
+    UserModule,
+    ResourceModule,
   ],
-  declarations: [],
+  declarations: [  ],
   exports: [
     CommonModule, FormsModule, RouterModule,
     //HttpModule,
@@ -50,7 +52,7 @@ import {AgGridModule} from "ag-grid-ng2/main";
     SmartadminWidgetsModule,
     AgGridModule,
     UserModule,
-
+    ResourceModule,
     // SmartadminFormsModule
     // ModalModule,
     // ButtonsModule,

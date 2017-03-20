@@ -4,23 +4,21 @@ import { Http, Response } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { ResourceType } from '../entity/resourcetype';
+import { Resource } from '../entity/resource';
 import { AppConfigService } from '../app-config.service';
 import { BasicAuthenticationHttp } from '../basic-authentication-http.service';
 
 @Injectable()
-export class ResourceListService {
+export class ResourceService {
 
-  public id:number;
-
-  private serverUrl: string = this.appConfig.setting.Server.Url + "/resourcelist";
+  private serverUrl: string = this.appConfig.setting.Server.Url + "/resourcetype";
   
   constructor(private http:BasicAuthenticationHttp, private appConfig:AppConfigService){
-    console.log('ResourceListService created');
+    console.log('ResourceService created');
   }
 
   //获取信息（分页）
-  getResourceListWithPage(pageIndex:number,pageSize:number): Promise<{rows:ResourceType[],rowCount:number}>{
+  getResourceListWithPage(pageIndex:number,pageSize:number): Promise<{rows:Resource[],rowCount:number}>{
         return this.http.get(this.serverUrl+'?pageIndex='+pageIndex.toString()+"&pageSize="+pageSize.toString())
                       .toPromise()
                       .then( response => {
@@ -33,28 +31,13 @@ export class ResourceListService {
   }
 
   //获取角色信息
-  getResourceType(id: number): Promise<ResourceType>{
-    return this.http.get(this.serverUrl+'/'+id)
+  getResource(className: string): Promise<Resource>{
+    return this.http.get(this.serverUrl+'/'+className)
                       .toPromise()
                       .then( response => {
                         //如果找不到，服务器端返回body为空转换json会报错
                         try{
-                          return response.json() as ResourceType
-                        }catch(err){
-                          return null;
-                        }
-                      })
-                      .catch(this.handleError);
-  }
-
-  //通过资源名查找资源类型
-  getResourceTypesByName(name: string): Promise<ResourceType>{
-    return this.http.get(this.serverUrl+'?name='+name)
-                      .toPromise()
-                      .then( response => {
-                        //如果找不到，服务器端返回body为空转换json会报错
-                        try{
-                          return response.json() as ResourceType
+                          return response.json() as Resource
                         }catch(err){
                           return null;
                         }
@@ -63,21 +46,21 @@ export class ResourceListService {
   }
 
   //保存
-  saveResourceType(resourceType:ResourceType): Promise<{sucess:boolean,message:string}>{
-    return this.http.post(this.serverUrl,JSON.stringify(resourceType))
+  save(resource:Resource): Promise<{sucess:boolean,message:string}>{
+    return this.http.post(this.serverUrl,JSON.stringify(resource))
                       .toPromise()
                       .then( response => response.json())
                       .catch(this.handleError);
   }
 
   //删除
-  deleteResourceTypes(resourceTypes:ResourceType[]): Promise<{sucess:boolean,message:string}>{
-    let ids = "";
-    for(let i=0;i<resourceTypes.length;i++){
-      ids += resourceTypes[i].id + ',';
+  delete(resources:Resource[]): Promise<{sucess:boolean,message:string}>{
+    let classNames = "";
+    for(let i=0;i<resources.length;i++){
+      classNames += resources[i].className + ',';
     }
-    ids = ids.substring(0,ids.length-1);
-    return this.http.delete(this.serverUrl+ids)
+    classNames = classNames.substring(0,classNames.length-1);
+    return this.http.delete(this.serverUrl+"/"+classNames)
                     .toPromise()
                     // .then(response => response.json())
                     .catch(this.handleError);

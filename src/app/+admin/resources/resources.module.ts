@@ -7,7 +7,7 @@ import {
 
 import { SmartadminModule } from '../../shared/smartadmin.module';
 
-import { ResourceTypeComponent } from './resources.component';
+import { ResourceComponent } from './resources.component';
 
 @NgModule({
   imports: [
@@ -17,6 +17,6 @@ import { ResourceTypeComponent } from './resources.component';
     ModalModule
 
   ],
-  declarations: [ ResourceTypeComponent ]
+  declarations: [ ResourceComponent ]
 })
-export class RolesModule { }
+export class ResourceModule { }

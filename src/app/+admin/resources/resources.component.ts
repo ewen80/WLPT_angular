@@ -7,17 +7,17 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 
 import {GridOptions} from 'ag-grid/main';
 
-import { ResourceListService } from '../../core/services/resourcelist.service';
-import { ResourceType } from '../../core/entity/resourcetype';
+import { ResourceService } from '../../core/services/resource.service';
+import { Resource } from '../../core/entity/resource';
 import { saveMode } from '../../enums';
 
 declare var $: any;
 
 @Component({
-  selector: 'rolesadmin',
-  templateUrl: './roles.component.html'
+  selector: 'resoucesadmin',
+  templateUrl: './resources.component.html'
 })
-export class ResourceTypeComponent implements OnInit,  AfterViewInit{
+export class ResourceComponent implements OnInit,  AfterViewInit{
 
   public saveMode = saveMode;//对话框保存模式（更新，新增)
 
@@ -34,7 +34,7 @@ export class ResourceTypeComponent implements OnInit,  AfterViewInit{
   private startRow = 0;
 
 
-  constructor(private resourceListService:ResourceListService) { 
+  constructor(private resourceService:ResourceService) { 
     // console.log('users.components created:'+userService);
   }
 
@@ -64,6 +64,9 @@ export class ResourceTypeComponent implements OnInit,  AfterViewInit{
       },
       {
         headerName:'类全限定名', field: "className"
+      },
+      {
+        headerName:'描述', field: "description"
       }
     ];
   }
@@ -77,7 +80,7 @@ export class ResourceTypeComponent implements OnInit,  AfterViewInit{
     let dataSource = {
       getRows:(params: any) => {
         let pageIndex = Math.floor(params.startRow / this.gridOptions.paginationPageSize);
-        this.resourceListService.getResourceListWithPage(pageIndex,this.gridOptions.paginationPageSize)
+        this.resourceService.getResourceListWithPage(pageIndex,this.gridOptions.paginationPageSize)
           .then( data => {
             params.successCallback(data.rows, data.rowCount);
           });
@@ -87,14 +90,6 @@ export class ResourceTypeComponent implements OnInit,  AfterViewInit{
     }
     this.gridOptions.api.setDatasource(dataSource);
   } 
-
-  public addRoleModalShow():void{
-    this.modalTitle = "添加资源类型";
-    this.resourceDetail.saveMode = saveMode.add;
-    this.resourceDetail.Reset();
-    this.resourceDetail.resourceType = new ResourceType();
-    this.resourceDetailModal.show();
-  }
 
   //保存结束
   public saveFinished(event:any){
@@ -119,17 +114,24 @@ export class ResourceTypeComponent implements OnInit,  AfterViewInit{
     });
     //重置对话框
     if(this.resourceDetail){
-      this.resourceDetail.Reset();
+      this.resourceDetail.reset(new Resource());
     }
-    //刷新角色列表
-    this.refreshRoleList();
+    //刷新列表
+    this.refreshResourceList();
+  }
+
+  //新增资源
+  public addResourceModalShow():void{
+    this.modalTitle = "添加资源类型";
+    this.resourceDetail.saveMode = saveMode.add;
+    this.resourceDetailModal.show();
   }
 
   //双击角色列表行事件
   public dblClickRow(event){
     this.modalTitle = "编辑资源类型";
     this.resourceDetail.saveMode = saveMode.update;
-    this.resourceDetail.resourceType = event.data as ResourceType;
+    this.resourceDetail.resourceType = event.data as Resource;
     this.resourceDetailModal.show();
   }
 
@@ -137,8 +139,8 @@ export class ResourceTypeComponent implements OnInit,  AfterViewInit{
   public deleteButtonClick(){
     var selectedRows = this.gridOptions.api.getSelectedRows();
     if(confirm("确认删除选中的"+selectedRows.length.toString()+"条记录吗？")){
-      this.resourceListService.deleteResourceTypes(selectedRows)
-        .then(() => this.refreshRoleList())
+      this.resourceService.delete(selectedRows)
+        .then(() => this.refreshResourceList())
         .catch((reason) => $.SmartMessageBox({
 					title : "出现错误",
 					content : JSON.parse(reason.text()).message,
@@ -148,7 +150,7 @@ export class ResourceTypeComponent implements OnInit,  AfterViewInit{
   }
 
   //刷新角色列表
-  private refreshRoleList(){
+  private refreshResourceList(){
     this.setDataSource();
   }
 
