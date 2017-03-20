@@ -1,13 +1,15 @@
 
 /*
   created by wenliang
-  资源管理页面组建
+  资源管理页面
 */
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 
 import {GridOptions} from 'ag-grid/main';
 
-import { RoleService } from '../../core/services/role.service';
+import { ResourceListService } from '../../core/services/resourcelist.service';
+import { ResourceType } from '../../core/entity/resourcetype';
+import { saveMode } from '../../enums';
 
 declare var $: any;
 
@@ -15,24 +17,24 @@ declare var $: any;
   selector: 'rolesadmin',
   templateUrl: './roles.component.html'
 })
-export class RolesComponent implements OnInit,  AfterViewInit{
+export class ResourceTypeComponent implements OnInit,  AfterViewInit{
 
-  public roleSaveMode = saveMode;//对话框保存模式（更新，新增)
+  public saveMode = saveMode;//对话框保存模式（更新，新增)
 
   public gridOptions:GridOptions;
   public columnDefs:any[];
   public rowData:any[];
 
-  @ViewChild("roleDetailModal") private roleDetailModal;
-  @ViewChild("roleDetail") private roleDetail;
+  @ViewChild("resourceDetailModal") private resourceDetailModal;
+  @ViewChild("resourceDetail") private resourceDetail;
   
   public modalTitle: string;
-  public delRolesButtonDisabled = true;
+  public delButtonDisabled = true;
 
   private startRow = 0;
 
 
-  constructor(private roleService:RoleService) { 
+  constructor(private resourceListService:ResourceListService) { 
     // console.log('users.components created:'+userService);
   }
 
@@ -58,10 +60,10 @@ export class RolesComponent implements OnInit,  AfterViewInit{
         } 
       },
       {
-        headerName: '角色Id', field: "id"
+        headerName: '资源类型名',  field: "name"
       },
       {
-        headerName: '角色名',  field: "name"
+        headerName:'类全限定名', field: "className"
       }
     ];
   }
@@ -75,7 +77,7 @@ export class RolesComponent implements OnInit,  AfterViewInit{
     let dataSource = {
       getRows:(params: any) => {
         let pageIndex = Math.floor(params.startRow / this.gridOptions.paginationPageSize);
-        this.roleService.getRolesWithPage(pageIndex,this.gridOptions.paginationPageSize)
+        this.resourceListService.getResourceListWithPage(pageIndex,this.gridOptions.paginationPageSize)
           .then( data => {
             params.successCallback(data.rows, data.rowCount);
           });
@@ -87,17 +89,17 @@ export class RolesComponent implements OnInit,  AfterViewInit{
   } 
 
   public addRoleModalShow():void{
-    this.modalTitle = "添加角色";
-    this.roleDetail.saveMode = saveMode.add;
-    this.roleDetail.Reset();
-    this.roleDetail.role = new Role();
-    this.roleDetailModal.show();
+    this.modalTitle = "添加资源类型";
+    this.resourceDetail.saveMode = saveMode.add;
+    this.resourceDetail.Reset();
+    this.resourceDetail.resourceType = new ResourceType();
+    this.resourceDetailModal.show();
   }
 
   //保存结束
   public saveFinished(event:any){
     //关闭对话框
-    this.roleDetailModal.hide();
+    this.resourceDetailModal.hide();
     //提示保存成功或失败
     let boxTitle: string;
     let boxColor: string;
@@ -116,8 +118,8 @@ export class RolesComponent implements OnInit,  AfterViewInit{
       timeout: 4000
     });
     //重置对话框
-    if(this.roleDetail){
-      this.roleDetail.Reset();
+    if(this.resourceDetail){
+      this.resourceDetail.Reset();
     }
     //刷新角色列表
     this.refreshRoleList();
@@ -125,17 +127,17 @@ export class RolesComponent implements OnInit,  AfterViewInit{
 
   //双击角色列表行事件
   public dblClickRow(event){
-    this.modalTitle = "编辑用户";
-    this.roleDetail.saveMode = saveMode.update;
-    this.roleDetail.role = event.data as Role;
-    this.roleDetailModal.show();
+    this.modalTitle = "编辑资源类型";
+    this.resourceDetail.saveMode = saveMode.update;
+    this.resourceDetail.resourceType = event.data as ResourceType;
+    this.resourceDetailModal.show();
   }
 
   //单击删除按钮
   public deleteButtonClick(){
     var selectedRows = this.gridOptions.api.getSelectedRows();
     if(confirm("确认删除选中的"+selectedRows.length.toString()+"条记录吗？")){
-      this.roleService.deleteRoles(selectedRows)
+      this.resourceListService.deleteResourceTypes(selectedRows)
         .then(() => this.refreshRoleList())
         .catch((reason) => $.SmartMessageBox({
 					title : "出现错误",
@@ -152,9 +154,9 @@ export class RolesComponent implements OnInit,  AfterViewInit{
 
   setDelButtonStatus(){
     if(this.gridOptions.api.getSelectedRows().length > 0){
-      this.delRolesButtonDisabled = false;
+      this.delButtonDisabled = false;
     }else{
-      this.delRolesButtonDisabled = true;
+      this.delButtonDisabled = true;
     }
     
   }

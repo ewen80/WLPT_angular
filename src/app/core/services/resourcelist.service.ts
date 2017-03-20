@@ -4,23 +4,23 @@ import { Http, Response } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { ResourceType } from '../entity/resource-type';
+import { ResourceType } from '../entity/resourcetype';
 import { AppConfigService } from '../app-config.service';
 import { BasicAuthenticationHttp } from '../basic-authentication-http.service';
 
 @Injectable()
-export class ResourceService {
+export class ResourceListService {
 
   public id:number;
 
   private serverUrl: string = this.appConfig.setting.Server.Url + "/resourcelist";
   
   constructor(private http:BasicAuthenticationHttp, private appConfig:AppConfigService){
-    console.log('RoleService created');
+    console.log('ResourceListService created');
   }
 
   //获取信息（分页）
-  getResourceTypesWithPage(pageIndex:number,pageSize:number): Promise<{rows:ResourceType[],rowCount:number}>{
+  getResourceListWithPage(pageIndex:number,pageSize:number): Promise<{rows:ResourceType[],rowCount:number}>{
         return this.http.get(this.serverUrl+'?pageIndex='+pageIndex.toString()+"&pageSize="+pageSize.toString())
                       .toPromise()
                       .then( response => {
@@ -35,6 +35,21 @@ export class ResourceService {
   //获取角色信息
   getResourceType(id: number): Promise<ResourceType>{
     return this.http.get(this.serverUrl+'/'+id)
+                      .toPromise()
+                      .then( response => {
+                        //如果找不到，服务器端返回body为空转换json会报错
+                        try{
+                          return response.json() as ResourceType
+                        }catch(err){
+                          return null;
+                        }
+                      })
+                      .catch(this.handleError);
+  }
+
+  //通过资源名查找资源类型
+  getResourceTypesByName(name: string): Promise<ResourceType>{
+    return this.http.get(this.serverUrl+'?name='+name)
                       .toPromise()
                       .then( response => {
                         //如果找不到，服务器端返回body为空转换json会报错

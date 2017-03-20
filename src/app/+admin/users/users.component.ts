@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 
 import {GridOptions} from 'ag-grid/main';
 
-import { UserService } from '../../core/user/user.service';
+import { UserService } from '../../core/services/user.service';
 import { saveMode } from '../../enums';
 import { User } from '../../core/entity/user';
 

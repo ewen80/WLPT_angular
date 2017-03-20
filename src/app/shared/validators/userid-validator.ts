@@ -4,8 +4,9 @@
  */
 import { AbstractControl } from '@angular/forms';
 
-import { UserService } from '../../core/user/user.service';
+import { UserService } from '../../core/services/user.service';
 import { validateUseridFactory } from './userid-validator.directive';
+
 
 export class UseridValidator{
 

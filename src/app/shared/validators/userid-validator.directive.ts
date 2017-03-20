@@ -1,7 +1,7 @@
 import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { NG_ASYNC_VALIDATORS, FormControl, ValidatorFn, AbstractControl, Validator, Validators } from '@angular/forms';
 
-import { UserService } from '../../core/user/user.service';
+import { UserService } from '../../core/services/user.service';
 
 /**
  * useridValidator工厂函数 

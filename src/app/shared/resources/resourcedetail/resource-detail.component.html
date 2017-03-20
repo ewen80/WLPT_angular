@@ -18,7 +18,7 @@
           -->
           <header>
             <span class="widget-icon"> <i class="fa fa-user"></i> </span>
-            <h2>资源信息</h2>
+            <h2>资源类型信息</h2>
           </header>
           <!-- widget div-->
           <div>
@@ -27,15 +27,12 @@
               <form [formGroup]="resourceDetailForm" (ngSubmit)="onSubmit()" novalidate>
                 <fieldset>  
                   <div class="form-group">  
-                    <label for="id">资源名：</label> 
-                    <div *ngIf="saveMode === 1">
+                    <label for="id">资源类型名：</label> 
+                    <div>
                         <input formControlName="name" id="name" class="form-control"  type="text">
                         <div *ngIf="formErrors.name" class="alert alert-danger">
                           {{ formErrors.name }}
                         </div>
-                    </div> 
-                    <div *ngIf="user && saveMode != 1">
-                        {{user.id}}
                     </div> 
                   </div>         
                   <div class="form-group">
