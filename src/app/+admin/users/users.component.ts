@@ -91,6 +91,7 @@ export class UsersComponent implements OnInit,  AfterViewInit{
   public addUserModalShow():void{
     this.modalTitle = "添加用户";
     this.userSaveMode = saveMode.add;
+    this.selectedUser = new User();
     this.userDetailModal.show();
   }
 

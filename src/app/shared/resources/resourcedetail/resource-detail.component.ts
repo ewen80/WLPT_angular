@@ -25,9 +25,10 @@ export class ResourceDetailComponent implements OnChanges {
     private createForm():void{
         this.resourceDetailForm = this.fb.group({
             // When you reference a method you lose the object it's attached on. You can force this using the bind method
-            name: ['',Validators.required,(new ResourceClassNameValidator(this.resourceService)).validate.bind(this)],
-            className: ['',Validators.required],
-            description: ['']
+            name: ['',Validators.required],
+            className: ['',Validators.required,(new ResourceClassNameValidator(this.resourceService)).validate.bind(this)],
+            description: [''],
+            deleted: ['false']
         });
         this.resourceDetailForm.valueChanges.subscribe(data => this.onValueChanged(data));
         this.resourceDetailForm.statusChanges.subscribe(status => this.onValidatorStatusChanged(status));
@@ -73,7 +74,8 @@ export class ResourceDetailComponent implements OnChanges {
             'required': '资源名不能为空'
         },
         'className':{
-            'required': '全限定名不能为空'
+            'required': '全限定名不能为空',
+            'resourceExist': '全限定名不能重复'
         }
     };
 
@@ -85,8 +87,16 @@ export class ResourceDetailComponent implements OnChanges {
         this.resourceDetailForm.reset({
             name: this.resource.name,
             className: this.resource.className,
-            description: this.resource.description
+            description: this.resource.description,
+            deleted: String(this.resource.deleted)
         });
+
+        const idControl = this.resourceDetailForm.get('className');
+        if(this.saveMode === saveMode.add){
+            idControl.enable();
+        }else{
+            idControl.disable();
+        }
     }
 
     //@Input属性发生变化
@@ -119,8 +129,13 @@ export class ResourceDetailComponent implements OnChanges {
         const saveResource: Resource = {
             name: formModel.name,
             className: formModel.className,
-            description: formModel.description
+            description: formModel.description,
+            deleted: formModel.deleted
         };
+
+        if(this.saveMode !== saveMode.add){
+            saveResource.className = this.resource.className;
+        }
 
         return saveResource;
     }

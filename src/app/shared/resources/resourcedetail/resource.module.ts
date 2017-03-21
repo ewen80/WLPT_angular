@@ -4,7 +4,7 @@ import { ReactiveFormsModule  } from "@angular/forms";
 
 import { SmartadminWidgetsModule } from '../../widgets/smartadmin-widgets.module';
 
-import { ResourceDetailComponent } from './resourcedetail.component';
+import { ResourceDetailComponent } from './resource-detail.component';
 
 
 @NgModule({

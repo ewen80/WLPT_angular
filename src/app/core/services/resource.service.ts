@@ -18,7 +18,7 @@ export class ResourceService {
   }
 
   //获取信息（分页）
-  getResourceListWithPage(pageIndex:number,pageSize:number): Promise<{rows:Resource[],rowCount:number}>{
+  getResourcesWithPage(pageIndex:number,pageSize:number): Promise<{rows:Resource[],rowCount:number}>{
         return this.http.get(this.serverUrl+'?pageIndex='+pageIndex.toString()+"&pageSize="+pageSize.toString())
                       .toPromise()
                       .then( response => {

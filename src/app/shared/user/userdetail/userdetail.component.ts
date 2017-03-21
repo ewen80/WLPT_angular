@@ -96,7 +96,6 @@ export class UserDetailComponent implements OnInit, OnChanges {
 
     //重置用户表状态
     public reset(user?:User): void{
-        console.log("reset");
         if(user){
             this.user = user;
         }
@@ -136,7 +135,8 @@ export class UserDetailComponent implements OnInit, OnChanges {
         this.roleService.getAllRoles()
             .then( response => {
                 if(response){
-                    this.allRoles = response;                }
+                    this.allRoles = response;
+                }
             })
     }
 

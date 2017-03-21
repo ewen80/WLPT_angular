@@ -14,7 +14,7 @@
               <button class="btn btn-default" (click)="addResourceModalShow()">
                 <i class="fa fa-plus"></i> <span class="hidden-mobile">添加资源</span>
               </button>
-              <button #delRolesButton class="btn btn-default" (click)="deleteButtonClick()" [disabled]="delButtonDisabled">
+              <button #delButton class="btn btn-default" (click)="deleteButtonClick()" [disabled]="delButtonDisabled">
                 <i class="fa fa-minus"></i> <span class="hidden-mobile">删除资源</span>
               </button>
             </div>
@@ -50,7 +50,7 @@
           <h4 class="modal-title">{{modalTitle}}</h4>
         </div>
         <div class="modal-body">
-          <resource-detail #resourceDetail  (onSaveFinished)="saveFinished($event)"></resource-detail>
+          <resource-detail #resourceDetail [resource]="selectedResource" [saveMode]="saveMode"  (onSaveFinished)="saveFinished($event)"></resource-detail>
         </div>
         
       </div>

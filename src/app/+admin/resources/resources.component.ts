@@ -1,4 +1,3 @@
-
 /*
   created by wenliang
   资源管理页面
@@ -19,7 +18,7 @@ declare var $: any;
 })
 export class ResourceComponent implements OnInit,  AfterViewInit{
 
-  public saveMode = saveMode;//对话框保存模式（更新，新增)
+  public saveMode: saveMode;//对话框保存模式（更新，新增)
 
   public gridOptions:GridOptions;
   public columnDefs:any[];
@@ -32,6 +31,8 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
   public delButtonDisabled = true;
 
   private startRow = 0;
+
+  public selectedResource: Resource = new Resource();
 
 
   constructor(private resourceService:ResourceService) { 
@@ -67,6 +68,13 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
       },
       {
         headerName:'描述', field: "description"
+      },
+      {
+        headerName: '已删除', field: 'deleted',
+        cellRenderer: (params:any) => {
+          console.log(params);
+          return params.data.deleted ? '是':'否';
+        }
       }
     ];
   }
@@ -75,12 +83,12 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
     this.setDataSource();
   }
 
-   //角色列表数据源
+   //数据源
   setDataSource(){
     let dataSource = {
       getRows:(params: any) => {
         let pageIndex = Math.floor(params.startRow / this.gridOptions.paginationPageSize);
-        this.resourceService.getResourceListWithPage(pageIndex,this.gridOptions.paginationPageSize)
+        this.resourceService.getResourcesWithPage(pageIndex,this.gridOptions.paginationPageSize)
           .then( data => {
             params.successCallback(data.rows, data.rowCount);
           });
@@ -123,15 +131,16 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
   //新增资源
   public addResourceModalShow():void{
     this.modalTitle = "添加资源类型";
-    this.resourceDetail.saveMode = saveMode.add;
+    this.saveMode = saveMode.add;
+    this.selectedResource = new Resource();
     this.resourceDetailModal.show();
   }
 
-  //双击角色列表行事件
+  //双击列表行事件
   public dblClickRow(event){
     this.modalTitle = "编辑资源类型";
-    this.resourceDetail.saveMode = saveMode.update;
-    this.resourceDetail.resourceType = event.data as Resource;
+    this.saveMode = saveMode.update;
+    this.selectedResource = event.data as Resource;
     this.resourceDetailModal.show();
   }
 

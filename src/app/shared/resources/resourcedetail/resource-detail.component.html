@@ -28,10 +28,15 @@
                 <fieldset>  
                   <div class="form-group">
                     <label for="className">类全限定名：</label>
-                    <input class="form-control"  type="text" formControlName="className" id="className">
-                    <div *ngIf="formErrors.className" class="alert alert-danger">
-                      {{ formErrors.className }}
-                    </div>  
+                    <div  *ngIf="saveMode === 1">
+                      <input class="form-control"  type="text" formControlName="className" id="className">
+                      <div *ngIf="formErrors.className" class="alert alert-danger">
+                        {{ formErrors.className }}
+                      </div>
+                    </div>
+                    <div *ngIf="resource && saveMode !== 1 ">
+                      {{ resource.className }}
+                    </div>
                   </div>
                   <div class="form-group">  
                     <label for="name">资源类型名：</label> 
@@ -50,17 +55,32 @@
                           {{ formErrors.description }}
                         </div>
                     </div> 
-                  </div>  
+                  </div> 
+                  <div class="form-group">  
+                    <label for="deleted">是否删除：</label> 
+                      <div>
+                        <label class="radio radio-inline">
+                          <input type="radio"  formControlName="deleted" value="false">否
+                        </label>
+                      </div>
+                      <div>
+                        <label class="radio radio-inline">
+                          <input type="radio"  formControlName="deleted" value="true">是
+                        </label>
+                      </div>
+                      <div *ngIf="formErrors.deleted" class="alert alert-danger">
+                        {{ formErrors.deleted }}
+                      </div>
+                  </div> 
                   <div *ngIf = "saveMode!==0" class="form-actions">
                     <button class="btn btn-primary" type="submit" [disabled]="!resourceDetailForm.valid">
                     <i class="fa fa-save"></i>
                     保存
                     </button>
                   </div>
+                  {{resourceDetailForm.value | json}}
                 </fieldset>
-                
               </form>
-              
             </div>
             <!-- end widget content -->
 
