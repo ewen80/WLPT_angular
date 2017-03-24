@@ -32,7 +32,7 @@ import { BasicAuthenticationHttp } from './basic-authentication-http.service';
         ResourceService,
         AppConfigService,
         BasicAuthenticationHttp,
-        {provide:ErrorHandler,useClass:MyErrorHandler}
+        // {provide:ErrorHandler,useClass:MyErrorHandler}
     ]
 })
 export class CoreModule{

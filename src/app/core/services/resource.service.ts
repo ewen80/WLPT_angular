@@ -7,13 +7,14 @@ import 'rxjs/add/operator/toPromise';
 import { Resource } from '../entity/resource';
 import { AppConfigService } from '../app-config.service';
 import { BasicAuthenticationHttp } from '../basic-authentication-http.service';
+import { MyErrorHandler } from '../my-error-handler';
 
 @Injectable()
 export class ResourceService {
 
   private serverUrl: string = this.appConfig.setting.Server.Url + "/resourcetype";
   
-  constructor(private http:BasicAuthenticationHttp, private appConfig:AppConfigService){
+  constructor(private http:BasicAuthenticationHttp, private appConfig:AppConfigService, private MyErrorHandler:MyErrorHandler){
     console.log('ResourceService created');
   }
 
@@ -27,7 +28,8 @@ export class ResourceService {
                                   rows:returnData.content,
                                   rowCount:returnData.totalElements
                                 }
-                      })      
+                      })   
+                      .catch(this.MyErrorHandler.handleError);   
   }
 
   //获取角色信息

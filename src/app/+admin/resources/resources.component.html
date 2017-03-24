@@ -6,6 +6,21 @@
   <sa-widgets-grid>
     <div class="row">
       <article class="col-sm-12">
+        <sa-widget [colorbutton]="false" [editbutton]="false" [deletebutton]="false" [fullscreenbutton]="false" color="darken">
+          <header>
+            <span class="widget-icon"> <i class="fa fa-arrows-v"></i> </span>
+            <h2>查询</h2>
+          </header>
+          <!-- widget div-->
+          <div>
+            <!-- widget content -->
+            <div class="widget-body">
+              <p>Notice the header text size slightly larger than other widget headers</p>
+            </div>
+            <!-- end widget content -->
+          </div>
+          <!-- end widget div -->
+        </sa-widget>
         <sa-widget [editbutton]="false" [togglebutton]="false" [fullscreenbutton]="false" [deletebutton]="false" color="blueDark">
           <header>
             <span class="widget-icon"> <i class="fa fa-tags"></i> </span>
