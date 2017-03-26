@@ -6,9 +6,11 @@ import {Component, ViewContainerRef} from '@angular/core';
 })
 export class AppComponent {
 
+
   title = 'app works!';
 
   private viewContainerRef: ViewContainerRef;
+
 
   public constructor(viewContainerRef:ViewContainerRef) {
     // You need this small hack in order to catch application root view container ref

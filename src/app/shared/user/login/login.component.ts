@@ -6,7 +6,7 @@
 import { Component }        from '@angular/core';
 import { Router,
          NavigationExtras } from '@angular/router';
-import { AuthenticationService }      from '../../../core/user/authentication/authentication.service';
+import { AuthenticationService }      from '../../../core/services/authentication/authentication.service';
 
 @Component({
   templateUrl: './login.component.html'

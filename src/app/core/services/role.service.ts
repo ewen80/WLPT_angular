@@ -5,23 +5,23 @@ import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Role } from '../entity/role';
-import { AppConfigService } from '../app-config.service';
-import { BasicAuthenticationHttp } from '../basic-authentication-http.service';
+import { AppConfig } from '../app.config';
+import { BasicAuthenticationHttp } from './basic-authentication-http.service';
 
 @Injectable()
 export class RoleService {
 
   public id:number;
 
-  private serverUrl: string = this.appConfig.setting.Server.Url;
+  private serverUrl: string = this.appConfig.getConfig("Server").Url + "/roles";
   
-  constructor(private http:BasicAuthenticationHttp, private appConfig:AppConfigService){
+  constructor(private http:BasicAuthenticationHttp, private appConfig:AppConfig){
     console.log('RoleService created');
   }
 
   //获取角色信息（分页）
   getRolesWithPage(pageIndex:number,pageSize:number): Promise<{rows:Role[],rowCount:number}>{
-        return this.http.get(this.serverUrl+'/roles?pageIndex='+pageIndex.toString()+"&pageSize="+pageSize.toString())
+        return this.http.get(this.serverUrl+'?pageIndex='+pageIndex.toString()+"&pageSize="+pageSize.toString())
                       .toPromise()
                       .then( response => {
                                 let returnData = response.json();
@@ -34,21 +34,21 @@ export class RoleService {
 
   //获取所有角色信息
   getAllRoles(): Promise<Role[]>{
-      return this.http.get(this.serverUrl+"/roles/all")
+      return this.http.get(this.serverUrl+"/all")
             .toPromise()
             .then( response => response.json());
   }
 
   //获取角色通过角色名称
   getRolesByName(name:string):Promise<Role>{
-    return this.http.get(this.serverUrl+"/roles/byname/"+name)
+    return this.http.get(this.serverUrl+"/byname/"+name)
             .toPromise()
             .then( response => response.json());
   }
 
   //获取角色信息
   getRole(id: string): Promise<Role>{
-    return this.http.get(this.serverUrl+'/roles/'+id)
+    return this.http.get(this.serverUrl+'/'+id)
                       .toPromise()
                       .then( response => {
                         //如果找不到角色，服务器端返回body为空转换json会报错
@@ -63,7 +63,7 @@ export class RoleService {
 
   //保存角色
   saveRole(role:Role): Promise<{sucess:boolean,message:string}>{
-    return this.http.post(this.serverUrl+'/roles',JSON.stringify(role))
+    return this.http.post(this.serverUrl,JSON.stringify(role))
                       .toPromise()
                       .then( response => response.json())
                       .catch(this.handleError);
@@ -76,7 +76,7 @@ export class RoleService {
       ids += roles[i].id + ',';
     }
     ids = ids.substring(0,ids.length-1);
-    return this.http.delete(this.serverUrl+'/roles/'+ids)
+    return this.http.delete(this.serverUrl+'/'+ids)
                     .toPromise()
                     // .then(response => response.json())
                     .catch(this.handleError);

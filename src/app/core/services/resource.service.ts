@@ -5,22 +5,40 @@ import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Resource } from '../entity/resource';
-import { AppConfigService } from '../app-config.service';
-import { BasicAuthenticationHttp } from '../basic-authentication-http.service';
-import { MyErrorHandler } from '../my-error-handler';
+import { AppConfig } from '../app.config';
+import { BasicAuthenticationHttp } from './basic-authentication-http.service';
 
 @Injectable()
 export class ResourceService {
 
-  private serverUrl: string = this.appConfig.setting.Server.Url + "/resourcetype";
+  private serverUrl: string = this.appConfig.getConfig("Server").Url + "/resourcetype";
   
-  constructor(private http:BasicAuthenticationHttp, private appConfig:AppConfigService, private MyErrorHandler:MyErrorHandler){
+  constructor(private http:BasicAuthenticationHttp, private appConfig:AppConfig){
     console.log('ResourceService created');
   }
 
   //获取信息（分页）
-  getResourcesWithPage(pageIndex:number,pageSize:number): Promise<{rows:Resource[],rowCount:number}>{
-        return this.http.get(this.serverUrl+'?pageIndex='+pageIndex.toString()+"&pageSize="+pageSize.toString())
+  getResourcesWithPage(pageIndex:number,pageSize:number,filterModel:any): Promise<{rows:Resource[],rowCount:number}>{
+    //分解filterModel形成query string
+    var filterString:string = "";
+    if(filterModel && Object.keys(filterModel).length>0){
+        let filterNameArray = Object.keys(filterModel); //过滤条件数组
+        filterNameArray.forEach( (value) => {
+          console.log(filterModel[value]); //value字段名,filterModel[value]字段值
+          filterString += 
+        });
+      // if(filterModel.className){
+      //   //全限定名过滤
+      //   filterString += 
+      // }
+      // if(filterModel.name){
+      //   //资源名过滤
+      // }
+      // if(filterModel.deleted){
+      //   //删除标记过滤
+      // }
+    }
+    return this.http.get(this.serverUrl+'?pageIndex='+pageIndex.toString()+"&pageSize="+pageSize.toString())
                       .toPromise()
                       .then( response => {
                                 let returnData = response.json();
@@ -29,7 +47,7 @@ export class ResourceService {
                                   rowCount:returnData.totalElements
                                 }
                       })   
-                      .catch(this.MyErrorHandler.handleError);   
+                      .catch(this.handleError);   
   }
 
   //获取角色信息

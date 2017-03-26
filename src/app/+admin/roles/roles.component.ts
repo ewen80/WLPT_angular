@@ -25,8 +25,6 @@ export class RolesComponent implements OnInit,  AfterViewInit{
 
   public gridOptions:GridOptions;
   public columnDefs:any[];
-  public rowData:any[];
-
   @ViewChild("roleDetailModal") private roleDetailModal;
   @ViewChild("roleDetail") private roleDetail;
   

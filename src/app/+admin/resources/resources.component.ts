@@ -22,7 +22,6 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
 
   public gridOptions:GridOptions;
   public columnDefs:any[];
-  public rowData:any[];
 
   @ViewChild("resourceDetailModal") private resourceDetailModal;
   @ViewChild("resourceDetail") private resourceDetail;
@@ -42,37 +41,40 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
   ngOnInit() {
     //初始化用户表格
     this.gridOptions = <GridOptions>{
+      floatingFilter:true,
       rowSelection:"multiple",
       rowModelType:'pagination',
-      paginationPageSize:20
+      paginationPageSize:20,
+      enableServerSideFilter: true,
     };
     
     this.columnDefs = [
       {
         headerName: '#',
         width:30,
+        suppressFilter:true,
         checkboxSelection: true
       },
       {
         headerName: '序号',
         width:50,
+        suppressFilter:true,
         cellRenderer: (params:any) => {
           return this.startRow + params.rowIndex + 1;
         } 
       },
       {
-        headerName: '资源类型名',  field: "name"
+        headerName: '资源类型名',  field: "name", filter: 'text', filterParams: {newRowsAction: 'keep'}
       },
       {
-        headerName:'类全限定名', field: "className"
+        headerName:'类全限定名', field: "className",filter: 'text', filterParams: {newRowsAction: 'keep'}
       },
       {
-        headerName:'描述', field: "description"
+        headerName:'描述', field: "description",suppressFilter:true
       },
       {
-        headerName: '已删除', field: 'deleted',
+        headerName: '已删除', field: 'deleted',filter: 'text', filterParams: {newRowsAction: 'keep'},
         cellRenderer: (params:any) => {
-          console.log(params);
           return params.data.deleted ? '是':'否';
         }
       }
@@ -87,8 +89,9 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
   setDataSource(){
     let dataSource = {
       getRows:(params: any) => {
+        console.log(params.filterModel);
         let pageIndex = Math.floor(params.startRow / this.gridOptions.paginationPageSize);
-        this.resourceService.getResourcesWithPage(pageIndex,this.gridOptions.paginationPageSize)
+        this.resourceService.getResourcesWithPage(pageIndex,this.gridOptions.paginationPageSize,params.filterModel)
           .then( data => {
             params.successCallback(data.rows, data.rowCount);
           });
@@ -158,7 +161,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
     }
   }
 
-  //刷新角色列表
+  //刷新列表
   private refreshResourceList(){
     this.setDataSource();
   }

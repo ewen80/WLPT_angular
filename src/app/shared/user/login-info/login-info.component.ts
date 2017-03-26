@@ -3,7 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../core/services/user.service";
 import {LayoutService} from "../../../shared/layout/layout.service";
 import { User } from "../../../core/entity/user";
-import { AppConfigService } from '../../../core/app-config.service';
+
 
 @Component({
 
@@ -14,7 +14,7 @@ export class LoginInfoComponent implements OnInit {
 
   user:User;
 
-  constructor(private appConfig: AppConfigService, private userService: UserService, private layoutService: LayoutService) {
+  constructor(private userService: UserService, private layoutService: LayoutService) {
                 
   }
 

@@ -7,7 +7,7 @@ import { Http, Headers } from '@angular/http';
 import {Observable} from "rxjs/Rx";
 import {Injectable} from '@angular/core';
 
-import { AuthenticationService } from './user/authentication/authentication.service';
+import { AuthenticationService } from '../services/authentication/authentication.service';
 
 @Injectable()
 export class BasicAuthenticationHttp {

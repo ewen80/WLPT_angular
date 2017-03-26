@@ -5,8 +5,8 @@ import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { User } from '../entity/user';
-import { AppConfigService } from '../app-config.service';
-import { BasicAuthenticationHttp } from '../basic-authentication-http.service';
+import { AppConfig } from '../app.config';
+import { BasicAuthenticationHttp } from './basic-authentication-http.service';
 
 // import {JsonApiService} from "../../shared/api/json-api.service";
 
@@ -18,7 +18,10 @@ export class UserService {
   // constructor(private jsonApiService:JsonApiService) {
   //   this.user = new Subject();
   // }
-  constructor(private http:BasicAuthenticationHttp,private appConfig:AppConfigService){
+
+  private serverUrl:string = this.appConfig.getConfig("Server").Url + "/users";
+
+  constructor(private http:BasicAuthenticationHttp,private appConfig:AppConfig){
     console.log('UserService created');
   }
 
@@ -58,13 +61,13 @@ export class UserService {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if(currentUser)
       return this.getUser(currentUser.id)
-    else
-      return this.handleError("Found no Logged User");
+    // else
+    //   return this.handleError("Found no Logged User");
   }
 
   //获取用户信息（分页）
   getUsersWithPage(pageIndex:number,pageSize:number): Promise<{rows:User[],rowCount:number}>{
-        return this.http.get(this.appConfig.setting.Server.Url+'/users?pageIndex='+pageIndex.toString()+"&pageSize="+pageSize.toString())
+    return this.http.get(this.serverUrl+'?pageIndex='+pageIndex.toString()+"&pageSize="+pageSize.toString())
                       .toPromise()
                       .then( response => {
                                 let returnData = response.json();
@@ -78,23 +81,24 @@ export class UserService {
 
   //获取用户信息
   getUser(id: string): Promise<User>{
-    return this.http.get(this.appConfig.setting.Server.Url+'/users/'+id)
+    return this.http.get(this.serverUrl+'/'+id)
                       .toPromise()
                       .then( response => {
                         //如果找不到用户，服务器端返回body为空转换json会报错
                         try{
-                          return response.json() as User
+                          let user = response.json() as User;
+                          user.picture = user.picture || this.appConfig.getConfig("User").DefaultPicture;
+                          return user;
                         }catch(err){
                           return null;
                         }
                       })
                       .catch(this.handleError);
-                      // .catch(reason => console.log("catch response is" + reason))
   }
 
   //保存用户
   saveUser(user:User): Promise<{sucess:boolean,message:string}>{
-    return this.http.post(this.appConfig.setting.Server.Url+'/users',JSON.stringify(user))
+    return this.http.post(this.serverUrl,JSON.stringify(user))
                       .toPromise()
                       .then( response => response.json())
                       .catch(this.handleError);
@@ -107,9 +111,8 @@ export class UserService {
       ids += users[i].id + ',';
     }
     ids = ids.substring(0,ids.length-1);
-    return this.http.delete(this.appConfig.setting.Server.Url+'/users/'+ids)
+    return this.http.delete(this.serverUrl+'/'+ids)
                     .toPromise()
-                    // .then(response => response.json())
                     .catch(this.handleError);
   }
 

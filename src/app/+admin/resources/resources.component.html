@@ -6,21 +6,6 @@
   <sa-widgets-grid>
     <div class="row">
       <article class="col-sm-12">
-        <sa-widget [colorbutton]="false" [editbutton]="false" [deletebutton]="false" [fullscreenbutton]="false" color="darken">
-          <header>
-            <span class="widget-icon"> <i class="fa fa-arrows-v"></i> </span>
-            <h2>查询</h2>
-          </header>
-          <!-- widget div-->
-          <div>
-            <!-- widget content -->
-            <div class="widget-body">
-              <p>Notice the header text size slightly larger than other widget headers</p>
-            </div>
-            <!-- end widget content -->
-          </div>
-          <!-- end widget div -->
-        </sa-widget>
         <sa-widget [editbutton]="false" [togglebutton]="false" [fullscreenbutton]="false" [deletebutton]="false" color="blueDark">
           <header>
             <span class="widget-icon"> <i class="fa fa-tags"></i> </span>
@@ -39,13 +24,13 @@
               <ag-grid-ng2 #resourcesGrid style="width: 100%; height: 350px;" class="ag-fresh"    
                   [gridOptions]="gridOptions" 
                   [columnDefs]="columnDefs"  
-                  [rowData]="rowData"
                   (rowDoubleClicked)="dblClickRow($event)"
                   (rowSelected)="setDelButtonStatus()"
                   (modelUpdated)="setDelButtonStatus()"
                   
               >
               </ag-grid-ng2>
+             
             </div>
           </div>
         </sa-widget>
@@ -53,7 +38,6 @@
     </div>
   </sa-widgets-grid>
 
- <!--弹出对话框-->
   <div class="modal fade" bsModal #resourceDetailModal="bs-modal" [config]="{backdrop: true}"
       tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">

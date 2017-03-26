@@ -17,10 +17,8 @@ export class UsersComponent implements OnInit,  AfterViewInit{
 
   public userSaveMode: saveMode;//对话框保存模式（更新，新增)
   public selectedUser: User = new User(); //当前用户
-
   public gridOptions:GridOptions;
   public columnDefs:any[];
-  public rowData:any[];
 
   @ViewChild("userDetailModal") private userDetailModal;
   @ViewChild("userDetail") private userDetail;
