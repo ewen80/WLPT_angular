@@ -9,6 +9,7 @@ import {GridOptions} from 'ag-grid/main';
 import { ResourceService } from '../../core/services/resource.service';
 import { Resource } from '../../core/entity/resource';
 import { saveMode } from '../../enums';
+import { AggridFilterSerialization } from "../../shared/helper/serialize/aggrid-filter.serialization";
 
 declare var $: any;
 
@@ -91,7 +92,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
       getRows:(params: any) => {
         console.log(params.filterModel);
         let pageIndex = Math.floor(params.startRow / this.gridOptions.paginationPageSize);
-        this.resourceService.getResourcesWithPage(pageIndex,this.gridOptions.paginationPageSize,params.filterModel)
+        this.resourceService.getResourcesWithPage(pageIndex,this.gridOptions.paginationPageSize)
           .then( data => {
             params.successCallback(data.rows, data.rowCount);
           });
