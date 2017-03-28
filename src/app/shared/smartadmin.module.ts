@@ -5,13 +5,6 @@ import {HttpModule} from '@angular/http';
 import {RouterModule} from '@angular/router';
 
 
-
-// import {
-//   ModalModule, ButtonsModule, TooltipModule, DropdownModule, ProgressbarModule, AlertModule, TabsModule,
-//   AccordionModule, CarouselModule
-// } from 'ng2-bootstrap'
-
-
 import {PopoverModule} from "ng2-popover/src/index";
 import {JsonApiService} from './api'
 import {LayoutService} from './layout/layout.service'
@@ -43,16 +36,12 @@ import {AgGridModule} from "ag-grid-ng2/main";
   declarations: [  ],
   exports: [
     CommonModule, FormsModule, RouterModule,
-    //HttpModule,
 
     PopoverModule,
     SmartadminLayoutModule,
     I18nModule,
     UtilsModule,
     SmartadminWidgetsModule,
-    AgGridModule,
-    UserModule,
-    ResourceModule,
     // SmartadminFormsModule
     // ModalModule,
     // ButtonsModule,
@@ -68,7 +57,11 @@ import {AgGridModule} from "ag-grid-ng2/main";
     // InlineGraphsModule,
     // ChatModule,
     // StatsModule,
-    //SmartadminDatatableModule
+    //SmartadminDatatableModule,
+
+    AgGridModule,
+    UserModule,
+    ResourceModule,
   ]
 
 })

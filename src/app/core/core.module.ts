@@ -14,6 +14,7 @@ import { ResourceService } from './services/resource.service';
 import { BasicAuthenticationHttp } from './services/basic-authentication-http.service';
 
 import { AppConfig } from './app.config';
+import { AggridFilterSerialization } from "../shared/helper/serialize/aggrid-filter.serialization";
 
 export function initConfig(config: AppConfig){
     return () => config.load();
@@ -36,7 +37,9 @@ export function initConfig(config: AppConfig){
         ResourceService,
         BasicAuthenticationHttp,
         AppConfig,
+        AggridFilterSerialization,  //AgGrid组件查询过滤器序列化为字符串
         {
+            //初始化配置
             provide: APP_INITIALIZER, useFactory:initConfig, deps: [AppConfig], multi: true
         }
         // {provide:ErrorHandler,useClass:MyErrorHandler}

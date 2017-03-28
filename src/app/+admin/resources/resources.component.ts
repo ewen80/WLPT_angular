@@ -35,7 +35,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
   public selectedResource: Resource = new Resource();
 
 
-  constructor(private resourceService:ResourceService) { 
+  constructor(private resourceService:ResourceService, private aggridFilterSerialization:AggridFilterSerialization) { 
     // console.log('users.components created:'+userService);
   }
 
@@ -90,9 +90,9 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
   setDataSource(){
     let dataSource = {
       getRows:(params: any) => {
-        console.log(params.filterModel);
         let pageIndex = Math.floor(params.startRow / this.gridOptions.paginationPageSize);
-        this.resourceService.getResourcesWithPage(pageIndex,this.gridOptions.paginationPageSize)
+        this.aggridFilterSerialization.filterModel = params.filterModel;
+        this.resourceService.getResourcesWithPage(pageIndex,this.gridOptions.paginationPageSize,this.aggridFilterSerialization)
           .then( data => {
             params.successCallback(data.rows, data.rowCount);
           });

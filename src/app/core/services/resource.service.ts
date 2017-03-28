@@ -19,27 +19,13 @@ export class ResourceService {
   }
 
   //获取信息（分页）
-  getResourcesWithPage(pageIndex:number,pageSize:number): Promise<{rows:Resource[],rowCount:number}>{
-    //分解filterModel形成query string
-    var filterString:string = "";
-    // if(filterModel && Object.keys(filterModel).length>0){
-    //     let filterNameArray = Object.keys(filterModel); //过滤条件数组
-    //     filterNameArray.forEach( (value) => {
-    //       console.log(filterModel[value]); //value字段名,filterModel[value]字段值
-    //       filterString += 
-    //     });
-    //   // if(filterModel.className){
-    //   //   //全限定名过滤
-    //   //   filterString += 
-    //   // }
-    //   // if(filterModel.name){
-    //   //   //资源名过滤
-    //   // }
-    //   // if(filterModel.deleted){
-    //   //   //删除标记过滤
-    //   // }
-    // }
-    return this.http.get(this.serverUrl+'?pageIndex='+pageIndex.toString()+"&pageSize="+pageSize.toString())
+  getResourcesWithPage(pageIndex:number,pageSize:number,serialization:SerializationHelper): Promise<{rows:Resource[],rowCount:number}>{
+    var queryString:string = this.serverUrl+'?pageIndex='+pageIndex.toString()+"&pageSize="+pageSize.toString();
+    var filterString = serialization.serialize();
+    if(filterString){
+      queryString += "&" + filterString;
+    }
+    return this.http.get(queryString)
                       .toPromise()
                       .then( response => {
                                 let returnData = response.json();

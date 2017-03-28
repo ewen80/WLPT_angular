@@ -4,6 +4,9 @@ import { SerializationHelper } from "./serialization-helper";
  * Ag-grid组件的filter序列化
  */
 export class AggridFilterSerialization implements SerializationHelper {
+    
+    public filterModel:any;
+
     serialize(): string {
         var serString = "";
         const filterModel = this.filterModel;
@@ -13,7 +16,7 @@ export class AggridFilterSerialization implements SerializationHelper {
                 const filter = filterModel[value];
                 console.log(filter); //value字段名,filterModel[value]字段值
                 if(filter.type){
-                    serString += "&" + value;
+                    serString += value;
                     switch(filter.type){
                         case "contains":
                             serString += "%";
@@ -38,6 +41,4 @@ export class AggridFilterSerialization implements SerializationHelper {
         }
         return serString;
     }
-
-    constructor(private filterModel:any){}
 }
