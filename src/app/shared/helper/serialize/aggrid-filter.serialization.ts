@@ -18,27 +18,37 @@ export class AggridFilterSerialization implements SerializationHelper {
                 if(filter.type){
                     serString += value;
                     switch(filter.type){
-                        case "contains":
-                            serString += "%";
+                        case "notEquals":
+                            serString += "!";
                             break;
                         case "equals":
+                        case "contains":
+                        case "startsWith":
+                        case "endsWith":
+                        default:
                             serString += ":";
                             break;
-                        case "notEquals":
-                            serString += "!:";
-                            break;
-                        case "startswith":
-                            serString += "~";
-                            break;
-                        case "endwith":
-                            serString += "^";
-                            break;
+                       //TODO：大于、小于等待添加
                         
                     }
-                    serString += filter.filter;
+                    switch(filter.type){
+                        case "contains":
+                            serString += "*" + filter.filter + "*";
+                            break;
+                        case "startsWith":
+                            serString += filter.filter + "*";
+                            break;
+                        case "endsWith":
+                            serString += "*" + filter.filter;
+                            break;
+                        default:
+                            serString += filter.filter;
+                            break;
+                    }
+                    serString += ",";
                 }
             });
         }
-        return serString;
+        return serString.substr(0, serString.length-1);
     }
 }

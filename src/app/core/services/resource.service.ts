@@ -23,7 +23,7 @@ export class ResourceService {
     var queryString:string = this.serverUrl+'?pageIndex='+pageIndex.toString()+"&pageSize="+pageSize.toString();
     var filterString = serialization.serialize();
     if(filterString){
-      queryString += "&" + filterString;
+      queryString += "&filter=" + filterString;
     }
     return this.http.get(queryString)
                       .toPromise()
