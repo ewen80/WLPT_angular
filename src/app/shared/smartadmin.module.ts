@@ -23,17 +23,22 @@ import {UtilsModule} from "./utils/utils.module";
 
 import { ResourceModule } from './resources/resourcedetail/resource.module';
 // ag-grid
-import {AgGridModule} from "ag-grid-angular/main";
+import { AgGridModule } from "ag-grid-angular/main";
+import { BooleanFloatingFilterComponent } from "./ag-grid-filters/boolean-floatingFilter.component";
 
 @NgModule({
   imports: [
     CommonModule, FormsModule, RouterModule,
     //HttpModule,
-    AgGridModule.withComponents([]),
+    AgGridModule.withComponents([
+      BooleanFloatingFilterComponent
+    ]),
     UserModule,
     ResourceModule,
   ],
-  declarations: [  ],
+  declarations: [
+    BooleanFloatingFilterComponent
+  ],
   exports: [
     CommonModule, FormsModule, RouterModule,
 
@@ -62,6 +67,8 @@ import {AgGridModule} from "ag-grid-angular/main";
     AgGridModule,
     UserModule,
     ResourceModule,
+
+    BooleanFloatingFilterComponent
   ]
 
 })

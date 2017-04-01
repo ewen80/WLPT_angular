@@ -10,6 +10,7 @@ import { ResourceService } from '../../core/services/resource.service';
 import { Resource } from '../../core/entity/resource';
 import { saveMode } from '../../enums';
 import { AggridFilterSerialization } from "../../shared/helper/serialize/aggrid-filter.serialization";
+import { BooleanFloatingFilterComponent } from "../../shared/ag-grid-filters/boolean-floatingFilter.component";
 
 declare var $: any;
 
@@ -77,7 +78,12 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
         headerName: '已删除', field: 'deleted',filter: 'text', filterParams: {newRowsAction: 'keep'},
         cellRenderer: (params:any) => {
           return params.data.deleted ? '是':'否';
-        }
+        },
+        suppressMenu:true,
+        floatingFilterComponentParams:{
+            suppressFilterButton:true
+        },
+        floatingFilterComponentFramework: BooleanFloatingFilterComponent,
       }
     ];
   }
