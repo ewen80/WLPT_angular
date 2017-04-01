@@ -1,6 +1,6 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {ChatService} from "../chat.service";
-import {UserService} from "../../user/user.service";
+import {UserService} from "../../../core/services/user.service";
 
 @Component({
   selector: 'chat-form',
@@ -18,14 +18,15 @@ export class ChatFormComponent implements OnInit {
 
 
   ngOnInit() {
-    this.chatService.messageToSubject.subscribe((user)=>{
-      this.message += (user.username + ', ');
-    });
+    /**暂时注释 因为这里使用了smartadmin的userService，此service已被改写所以导致程序出错 */
+    // this.chatService.messageToSubject.subscribe((user)=>{
+    //   this.message += (user.username + ', ');
+    // });
 
-    this.user = this.userService.userInfo;
-    this.userService.user.subscribe((user)=>{
-      this.user = user
-    })
+    // this.user = this.userService.userInfo;
+    // this.userService.user.subscribe((user)=>{
+    //   this.user = user
+    // })
   }
 
   sendMessage(){

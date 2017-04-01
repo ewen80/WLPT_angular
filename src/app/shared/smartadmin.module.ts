@@ -23,7 +23,7 @@ import {UtilsModule} from "./utils/utils.module";
 
 import { ResourceModule } from './resources/resourcedetail/resource.module';
 // ag-grid
-import {AgGridModule} from "ag-grid-ng2/main";
+import {AgGridModule} from "ag-grid-angular/main";
 
 @NgModule({
   imports: [

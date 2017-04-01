@@ -1,7 +1,7 @@
 import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { NG_ASYNC_VALIDATORS, FormControl, ValidatorFn, AbstractControl, Validator, Validators } from '@angular/forms';
 
-import { RoleService } from '../../core/role/role.service';
+import { RoleService } from '../../core/services/role.service';
 
 /*
     自定义角色Id验证指令，角色Id不能重复

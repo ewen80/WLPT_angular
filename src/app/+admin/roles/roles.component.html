@@ -21,7 +21,7 @@
           </header>
           <div>
             <div class="widget-body no-padding">
-              <ag-grid-ng2 #rolesGrid style="width: 100%; height: 350px;" class="ag-fresh"    
+              <ag-grid-angular #rolesGrid style="width: 100%; height: 350px;" class="ag-fresh"    
                   [gridOptions]="gridOptions" 
                   [columnDefs]="columnDefs"  
                   (rowDoubleClicked)="dblClickRow($event)"
@@ -29,7 +29,7 @@
                   (modelUpdated)="setDelButtonStatus()"
                   
               >
-              </ag-grid-ng2>
+              </ag-grid-angular>
             </div>
           </div>
         </sa-widget>

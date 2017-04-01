@@ -1,0 +1,4 @@
+//TODO： 更新ag-gride的翻页
+2017-4-1：ag-grid的翻页机制已经更新，原先的rowModelType='pagination'.已经Deprecated
+就版本的翻页文档：https://www.ag-grid.com/javascript-grid-pagination/index-deprecated.php#gsc.tab=0
+新版本的翻页文档：https://www.ag-grid.com/javascript-grid-pagination/index.php

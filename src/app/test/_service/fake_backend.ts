@@ -7,7 +7,7 @@
 import { Http, BaseRequestOptions, Response, ResponseOptions, RequestMethod, ConnectionBackend } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
-import { User } from '../../core/user/user';
+import { User } from '../../core/entity/user';
 
 let allUsers = new Array<User>();
 

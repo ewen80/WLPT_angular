@@ -8,7 +8,7 @@ import { routing } from './app.routing';
 import { CoreModule } from "./core/core.module";
 
 import {
-  ModalModule, ButtonsModule, TooltipModule, DropdownModule, ProgressbarModule, AlertModule, TabsModule,
+  ModalModule, ButtonsModule, TooltipModule, BsDropdownModule, ProgressbarModule, AlertModule, TabsModule,
   AccordionModule, CarouselModule
 } from 'ng2-bootstrap'
 
@@ -29,7 +29,7 @@ import {
     ModalModule.forRoot(),
     ButtonsModule.forRoot(),
     TooltipModule.forRoot(),
-    DropdownModule.forRoot(),
+    BsDropdownModule.forRoot(),
     ProgressbarModule.forRoot(),
     AlertModule.forRoot(),
     TabsModule.forRoot(),

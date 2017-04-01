@@ -13,7 +13,7 @@ import { MainLayoutComponent } from './app-layouts/main-layout.component';
 import { EmptyLayoutComponent } from './app-layouts/empty-layout.component';
 import { RouterModule } from "@angular/router";
 import { AuthLayoutComponent } from './app-layouts/auth-layout.component';
-import { TooltipModule, DropdownModule } from "ng2-bootstrap";
+// import { TooltipModule, DropdownModule } from "ng2-bootstrap";
 import { RouteBreadcrumbsComponent } from './ribbon/route-breadcrumbs.component';
 
 @NgModule({
@@ -24,8 +24,8 @@ import { RouteBreadcrumbsComponent } from './ribbon/route-breadcrumbs.component'
     FormsModule,
     RouterModule,
 
-    TooltipModule,
-    DropdownModule,
+    // TooltipModule,
+    // DropdownModule,
   ],
   declarations: [
     FooterComponent,

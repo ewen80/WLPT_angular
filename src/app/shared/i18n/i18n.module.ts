@@ -4,12 +4,12 @@ import {LanguageSelectorComponent} from "./language-selector/language-selector.c
 import {I18nPipe} from "./i18n.pipe";
 import {I18nService} from "./i18n.service";
 import {CommonModule} from "@angular/common";
-import {DropdownModule} from "ng2-bootstrap/ng2-bootstrap";
+// import {BsDropdownModule} from "ng2-bootstrap/ng2-bootstrap";
 
 @NgModule({
   imports: [
     CommonModule,
-    DropdownModule,
+    // BsDropdownModule.forRoot(),
   ],
   declarations:[
     LanguageSelectorComponent,

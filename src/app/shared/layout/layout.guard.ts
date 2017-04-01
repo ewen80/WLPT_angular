@@ -6,7 +6,7 @@ import {
 }                           from '@angular/router';
 
 @Injectable()
-export class LayoutGuard implements Resolve {
+export class LayoutGuard implements Resolve<boolean> {
   constructor(private router: Router) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {

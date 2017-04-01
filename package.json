@@ -14,6 +14,7 @@
   "dependencies": {
     "@angular/common": "^2.2.0",
     "@angular/compiler": "^2.2.0",
+    "@angular/compiler-cli": "^2.2.0",
     "@angular/core": "^2.2.0",
     "@angular/forms": "^2.2.0",
     "@angular/http": "^2.2.0",
@@ -65,8 +66,8 @@
     "to-markdown": "^3.0.1",
     "ts-helpers": "^1.1.1",
     "zone.js": "^0.7.0",
-    "ag-grid": "7.1.x",
-    "ag-grid-ng2": "7.1.x"
+    "ag-grid": "8.2.x",
+    "ag-grid-angular": "8.2.x"
   },
   "devDependencies": {
     "@angular/cli": "^1.0.0-beta.31",
