@@ -6,31 +6,51 @@
   <sa-widgets-grid>
     <div class="row">
       <article class="col-sm-12">
-        <sa-widget [editbutton]="false" [togglebutton]="false" [fullscreenbutton]="false" [deletebutton]="false" color="blueDark">
+        <sa-widget [editbutton]="false" [togglebutton]="false" [fullscreenbutton]="false" [deletebutton]="false">
           <header>
-            <span class="widget-icon"> <i class="fa fa-tags"></i> </span>
-            <h2>资源管理</h2>
-            <div class="widget-toolbar">
-              <button class="btn btn-default" (click)="addResourceModalShow()">
-                <i class="fa fa-plus"></i> <span class="hidden-mobile">添加资源</span>
-              </button>
-              <button #delButton class="btn btn-default" (click)="deleteButtonClick()" [disabled]="delButtonDisabled">
-                <i class="fa fa-minus"></i> <span class="hidden-mobile">删除资源</span>
-              </button>
-            </div>
+              <ul class="nav nav-tabs pull-left in">
+                <li [class.active]="activedTabIndex == 0">
+                  <a (click)="activedTabIndex=0"><i class="fa fa-tags"></i><span class="hidden-mobile hidden-tablet">资源类型</span></a>
+                </li>
+                <li [class.active]="activedTabIndex == 1">
+                  <a (click)="activedTabIndex=1"><span class="hidden-mobile hidden-tablet">资源范围</span></a>
+                </li>
+              </ul>
+              <div class="widget-toolbar">
+                <button class="btn btn-default" (click)="addResourceModalShow()">
+                  <i class="fa fa-plus"></i> <span class="hidden-mobile">添加资源类型</span>
+                </button>
+                <button #delButton class="btn btn-default" (click)="deleteResourceButtonClick()" [disabled]="delButtonDisabled">
+                  <i class="fa fa-minus"></i> <span class="hidden-mobile">删除资源类型</span>
+                </button>
+                <button #rangeButton class="btn btn-default" (click)="rangeButtonClick()" [disabled]="rangeButtonDisabled">
+                  <span class="hidden-mobile">范围管理</span>
+                </button>
+              </div>
           </header>
           <div>
             <div class="widget-body no-padding">
-              <ag-grid-angular #resourcesGrid style="width: 100%; height: 350px;" class="ag-fresh"    
-                  [gridOptions]="gridOptions" 
-                  [columnDefs]="columnDefs"  
-                  (rowDoubleClicked)="dblClickRow($event)"
-                  (rowSelected)="setDelButtonStatus()"
-                  (modelUpdated)="setDelButtonStatus()"
-                  
-              >
-              </ag-grid-angular>
-             
+              <!--Tabs-->
+              <tabset>
+                <!--资源类型列表-->
+                <tab [active]="activedTabIndex == 0">
+                  <ag-grid-angular #resourcesGrid style="width: 100%; height: 350px;" class="ag-fresh"    
+                      [gridOptions]="typesGridOptions" 
+                      [columnDefs]="typesColumnDefs"  
+                      (rowDoubleClicked)="dblClickTypesRow($event)"
+                      (rowSelected)="setButtonsStatus()"
+                      (modelUpdated)="setButtonsStatus()"></ag-grid-angular>
+                </tab>
+                <!--资源范围列表-->
+                <tab [active]="activedTabIndex == 1">
+                  <ag-grid-angular #rangesGrid style="width: 100%; height: 350px;" class="ag-fresh"    
+                      [gridOptions]="rangesGridOptions" 
+                      [columnDefs]="rangesColumnDefs"  
+                      (rowDoubleClicked)="dblClickRangesRow($event)"
+                      (rowSelected)="setButtonsStatus()"
+                      (modelUpdated)="setButtonsStatus()"></ag-grid-angular>
+                </tab>
+              </tabset>
             </div>
           </div>
         </sa-widget>
@@ -38,6 +58,7 @@
     </div>
   </sa-widgets-grid>
 
+  <!--资源添加修改对话框-->
   <div class="modal fade" bsModal #resourceDetailModal="bs-modal" [config]="{backdrop: true}"
       tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
@@ -51,10 +72,7 @@
         <div class="modal-body">
           <resource-detail #resourceDetail [resource]="selectedResource" [saveMode]="saveMode"  (onSaveFinished)="saveFinished($event)"></resource-detail>
         </div>
-        
       </div>
     </div>
-    
   </div>
-
 </div>

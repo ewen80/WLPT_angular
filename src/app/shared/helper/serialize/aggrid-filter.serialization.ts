@@ -14,7 +14,7 @@ export class AggridFilterSerialization implements SerializationHelper {
             let filterNameArray = Object.keys(filterModel); //过滤条件数组
             filterNameArray.forEach( (value) => {
                 const filter = filterModel[value];
-                console.log(filter); //value字段名,filterModel[value]字段值
+                // console.log(filter); //value字段名,filterModel[value]字段值
                 if(filter.type){
                     serString += value;
                     switch(filter.type){

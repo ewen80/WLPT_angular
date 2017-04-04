@@ -10,7 +10,8 @@ import { ResourceService } from '../../core/services/resource.service';
 import { Resource } from '../../core/entity/resource';
 import { saveMode } from '../../enums';
 import { AggridFilterSerialization } from "../../shared/helper/serialize/aggrid-filter.serialization";
-import { BooleanFloatingFilterComponent } from "../../shared/ag-grid-filters/boolean-floatingFilter.component";
+import { AgGridBooleanFilterComponent } from "../../shared/ag-grid-filters/boolean-filter.component";
+import { ResourceRangeService } from "../../core/services/resource-range.service";
 
 declare var $: any;
 
@@ -22,35 +23,47 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
 
   public saveMode: saveMode;//对话框保存模式（更新，新增)
 
-  public gridOptions:GridOptions;
-  public columnDefs:any[];
+  public typesGridOptions:GridOptions;
+  public rangesGridOptions:GridOptions;
+  public typesColumnDefs:any[];
+  public rangesColumnDefs:any[];
 
   @ViewChild("resourceDetailModal") private resourceDetailModal;
   @ViewChild("resourceDetail") private resourceDetail;
   
   public modalTitle: string;
   public delButtonDisabled = true;
+  public rangeButtonDisabled = true;
 
   private startRow = 0;
 
   public selectedResource: Resource = new Resource();
 
+  public activedTabIndex: number = 0;//当前活动状态的Tab序号
 
-  constructor(private resourceService:ResourceService, private aggridFilterSerialization:AggridFilterSerialization) { 
+
+  constructor(private resourceService:ResourceService, private resourceRangeService:ResourceRangeService, private aggridFilterSerialization:AggridFilterSerialization) { 
     // console.log('users.components created:'+userService);
   }
 
   ngOnInit() {
-    //初始化用户表格
-    this.gridOptions = <GridOptions>{
-      floatingFilter:true,
+    //初始化资源类型表格
+    this.typesGridOptions = <GridOptions>{
+      floatingFilter:false,
       rowSelection:"multiple",
       rowModelType:'pagination',
       paginationPageSize:20,
       enableServerSideFilter: true,
     };
+    this.rangesGridOptions = <GridOptions>{
+      floatingFilter:false,
+      rowSelection:"multiple",
+      rowModelType:'pagination',
+      paginationPageSize:20,
+      enableServerSideFilter: true,
+    }
     
-    this.columnDefs = [
+    this.typesColumnDefs = [
       {
         headerName: '#',
         width:30,
@@ -79,26 +92,38 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
         cellRenderer: (params:any) => {
           return params.data.deleted ? '是':'否';
         },
-        suppressMenu:true,
-        floatingFilterComponentParams:{
-            suppressFilterButton:true
-        },
-        floatingFilterComponentFramework: BooleanFloatingFilterComponent,
-      }
+        filterFramework: AgGridBooleanFilterComponent,
+      },
+    ];
+    this.rangesColumnDefs = [
+      {
+        headerName: '#',
+        width:30,
+        suppressFilter:true,
+        checkboxSelection: true
+      },
+      {
+        headerName: '序号',
+        width:50,
+        suppressFilter:true,
+        cellRenderer: (params:any) => {
+          return this.startRow + params.rowIndex + 1;
+        } 
+      },
     ];
   }
 
   ngAfterViewInit(){
-    this.setDataSource();
+    this.setTypesDataSource();
   }
 
-   //数据源
-  setDataSource(){
+   //资源类型数据源
+  setTypesDataSource(){
     let dataSource = {
       getRows:(params: any) => {
-        let pageIndex = Math.floor(params.startRow / this.gridOptions.paginationPageSize);
+        let pageIndex = Math.floor(params.startRow / this.typesGridOptions.paginationPageSize);
         this.aggridFilterSerialization.filterModel = params.filterModel;
-        this.resourceService.getResourcesWithPage(pageIndex,this.gridOptions.paginationPageSize,this.aggridFilterSerialization)
+        this.resourceService.getResourcesWithPage(pageIndex,this.typesGridOptions.paginationPageSize,this.aggridFilterSerialization)
           .then( data => {
             params.successCallback(data.rows, data.rowCount);
           });
@@ -106,8 +131,21 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
       }
                   
     }
-    this.gridOptions.api.setDatasource(dataSource);
+    this.typesGridOptions.api.setDatasource(dataSource);
   } 
+
+  //资源范围数据源
+  setRangesDataSource(){
+    let dataSource = {
+      getRows:(params: any) => {
+        this.resourceRangeService.getAll()
+          .then( data => {
+            params.successCallback(data.rows, data.rowCount);
+          });
+          this.startRow = params.startRow;
+      }
+    }
+  }
 
   //保存结束
   public saveFinished(event:any){
@@ -147,7 +185,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
   }
 
   //双击列表行事件
-  public dblClickRow(event){
+  public dblClickTypesRow(event){
     this.modalTitle = "编辑资源类型";
     this.saveMode = saveMode.update;
     this.selectedResource = event.data as Resource;
@@ -155,8 +193,8 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
   }
 
   //单击删除按钮
-  public deleteButtonClick(){
-    var selectedRows = this.gridOptions.api.getSelectedRows();
+  public deleteResourceButtonClick(){
+    var selectedRows = this.typesGridOptions.api.getSelectedRows();
     if(confirm("确认删除选中的"+selectedRows.length.toString()+"条记录吗？")){
       this.resourceService.delete(selectedRows)
         .then(() => this.refreshResourceList())
@@ -168,17 +206,18 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
     }
   }
 
-  //刷新列表
-  private refreshResourceList(){
-    this.setDataSource();
+  //单击范围管理按钮
+  public rangeButtonClick(){
+    this.activedTabIndex = 1;
   }
 
-  setDelButtonStatus(){
-    if(this.gridOptions.api.getSelectedRows().length > 0){
-      this.delButtonDisabled = false;
-    }else{
-      this.delButtonDisabled = true;
-    }
-    
+  //刷新列表
+  private refreshResourceList(){
+    this.setTypesDataSource();
+  }
+
+  setButtonsStatus(){
+    this.delButtonDisabled = this.typesGridOptions.api.getSelectedRows().length == 0;
+    this.rangeButtonDisabled = this.typesGridOptions.api.getSelectedRows().length != 1;
   }
 }

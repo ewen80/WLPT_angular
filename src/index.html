@@ -2,24 +2,15 @@
 <html>
 <head>
 
-  <!--  this hack for normalizing free hosting when host on github pages   -->
-  <script>
-    // See http://www.backalleycoder.com/2016/05/13/sghpa-the-single-page-app-hack-for-github-pages/
-    (function(){
-      var redirect = sessionStorage.redirect;
-      delete sessionStorage.redirect;
-      if (redirect && redirect != location.href) {
-        history.replaceState(null, null, redirect);
-      }
-    })();
-  </script>
-
   <meta charset="utf-8">
+
   <title>Smartadmin Angular 2</title>
+
+  <meta name="description" content="Smartadmin Angular 2 Template">
+
+  <!-- base url -->
   <base href="/">
 
-  <meta name="description" content="">
-  <meta name="author" content="">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -47,7 +38,7 @@
   <link rel="shortcut icon" href="assets/img/favicon/favicon.ico" type="image/x-icon">
 
   <!-- #GOOGLE FONT -->
-  <!-- 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700"> -->
+   	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
 
   <!-- #APP SCREEN / ICONS -->
   <!-- Specifying a Webpage Icon for Web Clip
@@ -67,8 +58,10 @@
   <link rel="apple-touch-startup-image" href="assets/img/splash/ipad-portrait.png"
         media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
   <link rel="apple-touch-startup-image" href="assets/img/splash/iphone.png" media="screen and (max-device-width: 320px)">
+   
 </head>
 <body>
   <app-root>Loading...</app-root>
+
 </body>
 </html>

@@ -1,18 +1,18 @@
-import {NgModule, ModuleWithProviders} from "@angular/core";
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
-import {RouterModule} from '@angular/router';
+import { NgModule, ModuleWithProviders } from "@angular/core";
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { RouterModule } from '@angular/router';
 
 
-import {PopoverModule} from "ng2-popover/src/index";
-import {JsonApiService} from './api'
-import {LayoutService} from './layout/layout.service'
-import {SmartadminLayoutModule} from './layout'
-import {I18nModule} from "./i18n/i18n.module";
-import {UserModule} from "./user/user.module";
-import {SmartadminWidgetsModule} from "./widgets/smartadmin-widgets.module";
-import {UtilsModule} from "./utils/utils.module";
+import { PopoverModule } from "ng2-popover/src/index";
+import { JsonApiService } from './api'
+import { LayoutService } from './layout/layout.service'
+import { SmartadminLayoutModule } from './layout'
+import { I18nModule } from "./i18n/i18n.module";
+import { UserModule } from "./user/user.module";
+import { SmartadminWidgetsModule } from "./widgets/smartadmin-widgets.module";
+import { UtilsModule } from "./utils/utils.module";
 // import {SmartadminFormsModule} from "./forms/smartadmin-forms.module";
 // import {ChatModule} from "./chat/chat.module";
 // import {StatsModule} from "./stats/stats.module";
@@ -24,20 +24,20 @@ import {UtilsModule} from "./utils/utils.module";
 import { ResourceModule } from './resources/resourcedetail/resource.module';
 // ag-grid
 import { AgGridModule } from "ag-grid-angular/main";
-import { BooleanFloatingFilterComponent } from "./ag-grid-filters/boolean-floatingFilter.component";
+import { AgGridBooleanFilterComponent } from "./ag-grid-filters/boolean-filter.component";
 
 @NgModule({
   imports: [
     CommonModule, FormsModule, RouterModule,
     //HttpModule,
     AgGridModule.withComponents([
-      BooleanFloatingFilterComponent
+      AgGridBooleanFilterComponent
     ]),
     UserModule,
     ResourceModule,
   ],
   declarations: [
-    BooleanFloatingFilterComponent
+    AgGridBooleanFilterComponent
   ],
   exports: [
     CommonModule, FormsModule, RouterModule,
@@ -68,13 +68,13 @@ import { BooleanFloatingFilterComponent } from "./ag-grid-filters/boolean-floati
     UserModule,
     ResourceModule,
 
-    BooleanFloatingFilterComponent
+    AgGridBooleanFilterComponent
   ]
 
 })
 
 export class SmartadminModule {
-  static forRoot():ModuleWithProviders {
+  static forRoot(): ModuleWithProviders {
     return {
       ngModule: SmartadminModule,
       providers: [JsonApiService, LayoutService]

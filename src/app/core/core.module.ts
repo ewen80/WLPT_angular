@@ -6,6 +6,11 @@ import { NgModule, ErrorHandler, ModuleWithProviders, APP_INITIALIZER } from '@a
 import { MockBackend } from '@angular/http/testing';
 import { Http, HttpModule, BaseRequestOptions } from "@angular/http";
 
+import {
+  ModalModule, ButtonsModule, TooltipModule, BsDropdownModule, ProgressbarModule, AlertModule, TabsModule,
+  AccordionModule, CarouselModule
+} from 'ng2-bootstrap'
+
 import { fakeBackendProvider } from "../test/_service/fake_backend";
 import { AuthenticationGuard, AuthenticationService } from './services/authentication/index';
 import { UserService } from './services/user.service';
@@ -22,7 +27,19 @@ export function initConfig(config: AppConfig){
 
 @NgModule({
     imports: [
-        HttpModule
+        HttpModule,
+
+        //开始引入所有的ng2-bootstrap模块
+        ModalModule.forRoot(),
+        ButtonsModule.forRoot(),
+        TooltipModule.forRoot(),
+        BsDropdownModule.forRoot(),
+        ProgressbarModule.forRoot(),
+        AlertModule.forRoot(),
+        TabsModule.forRoot(),
+        AccordionModule.forRoot(),
+        CarouselModule.forRoot(),
+        //结束引入
     ],
     declarations: [],
     exports: [ ],

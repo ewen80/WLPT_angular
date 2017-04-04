@@ -12,7 +12,7 @@ import { SerializationHelper } from "../../shared/helper/serialize/serialization
 @Injectable()
 export class ResourceService {
 
-  private serverUrl: string = this.appConfig.getConfig("Server").Url + "/resourcetype";
+  private serverUrl: string = this.appConfig.getConfig("Server").Url + "/resourcetypes";
   
   constructor(private http:BasicAuthenticationHttp, private appConfig:AppConfig){
     console.log('ResourceService created');
@@ -25,6 +25,7 @@ export class ResourceService {
     if(filterString){
       queryString += "&filter=" + filterString;
     }
+    // console.log(queryString);
     return this.http.get(queryString)
                       .toPromise()
                       .then( response => {
@@ -37,7 +38,7 @@ export class ResourceService {
                       .catch(this.handleError);   
   }
 
-  //获取角色信息
+  //获取单个资源信息
   getResource(className: string): Promise<Resource>{
     return this.http.get(this.serverUrl+'/'+className)
                       .toPromise()

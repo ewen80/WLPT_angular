@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import {
-  ModalModule
+  ModalModule,
+  TabsModule
 } from 'ng2-bootstrap'
 
 import { SmartadminModule } from '../../shared/smartadmin.module';
@@ -14,8 +15,9 @@ import { ResourceComponent } from './resources.component';
     CommonModule,
 
     SmartadminModule,
-    ModalModule
 
+    ModalModule,
+    TabsModule
   ],
   declarations: [ ResourceComponent ]
 })
