@@ -10,21 +10,29 @@
           <header>
               <ul class="nav nav-tabs pull-left in">
                 <li [class.active]="activedTabIndex == 0">
-                  <a (click)="activedTabIndex=0"><i class="fa fa-tags"></i><span class="hidden-mobile hidden-tablet">资源类型</span></a>
+                  <a (click)="onTabSelected(0)"><i class="fa fa-tags"></i><span class="hidden-mobile hidden-tablet">资源类型</span></a>
                 </li>
                 <li [class.active]="activedTabIndex == 1">
-                  <a (click)="activedTabIndex=1"><span class="hidden-mobile hidden-tablet">资源范围</span></a>
+                  <a (click)="onTabSelected(1)"><span class="hidden-mobile hidden-tablet">资源范围</span></a>
                 </li>
               </ul>
               <div class="widget-toolbar">
-                <button class="btn btn-default" (click)="addResourceModalShow()">
+                <!--资源类型工具按钮-->
+                <button #addTypeButton *ngIf="addTypeButtonDisplay" class="btn btn-default" (click)="addResourceModalShow()">
                   <i class="fa fa-plus"></i> <span class="hidden-mobile">添加资源类型</span>
                 </button>
-                <button #delButton class="btn btn-default" (click)="deleteResourceButtonClick()" [disabled]="delButtonDisabled">
+                <button #delTypeButton *ngIf="delTypeButtonDisplay" class="btn btn-default" (click)="deleteResourceButtonClick()" [disabled]="delTypeButtonDisabled">
                   <i class="fa fa-minus"></i> <span class="hidden-mobile">删除资源类型</span>
                 </button>
-                <button #rangeButton class="btn btn-default" (click)="rangeButtonClick()" [disabled]="rangeButtonDisabled">
+                <button #rangeButton *ngIf="rangeButtonDisplay" class="btn btn-default" (click)="rangeButtonClick()" [disabled]="rangeButtonDisabled">
                   <span class="hidden-mobile">范围管理</span>
+                </button>
+                <!--资源范围工具按钮-->
+                <button  *ngIf="addRangeButtonDisplay" class="btn btn-default" >
+                  <i class="fa fa-plus"></i><span class="hidden-mobile">添加资源范围</span>
+                </button>
+                <button  *ngIf="delRangeButtonDisplay" class="btn btn-default" [disabled]="delRangeButtonDisabled">
+                  <i class="fa fa-minus"></i> <span class="hidden-mobile">删除资源范围</span>
                 </button>
               </div>
           </header>
@@ -33,22 +41,22 @@
               <!--Tabs-->
               <tabset>
                 <!--资源类型列表-->
-                <tab [active]="activedTabIndex == 0">
+                <tab [active]="activedTabIndex == 0" >
                   <ag-grid-angular #resourcesGrid style="width: 100%; height: 350px;" class="ag-fresh"    
                       [gridOptions]="typesGridOptions" 
                       [columnDefs]="typesColumnDefs"  
                       (rowDoubleClicked)="dblClickTypesRow($event)"
-                      (rowSelected)="setButtonsStatus()"
-                      (modelUpdated)="setButtonsStatus()"></ag-grid-angular>
+                      (rowSelected)="setTypesButtonsStatus()"
+                      (modelUpdated)="setTypesButtonsStatus()"></ag-grid-angular>
                 </tab>
                 <!--资源范围列表-->
-                <tab [active]="activedTabIndex == 1">
+                <tab [active]="activedTabIndex == 1" >
                   <ag-grid-angular #rangesGrid style="width: 100%; height: 350px;" class="ag-fresh"    
                       [gridOptions]="rangesGridOptions" 
                       [columnDefs]="rangesColumnDefs"  
                       (rowDoubleClicked)="dblClickRangesRow($event)"
-                      (rowSelected)="setButtonsStatus()"
-                      (modelUpdated)="setButtonsStatus()"></ag-grid-angular>
+                      (rowSelected)="setRangesButtonsStatus()"
+                      (modelUpdated)="setRangesButtonsStatus()"></ag-grid-angular>
                 </tab>
               </tabset>
             </div>

@@ -16,6 +16,7 @@ import { AuthenticationGuard, AuthenticationService } from './services/authentic
 import { UserService } from './services/user.service';
 import { RoleService } from './services/role.service';
 import { ResourceService } from './services/resource.service';
+import { ResourceRangeService } from './services/resource-range.service';
 import { BasicAuthenticationHttp } from './services/basic-authentication-http.service';
 
 import { AppConfig } from './app.config';
@@ -52,6 +53,7 @@ export function initConfig(config: AppConfig){
         UserService,
         RoleService,
         ResourceService,
+        ResourceRangeService,
         BasicAuthenticationHttp,
         AppConfig,
         AggridFilterSerialization,  //AgGrid组件查询过滤器序列化为字符串

@@ -2,7 +2,7 @@
   created by wenliang
   资源管理页面
 */
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Input, EventEmitter } from '@angular/core';
 
 import {GridOptions} from 'ag-grid/main';
 
@@ -17,7 +17,7 @@ declare var $: any;
 
 @Component({
   selector: 'resoucesadmin',
-  templateUrl: './resources.component.html'
+  templateUrl: './resources.component.html',
 })
 export class ResourceComponent implements OnInit,  AfterViewInit{
 
@@ -32,14 +32,26 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
   @ViewChild("resourceDetail") private resourceDetail;
   
   public modalTitle: string;
-  public delButtonDisabled = true;
+  public delTypeButtonDisabled = true;
   public rangeButtonDisabled = true;
+
+  public delRangeButtonDisabled = true;
+
+  public addTypeButtonDisplay:boolean = true;
+  public delTypeButtonDisplay:boolean = true;
+  public rangeButtonDisplay:boolean = true;
+
+  public addRangeButtonDisplay:boolean = true;
+  public delRangeButtonDisplay:boolean = true;
 
   private startRow = 0;
 
   public selectedResource: Resource = new Resource();
 
   public activedTabIndex: number = 0;//当前活动状态的Tab序号
+
+  onTabToggled = new EventEmitter<any>(); 
+
 
 
   constructor(private resourceService:ResourceService, private resourceRangeService:ResourceRangeService, private aggridFilterSerialization:AggridFilterSerialization) { 
@@ -55,6 +67,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
       paginationPageSize:20,
       enableServerSideFilter: true,
     };
+
     this.rangesGridOptions = <GridOptions>{
       floatingFilter:false,
       rowSelection:"multiple",
@@ -95,6 +108,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
         filterFramework: AgGridBooleanFilterComponent,
       },
     ];
+
     this.rangesColumnDefs = [
       {
         headerName: '#',
@@ -115,6 +129,9 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
 
   ngAfterViewInit(){
     this.setTypesDataSource();
+    this.setRangesDataSource();
+
+    this.checkButtonsDisplay();
   }
 
    //资源类型数据源
@@ -145,6 +162,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
           this.startRow = params.startRow;
       }
     }
+    this.rangesGridOptions.api.setDatasource(dataSource);
   }
 
   //保存结束
@@ -216,8 +234,42 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
     this.setTypesDataSource();
   }
 
-  setButtonsStatus(){
-    this.delButtonDisabled = this.typesGridOptions.api.getSelectedRows().length == 0;
+  //设置工具栏按钮状态
+  setTypesButtonsStatus(){
+    this.delTypeButtonDisabled = this.typesGridOptions.api.getSelectedRows().length == 0;
     this.rangeButtonDisabled = this.typesGridOptions.api.getSelectedRows().length != 1;
+  }
+  setRangesButtonsStatus(){
+    this.delRangeButtonDisabled = this.rangesGridOptions.api.getSelectedRows().length == 0;
+  }
+
+  onTabSelected(selectedTabIndex:number){
+    this.activedTabIndex = selectedTabIndex;
+    this.checkButtonsDisplay();
+  }
+
+  //检查工具栏按钮是否需要显示
+  checkButtonsDisplay(){
+    //当前如果是资源范围管理tab则隐藏 "添加资源类型,删除资源类型,资源范围管理" 按钮
+    switch(this.activedTabIndex){
+      case 0:
+        //资源类型管理Tab
+        this.addTypeButtonDisplay = true;
+        this.delTypeButtonDisplay = true;
+        this.rangeButtonDisplay = true;
+
+        this.addRangeButtonDisplay = false;
+        this.delRangeButtonDisplay = false;
+        break;
+      case 1:
+        //资源范围管理Tab
+        this.addTypeButtonDisplay = false;
+        this.delTypeButtonDisplay = false;
+        this.rangeButtonDisplay = false;
+
+        this.addRangeButtonDisplay = true;
+        this.delRangeButtonDisplay = true;
+        break;
+    }
   }
 }
