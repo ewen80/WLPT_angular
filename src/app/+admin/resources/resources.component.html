@@ -28,7 +28,7 @@
                   <span class="hidden-mobile">范围管理</span>
                 </button>
                 <!--资源范围工具按钮-->
-                <button  *ngIf="addRangeButtonDisplay" class="btn btn-default" >
+                <button  *ngIf="addRangeButtonDisplay" class="btn btn-default" (click)="addRangeModalShow()">
                   <i class="fa fa-plus"></i><span class="hidden-mobile">添加资源范围</span>
                 </button>
                 <button  *ngIf="delRangeButtonDisplay" class="btn btn-default" [disabled]="delRangeButtonDisabled">
@@ -75,10 +75,28 @@
           <button type="button" class="close" aria-label="Close" (click)="resourceDetailModal.hide()">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title">{{modalTitle}}</h4>
+          <h4 class="modal-title">{{resourceModalTitle}}</h4>
         </div>
         <div class="modal-body">
-          <resource-detail #resourceDetail [resource]="selectedResource" [saveMode]="saveMode"  (onSaveFinished)="saveFinished($event)"></resource-detail>
+          <resource-detail #resourceDetail [resource]="selectedResource" [saveMode]="resourceSaveMode"  (onSaveFinished)="saveFinished($event)"></resource-detail>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--资源范围详情对话框-->
+  <div class="modal fade" bsModal #rangeDetailModal="bs-modal" [config]="{backdrop: true}"
+      tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" aria-label="Close" (click)="resourceRangeDetailModal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">{{rangeModalTitle}}</h4>
+        </div>
+        <div class="modal-body">
+          <resource-detail #rangeDetail [resource]="selectedResource" [saveMode]="rangeSaveMode"  (onSaveFinished)="saveFinished($event)"></resource-detail>
         </div>
       </div>
     </div>

@@ -26,6 +26,28 @@ export class ResourceRangeService{
                     .catch(this.handleError);   
     }
 
+    //根据类名和角色名获取范围
+    getByClassName(className:string):Promise<{rows:ResourceRange[],rowCount:number}>{
+        return this.http.get(this.serverUrl+"?resourceclassname="+className)
+                    .toPromise()
+                    .then( response =>{
+                                let returnData = response.json();
+                                return {
+                                    rows:returnData.content,
+                                    rowCount:returnData.totalElements
+                                }
+                    })
+                    .catch(this.handleError);
+    }
+
+    //保存
+    save(range:ResourceRange): Promise<{sucess:boolean,message:string}>{
+        return this.http.post(this.serverUrl,JSON.stringify(range))
+                      .toPromise()
+                      .then( response => response.json())
+                      .catch(this.handleError);
+    }
+
     private handleError(error: any): Promise<any>{
         return Promise.reject(error.message || error);
     }

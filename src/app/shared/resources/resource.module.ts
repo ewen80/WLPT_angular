@@ -2,9 +2,9 @@ import { NgModule, ModuleWithProviders  } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ReactiveFormsModule  } from "@angular/forms";
 
-import { SmartadminWidgetsModule } from '../../widgets/smartadmin-widgets.module';
+import { SmartadminWidgetsModule } from '../widgets/smartadmin-widgets.module';
 
-import { ResourceDetailComponent } from './resource-detail.component';
+import { ResourceDetailComponent } from './resourcedetail/resource-detail.component';
 
 
 @NgModule({

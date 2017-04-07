@@ -12,6 +12,7 @@ import { saveMode } from '../../enums';
 import { AggridFilterSerialization } from "../../shared/helper/serialize/aggrid-filter.serialization";
 import { AgGridBooleanFilterComponent } from "../../shared/ag-grid-filters/boolean-filter.component";
 import { ResourceRangeService } from "../../core/services/resource-range.service";
+import { ResourceRange } from "../../core/entity/resource-range";
 
 declare var $: any;
 
@@ -21,7 +22,8 @@ declare var $: any;
 })
 export class ResourceComponent implements OnInit,  AfterViewInit{
 
-  public saveMode: saveMode;//对话框保存模式（更新，新增)
+  public resourceSaveMode: saveMode;//资源类型对话框保存模式（更新，新增)
+  public rangeSaveMode: saveMode;//范围对话框保存模式
 
   public typesGridOptions:GridOptions;
   public rangesGridOptions:GridOptions;
@@ -30,8 +32,12 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
 
   @ViewChild("resourceDetailModal") private resourceDetailModal;
   @ViewChild("resourceDetail") private resourceDetail;
+
+  @ViewChild("rangeDetailModal") private rangeDetailModal;
+  @ViewChild("rangeDetail") private rangeDetail;
   
-  public modalTitle: string;
+  public resourceModalTitle: string;
+  public rangeModalTitle: string;
   public delTypeButtonDisabled = true;
   public rangeButtonDisabled = true;
 
@@ -47,12 +53,9 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
   private startRow = 0;
 
   public selectedResource: Resource = new Resource();
+  public selectedRange: ResourceRange = new ResourceRange();
 
   public activedTabIndex: number = 0;//当前活动状态的Tab序号
-
-  onTabToggled = new EventEmitter<any>(); 
-
-
 
   constructor(private resourceService:ResourceService, private resourceRangeService:ResourceRangeService, private aggridFilterSerialization:AggridFilterSerialization) { 
     // console.log('users.components created:'+userService);
@@ -129,7 +132,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
 
   ngAfterViewInit(){
     this.setTypesDataSource();
-    this.setRangesDataSource();
+    // this.setRangesDataSource();
 
     this.checkButtonsDisplay();
   }
@@ -152,10 +155,10 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
   } 
 
   //资源范围数据源
-  setRangesDataSource(){
+  setRangesDataSource(className:string){
     let dataSource = {
       getRows:(params: any) => {
-        this.resourceRangeService.getAll()
+        this.resourceRangeService.getByClassName(className)
           .then( data => {
             params.successCallback(data.rows, data.rowCount);
           });
@@ -196,16 +199,24 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
 
   //新增资源
   public addResourceModalShow():void{
-    this.modalTitle = "添加资源类型";
-    this.saveMode = saveMode.add;
+    this.resourceModalTitle = "添加资源类型";
+    this.resourceSaveMode = saveMode.add;
     this.selectedResource = new Resource();
     this.resourceDetailModal.show();
   }
 
+  //新增范围
+  public addRangeModalShow():void{
+    this.rangeModalTitle = "添加资源范围";
+    this.resourceSaveMode = saveMode.add;
+    this.selectedRange = new ResourceRange();
+    this.rangeDetailModal.show();
+  }
+
   //双击列表行事件
   public dblClickTypesRow(event){
-    this.modalTitle = "编辑资源类型";
-    this.saveMode = saveMode.update;
+    this.resourceModalTitle = "编辑资源类型";
+    this.resourceSaveMode = saveMode.update;
     this.selectedResource = event.data as Resource;
     this.resourceDetailModal.show();
   }
@@ -226,7 +237,16 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
 
   //单击范围管理按钮
   public rangeButtonClick(){
-    this.activedTabIndex = 1;
+    var selectedRows = this.typesGridOptions.api.getSelectedRows();
+    if(selectedRows.length > 1){
+      console.error("每次只能管理一个资源类型的资源范围！请选择一个资源类型，不要多选！");
+      return;
+    }else{
+      var resource: Resource = selectedRows[0];
+      this.setRangesDataSource(resource.className);
+      this.activedTabIndex = 1;
+      this.checkButtonsDisplay();
+    }
   }
 
   //刷新列表

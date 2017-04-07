@@ -21,7 +21,7 @@ import { UtilsModule } from "./utils/utils.module";
 // import {SmartProgressbarModule} from "./ui/smart-progressbar/smart-progressbar.module";
 //import { SmartadminDatatableModule } from './ui/datatable/smartadmin-datatable.module';
 
-import { ResourceModule } from './resources/resourcedetail/resource.module';
+import { ResourceModule } from './resources/resource.module';
 // ag-grid
 import { AgGridModule } from "ag-grid-angular/main";
 import { AgGridBooleanFilterComponent } from "./ag-grid-filters/boolean-filter.component";

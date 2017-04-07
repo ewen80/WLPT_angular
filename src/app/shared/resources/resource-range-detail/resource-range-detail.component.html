@@ -1,0 +1,81 @@
+         <!--Widget ID (each widget will need unique ID)-->
+        <sa-widget  [colorbutton]="false" 
+                    [editbutton]="false" 
+                    [deletebutton]="false"
+                    [fullscreenbutton]="false">
+          <!-- widget options:
+          usage: <sa-widget [editbutton]="false">
+
+          [colorbutton]="false"
+          [editbutton]="false"
+          [togglebutton]="false"
+          [deletebutton]="false"
+          [fullscreenbutton]="false"
+          [custombutton]="false"
+          [collapsed]="true"
+          [sortable]="false"
+
+          -->
+          <header>
+            <span class="widget-icon"> <i class="fa fa-user"></i> </span>
+            <h2>资源范围信息</h2>
+          </header>
+          <!-- widget div-->
+          <div>
+            <!-- widget content -->
+            <div class="widget-body">
+              <form [formGroup]="resourceRangeForm" (ngSubmit)="onSubmit()" novalidate>
+                <fieldset>  
+                  <div class="form-group">
+                    <label for="className">过滤器：</label>
+                    <div>
+                      <input class="form-control"  type="text" formControlName="filter" id="filter">
+                      <div *ngIf="formErrors.filter" class="alert alert-danger">
+                        {{ formErrors.filter }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">  
+                    <label for="role">角色：</label> 
+                    <div>
+                        <select formControlName="role" id="role" class="form-control">
+                            <option *ngFor="let role in allRoles" [value]="role.id">{{role.name}}({{role.id}})</option>
+                        </select>
+                        <div *ngIf="formErrors.role" class="alert alert-danger">
+                          {{ formErrors.role }}
+                        </div>
+                    </div> 
+                  </div>  
+                  <div class="form-group">  
+                    <label for="matchAll">是否全部匹配：</label> 
+                      <div>
+                        <label class="radio radio-inline">
+                          <input type="radio"  formControlName="matchAll" value="false">否
+                        </label>
+                      </div>
+                      <div>
+                        <label class="radio radio-inline">
+                          <input type="radio"  formControlName="matchAll" value="true">是
+                        </label>
+                      </div>
+                      <div *ngIf="formErrors.matchAll" class="alert alert-danger">
+                        {{ formErrors.matchAll }}
+                      </div>
+                  </div> 
+                  <div *ngIf = "saveMode!==0" class="form-actions">
+                    <button class="btn btn-primary" type="submit" [disabled]="!resourceRangeDetailForm.valid">
+                    <i class="fa fa-save"></i>
+                    保存
+                    </button>
+                  </div>
+                  {{resourceRangeDetailForm.value | json}}
+                </fieldset>
+              </form>
+            </div>
+            <!-- end widget content -->
+
+          </div>
+          <!-- end widget div -->
+
+        </sa-widget>
+        <!-- end widget -->
