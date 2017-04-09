@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 
-import { PopoverModule } from "ng2-popover/src/index";
+import { PopoverModule } from "ngx-popover";
 import { JsonApiService } from './api'
 import { LayoutService } from './layout/layout.service'
 import { SmartadminLayoutModule } from './layout'
@@ -13,6 +13,7 @@ import { I18nModule } from "./i18n/i18n.module";
 import { UserModule } from "./user/user.module";
 import { SmartadminWidgetsModule } from "./widgets/smartadmin-widgets.module";
 import { UtilsModule } from "./utils/utils.module";
+// import {VoiceControlModule} from "./voice-control/voice-control.module";
 // import {SmartadminFormsModule} from "./forms/smartadmin-forms.module";
 // import {ChatModule} from "./chat/chat.module";
 // import {StatsModule} from "./stats/stats.module";

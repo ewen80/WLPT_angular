@@ -208,9 +208,15 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
   //新增范围
   public addRangeModalShow():void{
     this.rangeModalTitle = "添加资源范围";
-    this.resourceSaveMode = saveMode.add;
-    this.selectedRange = new ResourceRange();
-    this.rangeDetailModal.show();
+    this.rangeSaveMode = saveMode.add;
+    if(this.selectedResource){
+      this.selectedRange = new ResourceRange();
+      this.selectedRange.resource = this.selectedResource.className;
+      this.rangeDetailModal.show();
+    }else{
+      console.error("还没有选中的资源类型,无法添加资源范围");
+      return;
+    }
   }
 
   //双击列表行事件

@@ -13,7 +13,7 @@ import {UtilsModule} from "../utils/utils.module";
 import {UserModule} from "../user/user.module";
 import { AsideChatComponent } from './aside-chat/aside-chat.component';
 import { AsideChatUserComponent } from './aside-chat-user/aside-chat-user.component';
-import {PopoverModule} from "ng2-popover/src/index";
+import {PopoverModule} from "ngx-popover";
 
 @NgModule({
   imports: [

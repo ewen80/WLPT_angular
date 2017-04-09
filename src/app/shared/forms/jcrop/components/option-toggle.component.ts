@@ -1,6 +1,6 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {OptionsActions} from "../actions/options.actions";
-import {NgRedux} from "ng2-redux";
+import {NgRedux} from "@angular-redux/store";
 
 @Component({
   selector: 'jcrop-option-toggle',

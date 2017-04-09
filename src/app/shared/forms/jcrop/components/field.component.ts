@@ -1,6 +1,6 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {CropActions} from "../actions/crop.actions";
-import {NgRedux} from "ng2-redux/lib/index";
+import {NgRedux} from "@angular-redux/store";
 import {Observable} from "rxjs";
 
 @Component({

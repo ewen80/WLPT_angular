@@ -96,7 +96,7 @@
           <h4 class="modal-title">{{rangeModalTitle}}</h4>
         </div>
         <div class="modal-body">
-          <resource-detail #rangeDetail [resource]="selectedResource" [saveMode]="rangeSaveMode"  (onSaveFinished)="saveFinished($event)"></resource-detail>
+          <resource-range-detail #rangeDetail [range]="selectedRange" [saveMode]="rangeSaveMode"  (onSaveFinished)="saveFinished($event)"></resource-range-detail>
         </div>
       </div>
     </div>

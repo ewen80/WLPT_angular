@@ -1,7 +1,7 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ContentChild} from "@angular/core/src/metadata/di";
 import {Input} from "@angular/core/src/metadata/directives";
-import {NgRedux} from "ng2-redux";
+import {NgRedux} from "@angular-redux/store";
 
 @Component({
   selector: 'jcrop-preview',

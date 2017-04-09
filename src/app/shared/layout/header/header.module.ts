@@ -20,7 +20,7 @@ import {I18nModule} from "../../i18n/i18n.module";
 import { SpeechButtonComponent } from './speech-button/speech-button.component';
 import {FormsModule} from "@angular/forms";
 import {UserModule} from "../../user/user.module";
-import {PopoverModule} from "ng2-popover/src/index";
+import {PopoverModule} from "ngx-popover";
 
 
 @NgModule({

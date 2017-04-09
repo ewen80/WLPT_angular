@@ -28,7 +28,7 @@ export class ResourceDetailComponent implements OnChanges {
             name: ['',Validators.required],
             className: ['',Validators.required,(new ResourceClassNameValidator(this.resourceService)).validate.bind(this)],
             description: [''],
-            deleted: ['false']
+            deleted: ['']
         });
         this.resourceDetailForm.valueChanges.subscribe(data => this.onValueChanged(data));
         this.resourceDetailForm.statusChanges.subscribe(status => this.onValidatorStatusChanged(status));

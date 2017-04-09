@@ -1,10 +1,11 @@
 import {Component, OnInit, Injectable} from '@angular/core';
 
 import {config} from '../smartadmin.config';
-import {Observable, Subject} from "rxjs/Rx";
+import {Observable, Subject, Subscription} from "rxjs/Rx";
 
 
 import 'rxjs/add/operator/debounceTime';
+import {NotificationService} from "../utils/notification.service";
 
 declare var $:any;
 
@@ -29,7 +30,8 @@ const store = {
   device: '',
 
   mobileViewActivated: false,
-  menuCollapsed: false
+  menuCollapsed: false,
+  menuMinified: false,
 };
 
 
@@ -51,7 +53,7 @@ export class LayoutService {
     return this.subject.subscribe(next, err, complete)
   }
 
-  constructor() {
+  constructor(private notificationService: NotificationService) {
     this.subject = new Subject();
     this.store = store;
     this.trigger();
@@ -145,8 +147,19 @@ export class LayoutService {
     this.trigger()
   }
 
-  onCollapseMenu(){
-    this.store.menuCollapsed = !this.store.menuCollapsed;
+  onCollapseMenu(value?){
+    if(typeof value !== 'undefined'){
+      this.store.menuCollapsed = value
+    } else {
+      this.store.menuCollapsed = !this.store.menuCollapsed;
+    }
+
+    this.trigger();
+  }
+  
+
+  onMinifyMenu(){
+    this.store.menuMinified = !this.store.menuMinified;    
     this.trigger();
   }
 
@@ -174,11 +187,11 @@ export class LayoutService {
   }
 
   factoryReset() {
-    $.SmartMessageBox({
+    this.notificationService.smartMessageBox({
       title: "<i class='fa fa-refresh' style='color:green'></i> Clear Local Storage",
       content: "Would you like to RESET all your saved widgets and clear LocalStorage?",
       buttons: '[No][Yes]'
-    }, function (ButtonPressed) {
+    }, (ButtonPressed) => {
       if (ButtonPressed == "Yes" && localStorage) {
         localStorage.clear();
         location.reload()
@@ -228,6 +241,12 @@ export class LayoutService {
       $html.toggleClass("hidden-menu-mobile-lock", state.menuCollapsed);
       $body.toggleClass("hidden-menu", state.menuCollapsed);
       $body.removeClass("minified");
+    }
+
+    if(state.menuMinified && !state.menuOnTop && !state.mobileViewActivated){
+       $body.addClass("minified");
+       $body.removeClass("hidden-menu");
+       $html.removeClass("hidden-menu-mobile-lock");
     }
   }
 }

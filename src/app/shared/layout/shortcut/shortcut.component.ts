@@ -1,16 +1,17 @@
 import {Subscription} from "rxjs/Rx";
 import {
   Component, OnInit, OnDestroy, ElementRef,
-  trigger,
-  state,
-  style,
-  transition,
-  animate, Renderer, AfterViewInit, AfterContentInit
+  Renderer, AfterViewInit, AfterContentInit
 } from '@angular/core';
 import { Router} from "@angular/router";
 
 import {LayoutService} from "../layout.service";
 
+import { trigger,
+  state,
+  style,
+  transition,
+  animate} from '@angular/animations'
 
 @Component({
   selector: 'sa-shortcut',

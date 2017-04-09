@@ -30,11 +30,9 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
 
     private createForm():void{
         this.resourceRangeDetailForm = this.fb.group({
-            // When you reference a method you lose the object it's attached on. You can force this using the bind method
-            name: ['',Validators.required],
-            className: ['',Validators.required],
-            description: [''],
-            deleted: ['false']
+            filter:[''],
+            role:['', Validators.required],
+            matchAll:['']
         });
         this.resourceRangeDetailForm.valueChanges.subscribe(data => this.onValueChanged(data));
         this.resourceRangeDetailForm.statusChanges.subscribe(status => this.onValidatorStatusChanged(status));
@@ -72,8 +70,7 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
     //需要进行验证的formControl
     formErrors = {
         'role': '',
-        'filter': '',
-        'matchAll': ''
+        'filter': ''
     }
 
     validationMessages = {
@@ -83,6 +80,9 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
         'filter':{
             'required': '过滤器不能为空',
         },
+        'matchAll':{
+            'required': '是否匹配全部选项不能为空'
+        }
     };
 
     //重置状态
@@ -91,10 +91,9 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
             this.range = range;
         }
         this.resourceRangeDetailForm.reset({
-            // name: this.resource.name,
-            // className: this.resource.className,
-            // description: this.resource.description,
-            // deleted: String(this.resource.deleted)
+            filter: this.range.filter,
+            role: this.range.roleId,
+            matchAll: String(this.range.matchAll)
         });
 
         // const idControl = this.resourceDetailForm.get('className');
@@ -147,10 +146,6 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
         const formModel = this.resourceRangeDetailForm.value;
 
         const saveResourceRange: ResourceRange = {
-            // name: formModel.name,
-            // className: formModel.className,
-            // description: formModel.description,
-            // deleted: formModel.deleted
             id: formModel.id,
             resource: this.range.resource,
             filter: formModel.filter,

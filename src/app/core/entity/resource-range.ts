@@ -6,5 +6,5 @@ export class ResourceRange {
     resource:string;
     filter:string;
     roleId:string;
-    matchAll:boolean;
+    matchAll:boolean = false;
 }
