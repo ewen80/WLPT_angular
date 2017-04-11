@@ -35,6 +35,9 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
 
   @ViewChild("rangeDetailModal") private rangeDetailModal;
   @ViewChild("rangeDetail") private rangeDetail;
+
+  private resourceDetailModalIsShown:boolean;
+  private rangeDetailModalIsShown: boolean;
   
   public resourceModalTitle: string;
   public rangeModalTitle: string;
@@ -51,6 +54,8 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
   public delRangeButtonDisplay:boolean = true;
 
   private startRow = 0;
+
+  public rangeRowData:any[];
 
   public selectedResource: Resource = new Resource();
   public selectedRange: ResourceRange = new ResourceRange();
@@ -74,9 +79,10 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
     this.rangesGridOptions = <GridOptions>{
       floatingFilter:false,
       rowSelection:"multiple",
-      rowModelType:'pagination',
-      paginationPageSize:20,
-      enableServerSideFilter: true,
+      //range不采用服务器端分页和排序,过滤
+      // rowModelType:'pagination',
+      // paginationPageSize:20,
+      // enableServerSideFilter: true,
     }
     
     this.typesColumnDefs = [
@@ -156,22 +162,32 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
 
   //资源范围数据源
   setRangesDataSource(className:string){
-    let dataSource = {
-      getRows:(params: any) => {
-        this.resourceRangeService.getByClassName(className)
-          .then( data => {
-            params.successCallback(data.rows, data.rowCount);
-          });
-          this.startRow = params.startRow;
-      }
-    }
-    this.rangesGridOptions.api.setDatasource(dataSource);
+      this.resourceRangeService.getByClassName(className)
+        .then( data => this.rangeRowData = data.rows);
   }
 
   //保存结束
   public saveFinished(event:any){
     //关闭对话框
-    this.resourceDetailModal.hide();
+    if(this.resourceDetailModalIsShown){
+      this.resourceDetailModal.hide();
+      //重置对话框
+      if(this.resourceDetail){
+        this.resourceDetail.reset(new Resource());
+      }
+      //刷新列表
+      this.refreshResourceList();
+    }
+
+    if(this.rangeDetailModalIsShown){
+      this.rangeDetailModal.hide();
+      //重置对话框
+      if(this.rangeDetail){
+        this.rangeDetail.reset(new ResourceRange());
+      }
+      //刷新列表
+      this.refreshRangeList(this.selectedResource.className);
+    }
     //提示保存成功或失败
     let boxTitle: string;
     let boxColor: string;
@@ -188,13 +204,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
       color: boxColor,
       iconSmall: "fa fa-info",
       timeout: 4000
-    });
-    //重置对话框
-    if(this.resourceDetail){
-      this.resourceDetail.reset(new Resource());
-    }
-    //刷新列表
-    this.refreshResourceList();
+    });    
   }
 
   //新增资源
@@ -203,6 +213,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
     this.resourceSaveMode = saveMode.add;
     this.selectedResource = new Resource();
     this.resourceDetailModal.show();
+    this.resourceDetailModalIsShown = true;
   }
 
   //新增范围
@@ -213,6 +224,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
       this.selectedRange = new ResourceRange();
       this.selectedRange.resource = this.selectedResource.className;
       this.rangeDetailModal.show();
+      this.rangeDetailModalIsShown = true;
     }else{
       console.error("还没有选中的资源类型,无法添加资源范围");
       return;
@@ -225,6 +237,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
     this.resourceSaveMode = saveMode.update;
     this.selectedResource = event.data as Resource;
     this.resourceDetailModal.show();
+    this.resourceDetailModalIsShown = true;
   }
 
   //单击删除按钮
@@ -250,15 +263,18 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
     }else{
       this.selectedResource = selectedRows[0];
       this.setRangesDataSource(this.selectedResource.className);
-      this.selectedResource = this.selectedResource;
       this.activedTabIndex = 1;
       this.checkButtonsDisplay();
     }
   }
 
-  //刷新列表
+  //刷新资源类型列表
   private refreshResourceList(){
     this.setTypesDataSource();
+  }
+  //刷新资源范围列表
+  private refreshRangeList(resourceClassName:string){
+    this.setRangesDataSource(resourceClassName);
   }
 
   //设置工具栏按钮状态

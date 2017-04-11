@@ -53,6 +53,7 @@
                 <tab [active]="activedTabIndex == 1" >
                   <ag-grid-angular #rangesGrid style="width: 100%; height: 350px;" class="ag-fresh"    
                       [gridOptions]="rangesGridOptions" 
+                      [rowData]="rangeRowData"
                       [columnDefs]="rangesColumnDefs"  
                       (rowDoubleClicked)="dblClickRangesRow($event)"
                       (rowSelected)="setRangesButtonsStatus()"

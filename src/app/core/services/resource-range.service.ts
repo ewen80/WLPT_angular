@@ -27,14 +27,13 @@ export class ResourceRangeService{
     }
 
     //根据类名和角色名获取范围
-    getByClassName(className:string):Promise<{rows:ResourceRange[],rowCount:number}>{
+    getByClassName(className:string):Promise<{rows:ResourceRange[]}>{
         return this.http.get(this.serverUrl+"?resourceclassname="+className)
                     .toPromise()
                     .then( response =>{
                                 let returnData = response.json();
                                 return {
-                                    rows:returnData.content,
-                                    rowCount:returnData.totalElements
+                                    rows:returnData,
                                 }
                     })
                     .catch(this.handleError);

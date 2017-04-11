@@ -1,6 +1,6 @@
 import {Component, OnInit, Input, Output, EventEmitter, ViewChild} from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ModalModule } from 'ng2-bootstrap';
+import { ModalModule } from 'ngx-bootstrap';
 
 
 

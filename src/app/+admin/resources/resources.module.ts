@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import {
   ModalModule,
   TabsModule
-} from 'ng2-bootstrap'
+} from 'ngx-bootstrap'
 
 import { SmartadminModule } from '../../shared/smartadmin.module';
 

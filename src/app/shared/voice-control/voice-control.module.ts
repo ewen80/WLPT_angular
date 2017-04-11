@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ModalModule} from "ng2-bootstrap";
+import {ModalModule} from "ngx-bootstrap";
 
 import {SoundModule} from "../sound/sound.module";
 import {UtilsModule} from "../utils/utils.module";
