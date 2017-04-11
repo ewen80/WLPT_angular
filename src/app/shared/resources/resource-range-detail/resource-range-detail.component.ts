@@ -142,12 +142,12 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
             });
     }
 
-    private prepareSave(): ResourceRange {
+    private prepareSave(): any {
         const formModel = this.resourceRangeDetailForm.value;
 
-        const saveResourceRange: ResourceRange = {
+        const saveResourceRange = {
             id: formModel.id,
-            resource: this.range.resource,
+            resourceTypeClassName: this.range.resource,
             filter: formModel.filter,
             roleId: formModel.role,
             matchAll: formModel.matchAll

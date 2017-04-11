@@ -248,8 +248,9 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
       console.error("每次只能管理一个资源类型的资源范围！请选择一个资源类型，不要多选！");
       return;
     }else{
-      var resource: Resource = selectedRows[0];
-      this.setRangesDataSource(resource.className);
+      this.selectedResource = selectedRows[0];
+      this.setRangesDataSource(this.selectedResource.className);
+      this.selectedResource = this.selectedResource;
       this.activedTabIndex = 1;
       this.checkButtonsDisplay();
     }
