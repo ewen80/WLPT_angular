@@ -12,10 +12,13 @@
                 <li [class.active]="activedTabIndex == 0">
                   <a (click)="onTabSelected(0)"><i class="fa fa-tags"></i><span class="hidden-mobile hidden-tablet">资源类型</span></a>
                 </li>
-                <li [class.active]="activedTabIndex == 1">
+                <li *ngIf="activedTabIndex == 1" [class.active]="activedTabIndex == 1">
                   <a (click)="onTabSelected(1)"><span class="hidden-mobile hidden-tablet">资源范围</span></a>
                 </li>
               </ul>
+              <div *ngIf="activedTabIndex === 1" style="float:left;margin-left: 10px">
+                资源信息: 全限定名 {{selectedResource.className}}, 资源名 {{selectedResource.name}}
+              </div>
               <div class="widget-toolbar">
                 <!--资源类型工具按钮-->
                 <button #addTypeButton *ngIf="addTypeButtonDisplay" class="btn btn-default" (click)="addResourceModalShow()">
@@ -31,7 +34,7 @@
                 <button  *ngIf="addRangeButtonDisplay" class="btn btn-default" (click)="addRangeModalShow()">
                   <i class="fa fa-plus"></i><span class="hidden-mobile">添加资源范围</span>
                 </button>
-                <button  *ngIf="delRangeButtonDisplay" class="btn btn-default" [disabled]="delRangeButtonDisabled">
+                <button  *ngIf="delRangeButtonDisplay" class="btn btn-default" [disabled]="delRangeButtonDisabled" (click)="deleteRangeButtonClick()">
                   <i class="fa fa-minus"></i> <span class="hidden-mobile">删除资源范围</span>
                 </button>
               </div>

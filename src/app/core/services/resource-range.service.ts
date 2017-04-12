@@ -47,6 +47,19 @@ export class ResourceRangeService{
                       .catch(this.handleError);
     }
 
+    //删除
+    delete(ranges:ResourceRange[]): Promise<{sucess:boolean,message:string}>{
+    let rangeIds = "";
+    for(let i=0;i<ranges.length;i++){
+      rangeIds += ranges[i].id + ',';
+    }
+    rangeIds = rangeIds.substring(0,rangeIds.length-1);
+    return this.http.delete(this.serverUrl+"/"+rangeIds)
+                    .toPromise()
+                    // .then(response => response.json())
+                    .catch(this.handleError);
+  }
+
     private handleError(error: any): Promise<any>{
         return Promise.reject(error.message || error);
     }

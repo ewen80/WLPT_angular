@@ -297,12 +297,26 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
     this.rangeDetailModalIsShown = true;
   }
 
-  //单击删除按钮
+  //单击资源删除按钮
   public deleteResourceButtonClick(){
     var selectedRows = this.typesGridOptions.api.getSelectedRows();
     if(confirm("确认删除选中的"+selectedRows.length.toString()+"条记录吗？")){
       this.resourceService.delete(selectedRows)
         .then(() => this.refreshResourceList())
+        .catch((reason) => $.SmartMessageBox({
+					title : "出现错误",
+					content : JSON.parse(reason.text()).message,
+          buttons : "[OK]",
+				}));
+    }
+  }
+
+  //单击范围删除按钮
+  public deleteRangeButtonClick(){
+    var selectedRows = this.rangesGridOptions.api.getSelectedRows();
+    if(confirm("确认删除选中的"+selectedRows.length.toString()+"条记录吗？")){
+      this.resourceRangeService.delete(selectedRows)
+        .then(() => this.refreshRangeList(this.selectedResource.className))
         .catch((reason) => $.SmartMessageBox({
 					title : "出现错误",
 					content : JSON.parse(reason.text()).message,
