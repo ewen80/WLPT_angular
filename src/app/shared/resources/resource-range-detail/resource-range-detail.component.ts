@@ -95,13 +95,6 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
             role: this.range.roleId,
             matchAll: String(this.range.matchAll)
         });
-
-        // const idControl = this.resourceDetailForm.get('className');
-        // if(this.saveMode === saveMode.add){
-        //     idControl.enable();
-        // }else{
-        //     idControl.disable();
-        // }
     }
 
     //@Input属性发生变化
@@ -126,8 +119,8 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
     private save(){
         this.range = this.prepareSave();
         //调用Service服务添加用户,激活保存完成事件
-        this.resourceRangeService.save(this.range).
-            then(response => {
+        this.resourceRangeService.save(this.range)
+            .then(response => {
                 if(response){
                     this.onSaveFinished.emit({
                                             saveMode: this.saveMode,
@@ -146,16 +139,17 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
         const formModel = this.resourceRangeDetailForm.value;
 
         const saveResourceRange = {
-            id: formModel.id,
+            id: 0,
             resourceTypeClassName: this.range.resource,
             filter: formModel.filter,
             roleId: formModel.role,
             matchAll: formModel.matchAll
         };
 
-        // if(this.saveMode !== saveMode.add){
-        //     saveResourceRange.className = this.resource.className;
-        // }
+
+        if(this.saveMode === saveMode.update){
+            saveResourceRange.id = this.range.id;
+        }
 
         return saveResourceRange;
     }

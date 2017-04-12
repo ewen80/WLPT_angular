@@ -27,7 +27,7 @@ export class ResourceRangeService{
     }
 
     //根据类名和角色名获取范围
-    getByClassName(className:string):Promise<{rows:ResourceRange[]}>{
+    getByClassName(className:string):Promise<{rows:any[]}>{
         return this.http.get(this.serverUrl+"?resourceclassname="+className)
                     .toPromise()
                     .then( response =>{

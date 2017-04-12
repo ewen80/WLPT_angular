@@ -13,6 +13,8 @@ import { AggridFilterSerialization } from "../../shared/helper/serialize/aggrid-
 import { AgGridBooleanFilterComponent } from "../../shared/ag-grid-filters/boolean-filter.component";
 import { ResourceRangeService } from "../../core/services/resource-range.service";
 import { ResourceRange } from "../../core/entity/resource-range";
+import { RoleService } from "app/core/services/role.service";
+import { Role } from "app/core/entity/role";
 
 declare var $: any;
 
@@ -62,7 +64,10 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
 
   public activedTabIndex: number = 0;//当前活动状态的Tab序号
 
-  constructor(private resourceService:ResourceService, private resourceRangeService:ResourceRangeService, private aggridFilterSerialization:AggridFilterSerialization) { 
+  constructor(private resourceService:ResourceService, 
+              private resourceRangeService:ResourceRangeService, 
+              private aggridFilterSerialization:AggridFilterSerialization,
+              private roleService:RoleService) { 
     // console.log('users.components created:'+userService);
   }
 
@@ -131,8 +136,32 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
         suppressFilter:true,
         cellRenderer: (params:any) => {
           return this.startRow + params.rowIndex + 1;
-        } 
+                      }
       },
+      {
+        headerName: '过滤器',
+        width:100,
+        suppressFilter:true,
+        field: 'filter'
+      },
+      {
+        headerName: '角色id',
+        suppressFilter:true,
+        field: 'roleId'
+      },
+      // {
+      //   headerName: '角色名',
+      //   suppressFilter:true,
+      //   field: 'roleName'
+      // },
+      {
+        headerName: '匹配全部',
+        width:100,
+        suppressFilter:true,
+        cellRenderer: (params: any) => {
+          return params.data.matchAll ? '是':'否';
+        }
+      }
     ];
   }
 
@@ -162,8 +191,27 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
 
   //资源范围数据源
   setRangesDataSource(className:string){
-      this.resourceRangeService.getByClassName(className)
-        .then( data => this.rangeRowData = data.rows);
+        var allRole: Role[];
+        this.roleService.getAllRoles()
+          .then( response => {
+            allRole = response;
+            this.rangeRowData = new Array<any>();
+            this.resourceRangeService.getByClassName(className)
+              .then( data => {
+                let rangeData = new Array<any>();
+                data.rows.map( range => {
+                  rangeData.push({
+                    id: range.id,
+                    filter: range.filter,
+                    roleId: range.roleId,
+                    // roleName: allRole.find( value => value.id === range.roleId).name,
+                    resource: range.resourceTypeClassName,
+                    matchAll: range.matchAll
+                  })
+                });
+                this.rangeRowData = rangeData;
+              });
+          });
   }
 
   //保存结束
@@ -231,13 +279,22 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
     }
   }
 
-  //双击列表行事件
+  //双击资源行事件
   public dblClickTypesRow(event){
     this.resourceModalTitle = "编辑资源类型";
     this.resourceSaveMode = saveMode.update;
     this.selectedResource = event.data as Resource;
     this.resourceDetailModal.show();
     this.resourceDetailModalIsShown = true;
+  }
+
+  //双击范围行事件
+  public dblClickRangesRow(event){
+    this.rangeModalTitle = "编辑资源范围";
+    this.rangeSaveMode = saveMode.update;
+    this.selectedRange = event.data as ResourceRange;
+    this.rangeDetailModal.show();
+    this.rangeDetailModalIsShown = true;
   }
 
   //单击删除按钮
