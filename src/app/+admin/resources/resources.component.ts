@@ -311,6 +311,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
     }
   }
 
+  //TODO:范围如果有Permission绑定着则不能删除
   //单击范围删除按钮
   public deleteRangeButtonClick(){
     var selectedRows = this.rangesGridOptions.api.getSelectedRows();
