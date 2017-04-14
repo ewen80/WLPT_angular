@@ -61,7 +61,10 @@ export class UsersComponent implements OnInit,  AfterViewInit{
         headerName: '姓名',  field: "name"
       },
       {
-        headerName: '角色名', field: 'role.name'
+        headerName: '角色id',
+        cellRenderer: (params:any) => {
+          return '<a>1</a>'
+        }
       }
     ];
   }
@@ -129,7 +132,7 @@ export class UsersComponent implements OnInit,  AfterViewInit{
   public dblClickRow(event){
     this.modalTitle = "编辑用户";
     this.userSaveMode = saveMode.update;
-    this.selectedUser = event.data as User;
+    this.userDetail.user = event.data as User;
     this.userDetailModal.show();
   }
 

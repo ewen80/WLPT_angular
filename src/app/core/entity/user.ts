@@ -5,7 +5,7 @@ export class User{
     public name: string;
     public password: string;
     public picture?: string;
-    public role: Role = new Role();
+    public roleId?: string;
 
     // public clone(user:User){
     //     this.id = user.id;

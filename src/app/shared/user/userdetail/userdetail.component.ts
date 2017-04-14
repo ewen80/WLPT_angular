@@ -103,7 +103,7 @@ export class UserDetailComponent implements OnInit, OnChanges {
             id: this.user.id,
             name: this.user.name,
             password: this.user.password,
-            roleId: this.user.role.id
+            roleId: this.user.roleId
         });
     
         const idControl = this.userDetailForm.get('id');
@@ -127,7 +127,7 @@ export class UserDetailComponent implements OnInit, OnChanges {
 
     //@Input属性发生变化
     ngOnChanges(): void {
-        this.reset();
+        this.reset(this.user);
     }
 
     //读取角色信息角色填充选择框
@@ -169,7 +169,7 @@ export class UserDetailComponent implements OnInit, OnChanges {
             id: formModel.id,
             password: formModel.password as string,
             name: formModel.name as string,
-            role: roleDeepCopy
+            roleId: formModel.roldId
         };
 
         if(this.saveMode !== saveMode.add){
