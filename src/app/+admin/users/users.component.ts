@@ -5,6 +5,8 @@ import {GridOptions} from 'ag-grid/main';
 import { UserService } from '../../core/services/user.service';
 import { saveMode } from '../../enums';
 import { User } from '../../core/entity/user';
+import { Role } from "app/core/entity/role";
+import { RoleService } from "app/core/services/role.service";
 
 
 declare var $: any;
@@ -28,12 +30,17 @@ export class UsersComponent implements OnInit,  AfterViewInit{
 
   private startRow = 0;
 
+  private allRoles:Role[];
 
-  constructor(private userService:UserService) { 
+
+  constructor(private userService:UserService, private roleService:RoleService) { 
     // console.log('users.components created:'+userService);
   }
 
   ngOnInit() {
+    this.roleService.getAllRoles()
+      .then(response =>this.allRoles = response);
+
     //初始化用户表格
     this.gridOptions = <GridOptions>{
       rowSelection:"multiple",
@@ -63,7 +70,7 @@ export class UsersComponent implements OnInit,  AfterViewInit{
       {
         headerName: '角色id',
         cellRenderer: (params:any) => {
-          return '<a>1</a>'
+          return '<a title=\'角色名: '+params.data.roleName+'\'>'+params.data.roleId+'</a>'
         }
       }
     ];
@@ -80,7 +87,12 @@ export class UsersComponent implements OnInit,  AfterViewInit{
         let pageIndex = Math.floor(params.startRow / this.gridOptions.paginationPageSize);
         this.userService.getUsersWithPage(pageIndex,this.gridOptions.paginationPageSize)
           .then( data => {
-            params.successCallback(data.rows, data.rowCount);
+            var newRows:Array<any> = new Array<any>();
+            //将角色名加入数据源
+            data.rows.forEach(user => {
+              newRows.push(Object.assign({},{ roleName:this.allRoles.find(role=>role.id === user.roleId).name},user));
+            });
+            params.successCallback(newRows, data.rowCount);
           });
           this.startRow = params.startRow;
       }
@@ -132,7 +144,7 @@ export class UsersComponent implements OnInit,  AfterViewInit{
   public dblClickRow(event){
     this.modalTitle = "编辑用户";
     this.userSaveMode = saveMode.update;
-    this.userDetail.user = event.data as User;
+    this.selectedUser = event.data as User;
     this.userDetailModal.show();
   }
 

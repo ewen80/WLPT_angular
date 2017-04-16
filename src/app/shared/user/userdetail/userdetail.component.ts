@@ -118,7 +118,7 @@ export class UserDetailComponent implements OnInit, OnChanges {
     //改变当前选择角色
     public changeRole(){
         let roleId = this.userDetailForm.get('roleId').value;
-        this.selectedRole = this.allRoles.find((value, index, obj) => value.id === roleId);
+        this.selectedRole = this.allRoles.find((value) => value.id === roleId);
     }
 
     ngOnInit(){
@@ -161,15 +161,11 @@ export class UserDetailComponent implements OnInit, OnChanges {
 
     private prepareSaveUser(): User {
         const formModel = this.userDetailForm.value;
-
-        // deep copy of form model lairs
-        const roleDeepCopy: Role = Object.assign({}, this.selectedRole);
-
         const saveUser: User = {
             id: formModel.id,
             password: formModel.password as string,
             name: formModel.name as string,
-            roleId: formModel.roldId
+            roleId: formModel.roleId
         };
 
         if(this.saveMode !== saveMode.add){
