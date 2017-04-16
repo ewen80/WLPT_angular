@@ -37,6 +37,13 @@
                 <button  *ngIf="delRangeButtonDisplay" class="btn btn-default" [disabled]="delRangeButtonDisabled" (click)="deleteRangeButtonClick()">
                   <i class="fa fa-minus"></i> <span class="hidden-mobile">删除资源范围</span>
                 </button>
+                <!--权限管理工具按钮-->
+                <button  *ngIf="addPermissionButtonDisplay" class="btn btn-default" (click)="addPermissionModalShow()">
+                  <i class="fa fa-plus"></i><span class="hidden-mobile">添加权限</span>
+                </button>
+                <button  *ngIf="delPermissionButtonDisplay" class="btn btn-default" [disabled]="delPermissionButtonDisabled" (click)="deletePermissionButtonClick()">
+                  <i class="fa fa-minus"></i> <span class="hidden-mobile">删除权限</span>
+                </button>
               </div>
           </header>
           <div>
@@ -61,6 +68,16 @@
                       (rowDoubleClicked)="dblClickRangesRow($event)"
                       (rowSelected)="setRangesButtonsStatus()"
                       (modelUpdated)="setRangesButtonsStatus()"></ag-grid-angular>
+                </tab>
+                <!--权限列表-->
+                <tab [active]="activedTabIndex == 2" >
+                  <ag-grid-angular #permissionsGrid style="width: 100%; height: 350px;" class="ag-fresh"    
+                      [gridOptions]="permissionsGridOptions" 
+                      [rowData]="permissionRowData"
+                      [columnDefs]="permissionsColumnDefs"  
+                      (rowDoubleClicked)="dblClickPermissionsRow($event)"
+                      (rowSelected)="setPermissionsButtonsStatus()"
+                      (modelUpdated)="setPermissionsButtonsStatus()"></ag-grid-angular>
                 </tab>
               </tabset>
             </div>
@@ -101,6 +118,24 @@
         </div>
         <div class="modal-body">
           <resource-range-detail #rangeDetail [range]="selectedRange" [saveMode]="rangeSaveMode"  (onSaveFinished)="saveFinished($event)"></resource-range-detail>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--权限详情对话框-->
+  <div class="modal fade" bsModal #permissionDetailModal="bs-modal" [config]="{backdrop: true}"
+      tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" aria-label="Close" (click)="permissionDetailModal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">{{permissionModalTitle}}</h4>
+        </div>
+        <div class="modal-body">
+          <permission-detail #permissionDetail [permission]="selectedPermission" [saveMode]="permissionSaveMode"  (onSaveFinished)="saveFinished($event)"></permission-detail>
         </div>
       </div>
     </div>

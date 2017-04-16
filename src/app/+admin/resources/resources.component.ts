@@ -15,6 +15,7 @@ import { ResourceRangeService } from "../../core/services/resource-range.service
 import { ResourceRange } from "../../core/entity/resource-range";
 import { RoleService } from "app/core/services/role.service";
 import { Role } from "app/core/entity/role";
+import { Permission } from "app/core/entity/permission";
 
 declare var $: any;
 
@@ -26,11 +27,15 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
 
   public resourceSaveMode: saveMode;//资源类型对话框保存模式（更新，新增)
   public rangeSaveMode: saveMode;//范围对话框保存模式
+  public permissionSaveMode: saveMode;//权限对话框保存模式
 
-  public typesGridOptions:GridOptions;
-  public rangesGridOptions:GridOptions;
-  public typesColumnDefs:any[];
-  public rangesColumnDefs:any[];
+  public typesGridOptions: GridOptions;
+  public rangesGridOptions: GridOptions;
+  public permissionsGridOptions: GridOptions;
+
+  public typesColumnDefs: any[];
+  public rangesColumnDefs: any[];
+  public permissionsColumnDefs: any[];
 
   @ViewChild("resourceDetailModal") private resourceDetailModal;
   @ViewChild("resourceDetail") private resourceDetail;
@@ -38,34 +43,52 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
   @ViewChild("rangeDetailModal") private rangeDetailModal;
   @ViewChild("rangeDetail") private rangeDetail;
 
+  @ViewChild("permissionDetailModal") private permissionDetailModal;
+  @ViewChild("permissionDetail") private permissionDetail;
+
   private resourceDetailModalIsShown:boolean;
   private rangeDetailModalIsShown: boolean;
+  private permissionDetailModalIsShow: boolean;
   
   public resourceModalTitle: string;
   public rangeModalTitle: string;
-  public delTypeButtonDisabled = true;
-  public rangeButtonDisabled = true;
+  public permissionModalTitle: string;
 
+  public rangeButtonDisabled = true; //管理资源范围按钮状态
+  public permissionButtonDisabled = true; //管理权限按钮状态
+
+  //删除按钮状态
   public delRangeButtonDisabled = true;
+  public delTypeButtonDisabled = true;
+  public delPermissionButtonDisabled = true;
 
-  public addTypeButtonDisplay:boolean = true;
-  public delTypeButtonDisplay:boolean = true;
-  public rangeButtonDisplay:boolean = true;
+  //是否显示相关按钮
+  public addTypeButtonDisplay: boolean = true;
+  public delTypeButtonDisplay: boolean = true;
 
+  public permissionButtonDisplay: boolean = true;
+  public addPermissionButtonDisplay: boolean = true;
+  public delPermissionButtonDisplay: boolean = true;
+
+  public rangeButtonDisplay: boolean = true;
   public addRangeButtonDisplay:boolean = true;
   public delRangeButtonDisplay:boolean = true;
 
   private startRow = 0;
 
-  public rangeRowData:any[];
+  //数据源
+  public rangeRowData: any[];
+  public permissionRowData: any[];
 
   public selectedResource: Resource = new Resource();
   public selectedRange: ResourceRange = new ResourceRange();
+  public selectedPermission: Permission = new Permission();
 
   public activedTabIndex: number = 0;//当前活动状态的Tab序号
 
   constructor(private resourceService:ResourceService, 
               private resourceRangeService:ResourceRangeService, 
+              private permissionService: PermissionService,
               private aggridFilterSerialization:AggridFilterSerialization,
               private roleService:RoleService) { 
     // console.log('users.components created:'+userService);
@@ -147,13 +170,10 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
       {
         headerName: '角色id',
         suppressFilter:true,
-        field: 'roleId'
+        cellRenderer: (params:any) => {
+          return '<a title=\'角色名: '+params.data.roleName+'\'>'+params.data.roleId+'</a>'
+        }
       },
-      // {
-      //   headerName: '角色名',
-      //   suppressFilter:true,
-      //   field: 'roleName'
-      // },
       {
         headerName: '匹配全部',
         width:100,
@@ -204,7 +224,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
                     id: range.id,
                     filter: range.filter,
                     roleId: range.roleId,
-                    // roleName: allRole.find( value => value.id === range.roleId).name,
+                    roleName: allRole.find( value => value.id === range.roleId).name,
                     resource: range.resourceTypeClassName,
                     matchAll: range.matchAll
                   })
