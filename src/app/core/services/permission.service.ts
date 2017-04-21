@@ -10,6 +10,6 @@ export class PermissionService {
     private serverUrl: string = this.appConfig.getConfig("Server").Url + "/permissions";
 
     constructor(private http:BasicAuthenticationHttp, private appConfig:AppConfig){
-    console.log('PermissionService created');
-  }
+      console.log('PermissionService created');
+    }
 }

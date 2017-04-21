@@ -32,7 +32,8 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
         this.resourceRangeDetailForm = this.fb.group({
             filter:[''],
             role:['', Validators.required],
-            matchAll:['']
+            matchAll:[''],
+            permission:[]
         });
         this.resourceRangeDetailForm.valueChanges.subscribe(data => this.onValueChanged(data));
         this.resourceRangeDetailForm.statusChanges.subscribe(status => this.onValidatorStatusChanged(status));

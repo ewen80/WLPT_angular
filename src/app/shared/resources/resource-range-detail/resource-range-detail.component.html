@@ -62,13 +62,26 @@
                         {{ formErrors.matchAll }}
                       </div>
                   </div> 
+                  <div class="form-group">  
+                    <label>权限：</label> 
+                      <div>
+                        <label class="checkbox-inline">
+                          <input type="checkbox"  formControlName="permission" value="read">读
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox"  formControlName="permission" value="write">写
+                        </label>
+                      </div>
+                      <div *ngIf="formErrors.matchAll" class="alert alert-danger">
+                        {{ formErrors.matchAll }}
+                      </div>
+                  </div> 
                   <div *ngIf = "saveMode!==0" class="form-actions">
                     <button class="btn btn-primary" type="submit" [disabled]="!resourceRangeDetailForm.valid">
                     <i class="fa fa-save"></i>
                     保存
                     </button>
                   </div>
-                  {{resourceRangeDetailForm.value | json}}
                 </fieldset>
               </form>
             </div>

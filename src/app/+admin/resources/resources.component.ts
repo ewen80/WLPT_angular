@@ -16,6 +16,7 @@ import { ResourceRange } from "../../core/entity/resource-range";
 import { RoleService } from "app/core/services/role.service";
 import { Role } from "app/core/entity/role";
 import { Permission } from "app/core/entity/permission";
+import { PermissionService } from "app/core/services/permission.service";
 
 declare var $: any;
 
@@ -88,7 +89,6 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
 
   constructor(private resourceService:ResourceService, 
               private resourceRangeService:ResourceRangeService, 
-              private permissionService: PermissionService,
               private aggridFilterSerialization:AggridFilterSerialization,
               private roleService:RoleService) { 
     // console.log('users.components created:'+userService);
@@ -145,7 +145,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
         filterFramework: AgGridBooleanFilterComponent,
       },
     ];
-
+    //资源范围列设置
     this.rangesColumnDefs = [
       {
         headerName: '#',
@@ -159,7 +159,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
         suppressFilter:true,
         cellRenderer: (params:any) => {
           return this.startRow + params.rowIndex + 1;
-                      }
+        }
       },
       {
         headerName: '过滤器',
@@ -180,6 +180,13 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
         suppressFilter:true,
         cellRenderer: (params: any) => {
           return params.data.matchAll ? '是':'否';
+        }
+      },
+      {
+        headerName: '权限设置',
+        suppressFilter: true,
+        cellRenderer: (params: any) => {
+          return 'permission';
         }
       }
     ];
