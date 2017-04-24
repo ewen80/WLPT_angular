@@ -8,7 +8,7 @@ import {GridOptions} from 'ag-grid/main';
 
 import { ResourceService } from '../../core/services/resource.service';
 import { Resource } from '../../core/entity/resource';
-import { saveMode } from '../../enums';
+import { saveMode } from '../../core/enums';
 import { AggridFilterSerialization } from "../../shared/helper/serialize/aggrid-filter.serialization";
 import { AgGridBooleanFilterComponent } from "../../shared/ag-grid-filters/boolean-filter.component";
 import { ResourceRangeService } from "../../core/services/resource-range.service";

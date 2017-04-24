@@ -8,7 +8,7 @@ import { UserService } from '../../../core/services/user.service';
 import { RoleService } from '../../../core/services/role.service';
 import { User } from '../../../core/entity/user';
 import { Role } from '../../../core/entity/role';
-import { saveMode } from '../../../enums';
+import { saveMode } from '../../../core/enums';
 import { UseridValidator } from '../../validators/userid-validator';
 
 @Component({

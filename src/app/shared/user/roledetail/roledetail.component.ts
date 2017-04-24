@@ -6,7 +6,7 @@ import { ModalModule } from 'ngx-bootstrap';
 
 import { RoleService } from '../../../core/services/role.service';
 import { Role } from '../../../core/entity/role';
-import { saveMode } from '../../../enums';
+import { saveMode } from '../../../core/enums';
 
 @Component({
     selector: 'role-detail',
