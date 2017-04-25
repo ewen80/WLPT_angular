@@ -7,6 +7,6 @@ export enum saveMode{
 
 //权限类型
 export enum PermissionType {
-    READ,   //读权限
-    WRITE   //写权限
+    READ = 1,   //读权限
+    WRITE = 2   //写权限
 }

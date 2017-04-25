@@ -10,6 +10,7 @@ import { ResourceRange } from "../../../core/entity/resource-range";
 import { ResourceRangeService } from "../../../core/services/resource-range.service";
 import { Role } from "../../../core/entity/role";
 import { RoleService } from "../../../core/services/role.service";
+import { Permission } from "app/core/entity/permission";
 
 @Component({
     selector: 'resource-range-detail',
@@ -33,7 +34,7 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
             filter:[''],
             role:['', Validators.required],
             matchAll:[''],
-            permission:[]
+            permissions:['']
         });
         this.resourceRangeDetailForm.valueChanges.subscribe(data => this.onValueChanged(data));
         this.resourceRangeDetailForm.statusChanges.subscribe(status => this.onValidatorStatusChanged(status));
@@ -153,6 +154,11 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
         }
 
         return saveResourceRange;
+    }
+
+    //复制权限信息
+    private prepareSavePermission(): Permission {
+
     }
 
     onSubmit(){
