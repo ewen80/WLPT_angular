@@ -3,8 +3,7 @@
  */
 import { PermissionType } from "app/core/enums";
 
-export class Permission {
+export class ResourceRangePermissionWrapper {
     resourceRangeId: number;
-    roleId: string;
     permissions: PermissionType[] = [];
 }

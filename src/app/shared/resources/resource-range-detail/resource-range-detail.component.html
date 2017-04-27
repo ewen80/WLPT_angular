@@ -24,60 +24,53 @@
           <div>
             <!-- widget content -->
             <div class="widget-body">
-              <form [formGroup]="resourceRangeDetailForm" (ngSubmit)="onSubmit()" novalidate>
-                <fieldset>  
-                  <div class="form-group">
-                    <label for="className">过滤器：</label>
-                    <div>
-                      <input class="form-control"  type="text" formControlName="filter" id="filter">
-                      <div *ngIf="formErrors.filter" class="alert alert-danger">
-                        {{ formErrors.filter }}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">  
-                    <label for="role">角色：</label> 
-                    <div>
-                        <select formControlName="role" id="role" class="form-control">
-                            <option *ngFor="let role of allRoles" [value]="role.id">{{role.name}}({{role.id}})</option>
-                        </select>
-                        <div *ngIf="formErrors.role" class="alert alert-danger">
-                          {{ formErrors.role }}
+              <form [formGroup]="resourceRangePermissionWrapperForm" (ngSubmit)="onSubmit()" novalidate>
+                <fieldset>
+                  <div formGroupName="resourceRangeForm" >
+                      <div class="form-group">
+                        <label for="className">过滤器：</label>
+                        <div>
+                          <input class="form-control"  type="text" formControlName="filter" id="filter">
+                          <div *ngIf="formErrors.filter" class="alert alert-danger">
+                            {{ formErrors.filter }}
+                          </div>
                         </div>
-                    </div> 
-                  </div>  
-                  <div class="form-group">  
-                    <label for="matchAll">是否全部匹配：</label> 
-                      <div>
-                        <label class="radio radio-inline">
-                          <input type="radio"  formControlName="matchAll" value="false">否
-                        </label>
                       </div>
-                      <div>
-                        <label class="radio radio-inline">
-                          <input type="radio"  formControlName="matchAll" value="true">是
-                        </label>
-                      </div>
-                      <div *ngIf="formErrors.matchAll" class="alert alert-danger">
-                        {{ formErrors.matchAll }}
-                      </div>
-                  </div> 
-                  <div class="form-group">  
+                      <div class="form-group">  
+                        <label for="role">角色：</label> 
+                        <div>
+                            <select formControlName="role" id="role" class="form-control">
+                                <option *ngFor="let role of allRoles" [value]="role.id">{{role.name}}({{role.id}})</option>
+                            </select>
+                            <div *ngIf="formErrors.role" class="alert alert-danger">
+                              {{ formErrors.role }}
+                            </div>
+                        </div> 
+                      </div>  
+                      <div class="form-group">  
+                        <label for="matchAll">是否全部匹配：</label> 
+                          <div>
+                            <label class="radio radio-inline">
+                              <input type="radio"  formControlName="matchAll" value="false">否
+                            </label>
+                          </div>
+                          <div>
+                            <label class="radio radio-inline">
+                              <input type="radio"  formControlName="matchAll" value="true">是
+                            </label>
+                          </div>
+                      </div> 
+                  </div>
+                  <div formGroupName="permissionsForm">  
                     <label>权限：</label> 
-                      <div>
-                        <label class="checkbox-inline">
-                          <input type="checkbox"  formControlName="permissions" value="read">读
+                      <div  class="form-group">
+                        <label class="checkbox-inline" *ngFor='let permission of permissions'>
+                          <input type="checkbox"  formControlName="{{permission.controlName}}" value="{{ permission.controlvalue }}">{{ permission.controlvalue }}
                         </label>
-                        <label class="checkbox-inline">
-                          <input type="checkbox"  formControlName="permissions" value="write">写
-                        </label>
-                      </div>
-                      <div *ngIf="formErrors.matchAll" class="alert alert-danger">
-                        {{ formErrors.matchAll }}
                       </div>
                   </div> 
                   <div *ngIf = "saveMode!==0" class="form-actions">
-                    <button class="btn btn-primary" type="submit" [disabled]="!resourceRangeDetailForm.valid">
+                    <button class="btn btn-primary" type="submit" [disabled]="!resourceRangePermissionWrapperForm.valid">
                     <i class="fa fa-save"></i>
                     保存
                     </button>
