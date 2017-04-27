@@ -9,5 +9,4 @@ export class ResourceRange {
     filter:string;
     roleId:string;
     matchAll:boolean = false;
-    permissions: PermissionType[];
 }

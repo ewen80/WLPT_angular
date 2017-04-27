@@ -120,21 +120,23 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
 
     private save(){
         this.range = this.prepareSave();
-        //调用Service服务添加用户,激活保存完成事件
-        this.resourceRangeService.save(this.range)
-            .then(response => {
-                if(response){
-                    this.onSaveFinished.emit({
-                                            saveMode: this.saveMode,
-                                            sucess: true, 
-                                            message: '保存成功'})
-                }else{
-                    this.onSaveFinished.emit({
-                                            saveMode: this.saveMode,
-                                            sucess: false, 
-                                            message: '保存失败'})
-                }
-            });
+        this.prepareSavePermission();
+
+        // //调用Service服务添加用户,激活保存完成事件
+        // this.resourceRangeService.save(this.range)
+        //     .then(response => {
+        //         if(response){
+        //             this.onSaveFinished.emit({
+        //                                     saveMode: this.saveMode,
+        //                                     sucess: true, 
+        //                                     message: '保存成功'})
+        //         }else{
+        //             this.onSaveFinished.emit({
+        //                                     saveMode: this.saveMode,
+        //                                     sucess: false, 
+        //                                     message: '保存失败'})
+        //         }
+        //     });
     }
 
     private prepareSave(): any {
@@ -158,7 +160,20 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
 
     //复制权限信息
     private prepareSavePermission(): Permission {
+        const formModel = this.resourceRangeDetailForm.value;
+        const formPermissions = formModel.permissions;
+        console.log(formModel);
 
+        const permission = {
+            resourceRangeId: 0,
+            roleId: formModel.role,
+            permissions: formModel.permissions
+        }
+
+        if(this.saveMode === saveMode.update) {
+            permission.resourceRangeId = this.range.id;
+        }
+        return permission;
     }
 
     onSubmit(){
