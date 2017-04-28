@@ -40,7 +40,7 @@ export class ResourceRangeService{
     }
 
     //保存
-    save(range:any): Promise<{sucess:boolean,message:string}>{
+    save(range:any): any{
         return this.http.post(this.serverUrl,JSON.stringify(range))
                       .toPromise()
                       .then( response => response.json())

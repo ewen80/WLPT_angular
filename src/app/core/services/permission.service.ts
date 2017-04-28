@@ -2,11 +2,11 @@ import { Injectable } from "@angular/core";
 
 import { AppConfig } from '../app.config';
 import { BasicAuthenticationHttp } from "app/core/services/basic-authentication-http.service";
-import { ResourceRangePermissionWrapper } from "app/core/entity/resource-range-permission-wrapper";
+import { PermissionWrapper } from "app/core/entity/permission-wrapper";
 
 
 @Injectable()
-export class ResourceRangePermissionWrapperService {
+export class PermissionService {
 
     private serverUrl: string = this.appConfig.getConfig("Server").Url + "/permissions";
 
@@ -16,7 +16,7 @@ export class ResourceRangePermissionWrapperService {
 
 
     //保存
-    save(wrapper:ResourceRangePermissionWrapper): Promise<{sucess:boolean,message:string}>{
+    save(wrapper: PermissionWrapper): any{
         return this.http.post(this.serverUrl,JSON.stringify(wrapper))
                       .toPromise()
                       .then( response => response.json());

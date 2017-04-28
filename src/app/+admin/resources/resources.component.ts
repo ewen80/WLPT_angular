@@ -169,6 +169,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
         headerName: '权限设置',
         suppressFilter: true,
         cellRenderer: (params: any) => {
+          console.log(params);
           return 'permission';
         }
       }

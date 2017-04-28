@@ -10,7 +10,9 @@ import { ResourceRange } from "../../../core/entity/resource-range";
 import { ResourceRangeService } from "../../../core/services/resource-range.service";
 import { Role } from "../../../core/entity/role";
 import { RoleService } from "../../../core/services/role.service";
-import { ResourceRangePermissionWrapper } from "app/core/entity/resource-range-permission-wrapper";
+import { PermissionWrapper } from "app/core/entity/permission-wrapper";
+import { PermissionService } from "app/core/services/permission.service";
+import { Permission } from "app/core/entity/permission";
 
 @Component({
     selector: 'resource-range-detail',
@@ -28,7 +30,10 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
 
     public allRoles: Array<Role> = [];
 
-    constructor(private fb: FormBuilder, private resourceRangeService: ResourceRangeService, private roleService: RoleService){
+    constructor(private fb: FormBuilder, 
+                private resourceRangeService: ResourceRangeService, 
+                private permissionService: PermissionService, 
+                private roleService: RoleService){
         this.createForm();
     }
 
@@ -140,24 +145,30 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
     }
 
     private save(){
-        this.range = this.prepareResourceRangeFormSave();
-        this.prepareSave();
+        const rpWrapper = this.prepareSave();
 
-        // //调用Service服务添加用户,激活保存完成事件
-        // this.resourceRangeService.save(this.range)
-        //     .then(response => {
-        //         if(response){
-        //             this.onSaveFinished.emit({
-        //                                     saveMode: this.saveMode,
-        //                                     sucess: true, 
-        //                                     message: '保存成功'})
-        //         }else{
-        //             this.onSaveFinished.emit({
-        //                                     saveMode: this.saveMode,
-        //                                     sucess: false, 
-        //                                     message: '保存失败'})
-        //         }
-        //     });
+        //保存ResourceRange
+        this.resourceRangeService.save(rpWrapper.resourceRange)
+            .then(response => {
+                if(response && response.id){
+                    //保存Permission
+                    let wrapper = new PermissionWrapper(response.id, rpWrapper.permissions);
+                    
+                    this.permissionService.save(wrapper)
+                        .then(() => {
+                            this.onSaveFinished.emit({
+                                            saveMode: this.saveMode,
+                                            sucess: true, 
+                                            message: '保存成功'})
+                        }
+                    )
+                }else{
+                    this.onSaveFinished.emit({
+                                            saveMode: this.saveMode,
+                                            sucess: false, 
+                                            message: '保存失败'})
+                }
+            });
     }
 
     private prepareResourceRangeFormSave(): any {
@@ -180,28 +191,22 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
     }
 
     //复制全部信息
-    private prepareSave(): ResourceRangePermissionWrapper {
+    private prepareSave(): {resourceRange: ResourceRange, permissions: Permission[]} {
         const range = this.prepareResourceRangeFormSave();
-        var selPermissions: PermissionType[] = [];;
+
+        var selPermissions: Permission[] = [];;
         for(var permission of this.permissions) {
             if(this.permissionsForm.get(permission.controlName).value) {
-                selPermissions.push(permission.value);
+                selPermissions.push(new Permission(permission.value));
             }
-            
         }
-        // const formPermissions = this.permissionsForm.get();
-        // console.log(formModel);
 
-        // const wrapper = {
-        //     resourceRangeId: 0,
-        //     permissions: formModel.permissions
-        // }
+        const wrapper = {
+            resourceRange: range,
+            permissions: selPermissions
+        }
 
-        // if(this.saveMode === saveMode.update) {
-        //     permission.resourceRangeId = this.range.id;
-        // }
-        // return permission;
-        return null;
+        return wrapper;
     }
 
     onSubmit(){
