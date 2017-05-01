@@ -16,6 +16,8 @@ import { ResourceRange } from "../../core/entity/resource-range";
 import { RoleService } from "app/core/services/role.service";
 import { Role } from "app/core/entity/role";
 import { PermissionService } from "app/core/services/permission.service";
+import { PermissionWrapper } from "app/core/entity/permission-wrapper";
+import { PermissionWrapperDTO } from "app/core/entity/permission-wrapper-dto";
 
 declare var $: any;
 
@@ -65,15 +67,16 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
   //数据源
   public rangeRowData: any[];
 
-  public selectedResource: Resource = new Resource();
-  public selectedRange: ResourceRange = new ResourceRange();
+  public selectedResource: Resource;
+  public selectedPermissionWrapper: PermissionWrapper;
 
   public activedTabIndex: number = 0;//当前活动状态的Tab序号
 
   constructor(private resourceService:ResourceService, 
               private resourceRangeService:ResourceRangeService, 
               private aggridFilterSerialization:AggridFilterSerialization,
-              private roleService:RoleService) { 
+              private roleService:RoleService,
+              private permissionService:PermissionService) { 
     // console.log('users.components created:'+userService);
   }
 
@@ -169,8 +172,23 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
         headerName: '权限设置',
         suppressFilter: true,
         cellRenderer: (params: any) => {
-          console.log(params);
-          return 'permission';
+          let permissionString: string = "";
+          let permissions = params.data.permissions;
+          if(permissions && permissions instanceof Array && permissions.length > 0) {
+            for(var permission of permissions) {
+              if(permission && permission.mask) {
+                switch(permission.mask) {
+                  case 1:
+                    permissionString += "读 ";
+                    break;
+                  case 2:
+                    permissionString += "写 ";
+                    break;
+                }
+              }
+            }
+          }
+          return permissionString;
         }
       }
     ];
@@ -220,7 +238,32 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
                     matchAll: range.matchAll
                   })
                 });
-                this.rangeRowData = rangeData;
+                
+                //获取这些资源范围对应的权限信息
+                var rangeIds: string[] = [];
+                rangeData.forEach( (value) => rangeIds.push(value.id));
+                if(rangeIds.length > 0) {
+                  this.permissionService.getByResourceRanges(rangeIds)
+                  .then( data => {
+                    var permissionWrapperDTOs: PermissionWrapperDTO[] = [];
+                    if(data instanceof Array){
+                       permissionWrapperDTOs = data;
+                    } else {
+                      permissionWrapperDTOs.push(data);
+                    }
+                   
+                    permissionWrapperDTOs.forEach( (wrapper) => {
+                      var range = rangeData.find( (value) => value.id === wrapper.resourceRangeId);
+                      if(range){
+                        range.permissions = wrapper.permissions;
+                      }
+                    });
+
+                    this.rangeRowData = rangeData;
+                  });
+                }
+                
+                
               });
           });
   }
@@ -242,7 +285,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
       this.rangeDetailModal.hide();
       //重置对话框
       if(this.rangeDetail){
-        this.rangeDetail.reset(new ResourceRange());
+        this.rangeDetail.reset(new PermissionWrapper(new ResourceRange(), null));
       }
       //刷新列表
       this.refreshRangeList(this.selectedResource.className);
@@ -280,13 +323,13 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
     this.rangeModalTitle = "添加资源范围";
     this.rangeSaveMode = saveMode.add;
     if(this.selectedResource){
-      this.selectedRange = new ResourceRange();
-      this.selectedRange.resource = this.selectedResource.className;
+      let range: ResourceRange = new ResourceRange();
+      range.resource = this.selectedResource.className;
+      this.selectedPermissionWrapper = new PermissionWrapper(range, null);
       this.rangeDetailModal.show();
       this.rangeDetailModalIsShown = true;
     }else{
-      console.error("还没有选中的资源类型,无法添加资源范围");
-      return;
+      throw "还没有选中的资源类型,无法添加资源范围";
     }
   }
 
@@ -303,9 +346,31 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
   public dblClickRangesRow(event){
     this.rangeModalTitle = "编辑资源范围";
     this.rangeSaveMode = saveMode.update;
-    this.selectedRange = event.data as ResourceRange;
+
+    console.log(event.data);
+
+    this.selectedPermissionWrapper = this.getPermissionWrapperFromDataSource(event.data);
+
     this.rangeDetailModal.show();
     this.rangeDetailModalIsShown = true;
+  }
+
+  //从DataSource转换成PermissionWrapper
+  private  getPermissionWrapperFromDataSource(source: any)  {
+    var resourceRange: ResourceRange = new ResourceRange();
+
+    if(source) {
+      resourceRange.filter = source.filter;
+      resourceRange.matchAll = source.matchAll;
+      resourceRange.id = source.id;
+      resourceRange.roleId = source.roleId;
+      resourceRange.resource = source.resource;
+
+      return new PermissionWrapper(resourceRange, source.permissions);
+    } else {
+      return null;
+    }
+    
   }
 
   //单击资源删除按钮

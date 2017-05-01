@@ -82,7 +82,7 @@
           <h4 class="modal-title">{{resourceModalTitle}}</h4>
         </div>
         <div class="modal-body">
-          <resource-detail #resourceDetail [resource]="selectedResource" [saveMode]="resourceSaveMode"  (onSaveFinished)="saveFinished($event)"></resource-detail>
+          <resource-detail *ngIf="selectedResource" #resourceDetail [resource]="selectedResource" [saveMode]="resourceSaveMode"  (onSaveFinished)="saveFinished($event)"></resource-detail>
         </div>
       </div>
     </div>
@@ -100,7 +100,7 @@
           <h4 class="modal-title">{{rangeModalTitle}}</h4>
         </div>
         <div class="modal-body">
-          <resource-range-detail #rangeDetail [range]="selectedRange" [saveMode]="rangeSaveMode"  (onSaveFinished)="saveFinished($event)"></resource-range-detail>
+          <resource-range-detail *ngIf="selectedPermissionWrapper" #rangeDetail [wrapper]="selectedPermissionWrapper" [saveMode]="rangeSaveMode"  (onSaveFinished)="saveFinished($event)"></resource-range-detail>
         </div>
       </div>
     </div>

@@ -1,15 +1,16 @@
 /**
- * 权限类
+ * 权限包装类
  */
 import { ResourceRange } from "app/core/entity/resource-range";
 import { Permission } from "app/core/entity/permission";
 
 export class PermissionWrapper {
-    resourceRangeId: number;
+    resourceRange: ResourceRange;
     permissions: Permission[] = [];
 
-    constructor(resourceRangeId: number, permissions: Permission[]){
-        this.resourceRangeId = resourceRangeId;
+    constructor(resourceRange: ResourceRange, permissions: Permission[]){
+        this.resourceRange = resourceRange;
         this.permissions = permissions;
     }
+
 }

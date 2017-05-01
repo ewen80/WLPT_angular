@@ -10,9 +10,10 @@ import { ResourceRange } from "../../../core/entity/resource-range";
 import { ResourceRangeService } from "../../../core/services/resource-range.service";
 import { Role } from "../../../core/entity/role";
 import { RoleService } from "../../../core/services/role.service";
-import { PermissionWrapper } from "app/core/entity/permission-wrapper";
+import { PermissionWrapperDTO } from "app/core/entity/permission-wrapper-dto";
 import { PermissionService } from "app/core/services/permission.service";
 import { Permission } from "app/core/entity/permission";
+import { PermissionWrapper } from "app/core/entity/permission-wrapper";
 
 @Component({
     selector: 'resource-range-detail',
@@ -20,9 +21,23 @@ import { Permission } from "app/core/entity/permission";
 })
 export class ResourceRangeDetailComponent implements OnInit, OnChanges {
 
-    @Input() range: ResourceRange;
+    @Input() wrapper: PermissionWrapper;
     @Input() saveMode: saveMode; //保存模式（只读，修改，新增）
     @Output() onSaveFinished = new EventEmitter<{saveMode:saveMode,sucess:boolean,message:string}>(); //保存完成后激活事件，参数包含保存类型（新增，修改）和保存结果以及附加消息
+
+    //支持的权限列表
+    readonly SUPPORT_PERMISSIONS = [
+        {
+            controlName: 'readPermission',
+            value: PermissionType.READ,
+            label: '读'            
+        },
+        {
+            controlName: 'writePermission',
+            value: PermissionType.WRITE,
+            label: '写'
+        }
+    ];
 
     public resourceRangePermissionWrapperForm: FormGroup;
     public resourceRangeForm: FormGroup;
@@ -99,30 +114,35 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
         },
     };
 
-    //支持的权限列表
-    permissions = [
-        {
-            controlName: 'readPermission',
-            value: PermissionType.READ,
-            label: '读'            
-        },
-        {
-            controlName: 'writePermission',
-            value: PermissionType.WRITE,
-            label: '写'
-        }
-    ];
+    
 
     //重置状态
-    public reset(range?:ResourceRange): void{
-        if(range){
-            this.range = range;
+    public reset(wrapper?:PermissionWrapper): void{
+        if(wrapper){
+            this.wrapper = wrapper;
         }
         this.resourceRangeForm.reset({
-            filter: this.range.filter,
-            role: this.range.roleId,
-            matchAll: String(this.range.matchAll)
+            filter: this.wrapper.resourceRange.filter,
+            role: this.wrapper.resourceRange.roleId,
+            matchAll: String(this.wrapper.resourceRange.matchAll)
         });
+
+        //初始化权限选择框
+        var permissionsObject = {};
+        for(var permission of this.SUPPORT_PERMISSIONS) {
+            if(this.wrapper && this.wrapper.permissions && this.wrapper.permissions instanceof Array){
+                var findIndex = this.wrapper.permissions.findIndex( value => value.mask === permission.value);
+                if(findIndex > -1) {
+                    permissionsObject[permission.controlName] = true;
+                } else {
+                    permissionsObject[permission.controlName] = false;
+                }
+            } else {
+                permissionsObject[permission.controlName] = false;
+            }
+        }
+        console.log(permissionsObject);
+        this.permissionsForm.reset(permissionsObject);
     }
 
     //@Input属性发生变化
@@ -145,16 +165,16 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
     }
 
     private save(){
-        const rpWrapper = this.prepareSave();
+        const rpWrapper: PermissionWrapper = this.prepareSave();
 
         //保存ResourceRange
         this.resourceRangeService.save(rpWrapper.resourceRange)
             .then(response => {
                 if(response && response.id){
                     //保存Permission
-                    let wrapper = new PermissionWrapper(response.id, rpWrapper.permissions);
+                    let wrapperDTO = new PermissionWrapperDTO(response.id, rpWrapper.permissions);
                     
-                    this.permissionService.save(wrapper)
+                    this.permissionService.save(wrapperDTO)
                         .then(() => {
                             this.onSaveFinished.emit({
                                             saveMode: this.saveMode,
@@ -171,12 +191,12 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
             });
     }
 
+    //复制ResourceRange信息
     private prepareResourceRangeFormSave(): any {
         const formModel = this.resourceRangeForm.value;
 
-        const saveResourceRange = {
-            id: 0,
-            resourceTypeClassName: this.range.resource,
+        let saveResourceRange = {
+            resourceTypeClassName: this.wrapper.resourceRange.resource,
             filter: formModel.filter,
             roleId: formModel.role,
             matchAll: formModel.matchAll
@@ -184,18 +204,18 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
 
 
         if(this.saveMode === saveMode.update){
-            saveResourceRange.id = this.range.id;
+            saveResourceRange = Object.assign({}, saveResourceRange, {id: this.wrapper.resourceRange.id});
         }
 
         return saveResourceRange;
     }
 
     //复制全部信息
-    private prepareSave(): {resourceRange: ResourceRange, permissions: Permission[]} {
+    private prepareSave(): PermissionWrapper {
         const range = this.prepareResourceRangeFormSave();
 
         var selPermissions: Permission[] = [];;
-        for(var permission of this.permissions) {
+        for(var permission of this.SUPPORT_PERMISSIONS) {
             if(this.permissionsForm.get(permission.controlName).value) {
                 selPermissions.push(new Permission(permission.value));
             }
