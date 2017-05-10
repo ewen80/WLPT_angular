@@ -1,16 +1,15 @@
 /**
- * 权限包装类
+ * 权限包装DTO
  */
 import { ResourceRange } from "app/core/entity/resource-range";
 import { Permission } from "app/core/entity/permission";
 
-export class PermissionWrapper {
-    resourceRange: ResourceRange;
+export class PermissionWrapperDTO {
+    resourceRangeId: number;
     permissions: Permission[] = [];
 
-    constructor(resourceRange: ResourceRange, permissions: Permission[]){
-        this.resourceRange = resourceRange;
+    constructor(resourceRangeId: number, permissions: Permission[]){
+        this.resourceRangeId = resourceRangeId;
         this.permissions = permissions;
     }
-
 }

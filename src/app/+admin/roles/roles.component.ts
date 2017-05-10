@@ -127,7 +127,7 @@ export class RolesComponent implements OnInit,  AfterViewInit{
 
   //双击角色列表行事件
   public dblClickRow(event){
-    this.modalTitle = "编辑用户";
+    this.modalTitle = "编辑角色";
     this.roleDetail.saveMode = saveMode.update;
     this.roleDetail.role = event.data as Role;
     this.roleDetailModal.show();

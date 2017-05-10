@@ -64,8 +64,8 @@
                   <div formGroupName="permissionsForm">  
                     <label>权限：</label> 
                       <div  class="form-group">
-                        <label class="checkbox-inline" *ngFor='let permission of permissions'>
-                          <input type="checkbox"  formControlName="{{permission.controlName}}" value="{{ permission.controlvalue }}">{{ permission.label }}
+                        <label class="checkbox-inline" *ngFor='let permission of SUPPORT_PERMISSIONS'>
+                          <input type="checkbox"  formControlName="{{permission.controlName}}">{{ permission.label }}
                         </label>
                       </div>
                   </div> 
