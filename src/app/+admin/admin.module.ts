@@ -5,6 +5,7 @@ import { adminRouting } from './admin.routing';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { ResourceModule } from './resources/resources.module';
+import { MenusModule } from "app/+admin/menus/menus.module";
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { ResourceModule } from './resources/resources.module';
 
     UsersModule,
     RolesModule,
-    ResourceModule
+    ResourceModule,
+    MenusModule
   ],
   declarations: [  ],
   providers:[
