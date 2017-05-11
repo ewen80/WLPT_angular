@@ -88,7 +88,7 @@
     "zone.js": "0.8.5",
     "ag-grid": "8.2.x",
     "ag-grid-angular": "8.2.x",
-    "angular-tree-component": "3.5.0"
+    "angular-tree-component": "^3.5.0"
   },
   "devDependencies": {
     "@angular/cli": "1.0.0",

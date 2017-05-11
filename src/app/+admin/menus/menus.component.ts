@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'tree',
-    template: '<tree-root [nodes]="nodes"></tree-root>'
+    templateUrl: './menus.component.html'
 })
 export class MenusComponent {
     nodes = [

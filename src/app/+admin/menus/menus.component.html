@@ -1,1 +1,30 @@
-<tree></tree>
+<div id="content">
+  <div class="row">
+    <sa-big-breadcrumbs [items]="['后台管理', '菜单管理']" icon="table" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+  </div>
+
+<sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <sa-widget [editbutton]="false" [togglebutton]="false" [fullscreenbutton]="false" [deletebutton]="false">
+          <header>
+            <span class="widget-icon"> <i class="fa fa-users"></i> </span>
+            <h2>菜单管理</h2>
+            <div class="widget-toolbar">
+              <button class="btn btn-default" (click)="addUserModalShow()">
+                <i class="fa fa-plus"></i> <span class="hidden-mobile">添加用户</span>
+              </button>
+              <button #delUsersButton class="btn btn-default" (click)="deleteButtonClick()" [disabled]="delUsersButtonDisabled">
+                <i class="fa fa-minus"></i> <span class="hidden-mobile">删除用户</span>
+              </button>
+            </div>
+          </header>
+          <div>
+            <div class="widget-body no-padding">
+                1111       
+            </div>
+          </div>
+        </sa-widget>
+      </article>
+    </div>
+  </sa-widgets-grid>
