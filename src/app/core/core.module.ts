@@ -22,6 +22,7 @@ import { BasicAuthenticationHttp } from './services/basic-authentication-http.se
 import { AppConfig } from './app.config';
 import { AggridFilterSerialization } from "../shared/helper/serialize/aggrid-filter.serialization";
 import { PermissionService } from "app/core/services/permission.service";
+import { MenuService } from "app/core/services/resources/menu.service";
 
 export function initConfig(config: AppConfig){
     return () => config.load();
@@ -56,6 +57,7 @@ export function initConfig(config: AppConfig){
         ResourceService,
         ResourceRangeService,
         PermissionService,
+        MenuService,
         BasicAuthenticationHttp,
         AppConfig,
         AggridFilterSerialization,  //AgGrid组件查询过滤器序列化为字符串

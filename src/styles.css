@@ -1,9 +1,0 @@
-/* You can add global styles to this file, and also import other style files */
-
-.ng-valid:not(form).ng-valid:not([formgroupname])  {
-  border-left: 5px solid #42A948; 
-}
-
-.ng-invalid:not(form).ng-invalid:not([formgroupname]).ng-invalid:not(.ng-pristine)  {
-  border-left: 5px solid #a94442;  
-}

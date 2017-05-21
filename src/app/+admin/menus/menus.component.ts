@@ -1,32 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Menu } from "app/core/entity/resources/menu";
+import { MenuService } from "app/core/services/resources/menu.service";
 
 @Component({
-    selector: 'tree',
     templateUrl: './menus.component.html'
 })
-export class MenusComponent {
-    nodes = [
-    {
-      id: 1,
-      name: 'root1',
-      children: [
-        { id: 2, name: 'child1' },
-        { id: 3, name: 'child2' }
-      ]
-    },
-    {
-      id: 4,
-      name: 'root2',
-      children: [
-        { id: 5, name: 'child2.1' },
-        {
-          id: 6,
-          name: 'child2.2',
-          children: [
-            { id: 7, name: 'subsub' }
-          ]
-        }
-      ]
+export class MenusComponent implements OnInit {
+    public nodes: Menu[];
+
+    constructor(private menuService: MenuService) {
+      
     }
-  ];
+
+    ngOnInit(): void {
+      //读取菜单数据
+      this.menuService.getAll()
+        .then( response => this.nodes = response);
+    }
 }
