@@ -10,3 +10,9 @@ export enum PermissionType {
     READ = 1,   //读权限
     WRITE = 2   //写权限
 }
+
+//菜单管理保存类型
+export enum MenuOperationType {
+    addRootMenu,    //添加根菜单
+    addChildMenu    //添加子菜单
+}
