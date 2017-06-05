@@ -1,69 +1,69 @@
 <div id="content">
-  <div class="row">
-    <sa-big-breadcrumbs [items]="['后台管理', '菜单管理']" icon="table" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
-  </div>
-
-  <sa-widgets-grid>
     <div class="row">
-      <article class="col-sm-12">
-        <sa-widget [editbutton]="false" [togglebutton]="false" [fullscreenbutton]="false" [deletebutton]="false">
-          <header>
-            <span class="widget-icon"> <i class="fa fa-users"></i> </span>
-            <h2>菜单管理</h2>
-            <div class="widget-toolbar">
+        <sa-big-breadcrumbs [items]="['后台管理', '菜单管理']" icon="table" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+    </div>
+
+    <sa-widgets-grid>
+        <div class="row">
+            <article class="col-sm-12">
+                <sa-widget [editbutton]="false" [togglebutton]="false" [fullscreenbutton]="false" [deletebutton]="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-users"></i> </span>
+                        <h2>菜单管理</h2>
+                        <!--<div class="widget-toolbar">
               <button class="btn btn-default" (click)="addUserModalShow()">
                 <i class="fa fa-plus"></i> <span class="hidden-mobile">添加根菜单</span>
               </button>
-            </div>
-          </header>
-          <div>
-            <div class="widget-body">
-              <article class="col-sm-12 col-md-12 col-lg-6 sortable-grid ui-sortable">
-                <tree-root [nodes]="nodes">
-                  <ng-template #treeNodeTemplate let-node let-index="index">
-                    <span>{{ node.data.name }}</span>
-                    <a class="btn btn-info btn-xs">+</a>
-                  </ng-template>
-                </tree-root>  
-              </article>
-              <article class="col-sm-12 col-md-12 col-lg-6 sortable-grid ui-sortable">
-                <!--菜单详情框-->
-                  <form class="form-horizontal">
-                    <fieldset>
-                      <legend>菜单详情</legend>
-                      <div class="form-group">  
-                        <label class="col-md-2 control-label">名称</label> 
-                        <div class="col-md-10">
-                            <input class="form-control"  type="text">
-                        </div> 
-                      </div> 
-                      <div class="form-group">  
-                        <label class="col-md-2 control-label">路径</label> 
-                        <div class="col-md-10">
-                            <input class="form-control"  type="text">
-                        </div> 
-                      </div> 
-                      <div class="form-group">  
-                        <label class="col-md-2 control-label">排序号</label> 
-                        <div class="col-md-10">
-                            <input class="form-control"  type="text">
-                        </div> 
-                      </div> 
-                      <div>
-                        <div class="col-md-2"></div>
-                        <div class="col-md-10">
-                          <button class="btn btn-primary" type="submit">
+            </div>-->
+                    </header>
+                    <div>
+                        <div class="widget-body">
+                            <article class="col-sm-12 col-md-12 col-lg-6 sortable-grid ui-sortable">
+                                <tree-root [nodes]="nodes" (activate)="onTreeClick($event)" (deactivate)="onTreeClick($event)">
+                                    <ng-template #treeNodeTemplate let-node let-index="index">
+                                        <span>{{ node.data.name }}</span>
+                                        <a class="btn btn-info btn-xs" (click)="addChildMenu($event)">+</a>
+                                    </ng-template>
+                                </tree-root>
+                            </article>
+                            <article class="col-sm-12 col-md-12 col-lg-6 sortable-grid ui-sortable">
+                                <!--菜单详情框-->
+                                <form class="form-horizontal">
+                                    <fieldset>
+                                        <legend>{{curSaveMode.title}}</legend>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">名称</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">路径</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">排序号</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="col-md-2"></div>
+                                            <div class="col-md-10">
+                                                <button class="btn btn-primary" type="submit">
                           <i class="fa fa-save"></i>
-                          保存
+                          {{curSaveMode.buttonTitle}}
                           </button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </article>
                         </div>
-                      </div>
-                    </fieldset>
-                  </form>
-              </article>     
-            </div>
-          </div>
-        </sa-widget>
-      </article>
-    </div>
-  </sa-widgets-grid>
+                    </div>
+                </sa-widget>
+            </article>
+        </div>
+    </sa-widgets-grid>
