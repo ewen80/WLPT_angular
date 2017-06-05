@@ -1,4 +1,6 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { Menu } from "app/core/entity/resources/menu";
 import { MenuService } from "app/core/services/resources/menu.service";
 
@@ -20,6 +22,8 @@ export class MenusComponent implements OnInit {
     readonly MOD_BUTTON_TITLE = "修改";
 
     public nodes: Menu[];
+    public menuDetailForm: FormGroup;
+
     public curSaveMode: {title:string, 
                         saveType:MenuSaveType,
                         buttonTitle:string,
@@ -28,8 +32,16 @@ export class MenusComponent implements OnInit {
                                                 buttonTitle: this.ADD_BUTTON_TITLE,
                                                 selectedNode:null} ; //当前菜单保存类型
  
-    constructor(private menuService: MenuService) {
-      
+    constructor(private formBuilder: FormBuilder, private menuService: MenuService) {
+      this.createForm();
+    }
+
+    //构建Form
+    private createForm():void{
+        this.menuDetailForm = this.formBuilder.group({
+            name: ['',Validators.required],
+            path: ['', Validators.required] 
+        });
     }
 
     ngOnInit(): void {
@@ -41,6 +53,7 @@ export class MenusComponent implements OnInit {
                 });
     }
 
+    //点击菜单节点
     onTreeClick(event){
         if(event && event.treeModel){
             var treeModel = event.treeModel;
@@ -61,7 +74,8 @@ export class MenusComponent implements OnInit {
         }
     }
 
-    addChildMenu(event){
+    //点击添加子菜单按钮
+    addChildMenuClick(event){
         this.curSaveMode = {title: this.ADD_CHILD_MENU_TITLE, 
                             saveType: MenuSaveType.addChildMenu,
                             buttonTitle: this.ADD_BUTTON_TITLE,
@@ -71,5 +85,29 @@ export class MenusComponent implements OnInit {
 
         console.log(this.curSaveMode);
 
+    }
+
+    //点击菜单保存按钮
+    onsubmit(){
+        switch(this.curSaveMode.saveType){
+            case MenuSaveType.addRootMenu:
+
+                break;
+        }
+    }
+
+    //添加根菜单节点
+    addRootMenu(){
+        var rootMenu: Menu = new Menu();
+        rootMenu.name = 
+    }
+
+    prepareSaveMenu(): Menu{
+        const formModel = this.menuDetailForm.value;
+        const saveMenu = {
+            name: formModel.name,
+            path: formModel.path
+        }
+        return saveMenu;
     }
 }

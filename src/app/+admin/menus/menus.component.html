@@ -22,33 +22,33 @@
                                 <tree-root [nodes]="nodes" (activate)="onTreeClick($event)" (deactivate)="onTreeClick($event)">
                                     <ng-template #treeNodeTemplate let-node let-index="index">
                                         <span>{{ node.data.name }}</span>
-                                        <a class="btn btn-info btn-xs" (click)="addChildMenu($event)">+</a>
+                                        <a class="btn btn-info btn-xs" (click)="addChildMenuClick($event)">+</a>
                                     </ng-template>
                                 </tree-root>
                             </article>
                             <article class="col-sm-12 col-md-12 col-lg-6 sortable-grid ui-sortable">
                                 <!--菜单详情框-->
-                                <form class="form-horizontal">
+                                <form [formGroup]="menuDetailForm" class="form-horizontal" (ngSubmit)="onSubmit()" novalidate>
                                     <fieldset>
                                         <legend>{{curSaveMode.title}}</legend>
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">名称</label>
                                             <div class="col-md-10">
-                                                <input class="form-control" type="text">
+                                                <input formControlName="name" class="form-control" type="text">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">路径</label>
                                             <div class="col-md-10">
-                                                <input class="form-control" type="text">
+                                                <input formControlName="path" class="form-control" type="text">
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <!--<div class="form-group">
                                             <label class="col-md-2 control-label">排序号</label>
                                             <div class="col-md-10">
-                                                <input class="form-control" type="text">
+                                                <input formControlName="orderId" class="form-control" type="text">
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <div>
                                             <div class="col-md-2"></div>
                                             <div class="col-md-10">
