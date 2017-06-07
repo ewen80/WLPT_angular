@@ -19,10 +19,11 @@
                     <div>
                         <div class="widget-body">
                             <article class="col-sm-12 col-md-12 col-lg-6 sortable-grid ui-sortable">
-                                <tree-root [nodes]="nodes" (activate)="onTreeClick($event)" (deactivate)="onTreeClick($event)">
+                                <tree-root #menuTree [nodes]="nodes" (activate)="onTreeClick($event)" (deactivate)="onTreeClick($event)">
                                     <ng-template #treeNodeTemplate let-node let-index="index">
                                         <span>{{ node.data.name }}</span>
-                                        <a class="btn btn-info btn-xs" (click)="addChildMenuClick($event)">+</a>
+                                        <a class="btn btn-info btn-xs" (click)="addChildMenuClick(node.data)">+</a>&nbsp;
+                                        <a class="btn btn-danger btn-xs" (click)="delMenuClick(node)">-</a>
                                     </ng-template>
                                 </tree-root>
                             </article>
@@ -53,9 +54,9 @@
                                             <div class="col-md-2"></div>
                                             <div class="col-md-10">
                                                 <button class="btn btn-primary" type="submit">
-                          <i class="fa fa-save"></i>
-                          {{curSaveMode.buttonTitle}}
-                          </button>
+                                                    <i class="fa fa-save"></i>
+                                                    {{curSaveMode.buttonTitle}}
+                                                    </button>
                                             </div>
                                         </div>
                                     </fieldset>

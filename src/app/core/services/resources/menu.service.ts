@@ -24,11 +24,15 @@ export class MenuService {
                       .catch(this.handleError);   
   }
 
-  save(menu:Menu): Promise<{sucess:boolean,message:string}>{
+  save(menu:Menu): Promise<Menu>{
     return this.http.post(this.serverUrl,JSON.stringify(menu))
                       .toPromise()
                       .then( response => response.json())
                       .catch(this.handleError);
+  }
+
+  delete(menuId:number): void{
+    this.http.post(this.serverUrl,JSON.stringify(menuId));
   }
 
   private handleError(error: any): Promise<any>{

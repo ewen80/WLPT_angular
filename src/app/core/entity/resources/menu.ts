@@ -1,8 +1,9 @@
 
 export class Menu {
-    id: number;
+    id?: number;
     name: string;
     path: string;
-    orderId: number;
-    children: Menu[];
+    orderId?: number = 0;
+    children?: Menu[];
+    parentId?: number = 0; 
 }
