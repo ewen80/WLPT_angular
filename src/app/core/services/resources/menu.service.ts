@@ -31,8 +31,8 @@ export class MenuService {
                       .catch(this.handleError);
   }
 
-  delete(menuId:number): void{
-    this.http.post(this.serverUrl,JSON.stringify(menuId));
+  delete(menuId:number): Promise<void>{
+    return this.http.delete(this.serverUrl + '/' + menuId).toPromise();
   }
 
   private handleError(error: any): Promise<any>{
