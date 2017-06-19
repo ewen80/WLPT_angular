@@ -1,11 +1,10 @@
 <ul saSmartMenu>
-    <ng-template>
-        <li routerLinkActive="active">
-            <a routerLink="{{routerLink}}" title="{{menuName}}">
-                <i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">{{ menuName | i18n}}</span>
-            </a>
-        </li>
-    </ng-template>
+    <li routerLinkActive="active" *ngFor="let node of nodes">
+        <a routerLink="{{node.path}}" title="{{node.name}}">
+            <i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">{{ node.name | i18n}}</span>
+        </a>
+        <menu [nodes]="nodes.children"></menu>
+    </li>
 </ul>
 <!--------------------------------------------------------------------------->
 <li routerLinkActive="active">

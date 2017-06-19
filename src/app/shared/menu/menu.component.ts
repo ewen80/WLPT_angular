@@ -8,14 +8,14 @@ import { Menu } from "app/core/entity/resources/menu";
 })
 export class MenuComponent implements OnInit {
     //菜单数据源json格式
-    @Input() dataSource: Menu[];
+    @Input() nodes: Menu[];
 
     ngOnInit(): void {
         throw new Error('Method not implemented.');
     }
 
     private loadMenus(){
-        
+
     }
 
 }
