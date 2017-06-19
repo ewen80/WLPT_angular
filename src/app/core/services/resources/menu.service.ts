@@ -17,11 +17,20 @@ export class MenuService {
     console.log('MenuService created');
   }
 
+  //获取所有菜单节点(树形)
   getAll(): Promise<Menu[]>{
     return this.http.get(this.serverUrl)
                       .toPromise()
                       .then( response => response.json())   
                       .catch(this.handleError);   
+  }
+
+  //获取有权限的菜单树
+  getAuthorizedMenuTree(userId:string): Promise<Menu[]>{
+    return this.http.get(this.serverUrl+"/authorized/"+userId)
+                      .toPromise()
+                      .then( response => response.json())
+                      .catch(this.handleError);
   }
 
   save(menu:Menu): Promise<Menu>{
