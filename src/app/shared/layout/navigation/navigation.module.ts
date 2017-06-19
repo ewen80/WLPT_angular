@@ -8,7 +8,8 @@ import {MinifyMenuComponent} from "./minify-menu.component";
 import {NavigationComponent} from "./navigation.component";
 import {SmartMenuDirective} from "./smart-menu.directive";
 import {UserModule} from "../../user/user.module";
-import {RouterModule} from "@angular/router";
+import { RouterModule } from "@angular/router";
+import { MenuModule } from "app/shared/menu/menu.module";
 // import {ChatModule} from "../../chat/chat.module";
 
 @NgModule({
@@ -18,6 +19,7 @@ import {RouterModule} from "@angular/router";
     I18nModule,
     UserModule,
     // ChatModule
+    MenuModule
   ],
   declarations: [
     BigBreadcrumbsComponent,

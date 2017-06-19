@@ -1,44 +1,45 @@
 <aside id="left-panel">
 
-  <!-- User info -->
-  <sa-login-info></sa-login-info>
-  <!-- end user info -->
+    <!-- User info -->
+    <sa-login-info></sa-login-info>
+    <!-- end user info -->
 
-  <nav>
-    <!-- NOTE: Notice the gaps after each icon usage <i></i>..
+    <nav>
+        <!-- NOTE: Notice the gaps after each icon usage <i></i>..
     Please note that these links work a bit different than
     traditional href="" links. See documentation for details.
     -->
-
-    <ul saSmartMenu>
-
-      <li routerLinkActive="active">
-        <a routerLink="/home" title="Home">
-          <i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">{{'Home' | i18n}}</span></a>
-      </li>
-
-      <li routerLinkActive="active">
-        <a  title="Admin">
-          <i class="fa fa-lg fa-fw fa-cog" aria-hidden="true"></i> <span class="menu-item-parent">{{'后台管理' | i18n}}</span>
-        </a>
         <ul>
-          <li routerLinkActive="active">
-            <a routerLink="/admin/users">{{'用户管理' | i18n}}</a>
-          </li>
-          <li routerLinkActive="active">
-            <a routerLink="/admin/roles">{{'角色管理' | i18n}}</a>
-          </li>
-          <li routerLinkActive="active">
-            <a routerLink="/admin/resources">{{'资源管理' | i18n}}</a>
-          </li>
-          <li routerLinkActive="active">
-            <a routerLink="/admin/resources/menus">{{'菜单管理' | i18n}}</a>
-          </li>
+            <menu [nodes]="menuNodes"></menu>
         </ul>
-      </li>
-    </ul>
-  </nav>
+        <!--<ul saSmartMenu>
+            <li routerLinkActive="active">
+                <a routerLink="/home" title="Home">
+                    <i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">{{'Home' | i18n}}</span></a>
+            </li>
 
-  <sa-minify-menu></sa-minify-menu>
+            <li routerLinkActive="active">
+                <a title="Admin">
+                    <i class="fa fa-lg fa-fw fa-cog" aria-hidden="true"></i> <span class="menu-item-parent">{{'后台管理' | i18n}}</span>
+                </a>
+                <ul>
+                    <li routerLinkActive="active">
+                        <a routerLink="/admin/users">{{'用户管理' | i18n}}</a>
+                    </li>
+                    <li routerLinkActive="active">
+                        <a routerLink="/admin/roles">{{'角色管理' | i18n}}</a>
+                    </li>
+                    <li routerLinkActive="active">
+                        <a routerLink="/admin/resources">{{'资源管理' | i18n}}</a>
+                    </li>
+                    <li routerLinkActive="active">
+                        <a routerLink="/admin/resources/menus">{{'菜单管理' | i18n}}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>-->
+    </nav>
+
+    <sa-minify-menu></sa-minify-menu>
 
 </aside>

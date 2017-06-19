@@ -1,21 +1,14 @@
 import { Component, Input, OnInit } from "@angular/core";
 
 import { Menu } from "app/core/entity/resources/menu";
+import { MenuService } from "app/core/services/resources/menu.service";
 
 @Component({
     selector: 'menu',
-    templateUrl: 'menu.component.html'
+    templateUrl: './menu.component.html'
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent {
     //菜单数据源json格式
     @Input() nodes: Menu[];
-
-    ngOnInit(): void {
-        throw new Error('Method not implemented.');
-    }
-
-    private loadMenus(){
-
-    }
 
 }
