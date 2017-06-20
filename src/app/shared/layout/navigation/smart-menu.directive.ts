@@ -51,9 +51,13 @@ export class SmartMenuDirective implements OnInit, AfterContentInit {
 
 
   ngAfterContentInit() {
-    this.$menu.find('li:has(> ul)').each((i, li)=> {
+    console.log(this.$menu);
+    this.$menu.find('li:has( ul)').each((i, li)=> {
       let $menuItem = $(li);
+      console.log($menuItem);
       let $a = $menuItem.find('>a');
+      console.log('found a');
+      console.log($a);
       let sign = $('<b class="collapse-sign"><em class="fa fa-plus-square-o"/></b>');
       $a.on('click', (e)=> {
         this.toggle($menuItem);

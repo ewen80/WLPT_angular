@@ -23,7 +23,6 @@ export class NavigationComponent implements OnInit {
       this.menuService.getAuthorizedMenuTree('admin')
           .then( response => {
             this.menuNodes = response;
-            console.log(this.menuNodes);
           });
   }
 

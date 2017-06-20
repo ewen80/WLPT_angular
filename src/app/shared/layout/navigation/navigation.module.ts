@@ -9,7 +9,7 @@ import {NavigationComponent} from "./navigation.component";
 import {SmartMenuDirective} from "./smart-menu.directive";
 import {UserModule} from "../../user/user.module";
 import { RouterModule } from "@angular/router";
-import { MenuModule } from "app/shared/menu/menu.module";
+import { MenuComponent } from "app/shared/layout/navigation/menu/menu.component";
 // import {ChatModule} from "../../chat/chat.module";
 
 @NgModule({
@@ -17,21 +17,22 @@ import { MenuModule } from "app/shared/menu/menu.module";
     CommonModule,
     RouterModule,
     I18nModule,
-    UserModule,
+    UserModule
     // ChatModule
-    MenuModule
   ],
   declarations: [
     BigBreadcrumbsComponent,
     MinifyMenuComponent,
     NavigationComponent,
     SmartMenuDirective,
+    MenuComponent
   ],
   exports: [
     BigBreadcrumbsComponent,
     MinifyMenuComponent,
     NavigationComponent,
     SmartMenuDirective,
+    MenuComponent
   ]
 })
 export class NavigationModule{}
