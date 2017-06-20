@@ -1,6 +1,6 @@
 import {
   Directive, ElementRef, OnInit,
-  AfterContentInit
+  AfterContentInit, AfterViewInit
 } from '@angular/core';
 import {Subscription} from "rxjs/Rx";
 
@@ -12,7 +12,7 @@ declare var $:any;
 @Directive({
   selector: '[saSmartMenu]'
 })
-export class SmartMenuDirective implements OnInit, AfterContentInit {
+export class SmartMenuDirective implements OnInit, AfterViewInit {
 
   private $menu:any;
   private layoutSub:Subscription;
@@ -50,7 +50,7 @@ export class SmartMenuDirective implements OnInit, AfterContentInit {
   }
 
 
-  ngAfterContentInit() {
+  ngAfterViewInit() {
     console.log(this.$menu);
     this.$menu.find('li:has( ul)').each((i, li)=> {
       let $menuItem = $(li);
