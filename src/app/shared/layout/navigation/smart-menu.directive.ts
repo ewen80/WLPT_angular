@@ -1,6 +1,6 @@
 import {
   Directive, ElementRef, OnInit,
-  AfterContentInit, AfterViewInit
+  AfterViewInit
 } from '@angular/core';
 import {Subscription} from "rxjs/Rx";
 
@@ -26,10 +26,9 @@ export class SmartMenuDirective implements OnInit, AfterViewInit {
     this.$menu = $(this.menu.nativeElement);
   }
 
-  ngOnInit() {
-
-    this.layoutSub = this.layoutService.subscribe((store)=> {
-      this.processLayout(store)
+    ngOnInit() {
+      this.layoutSub = this.layoutService.subscribe((store)=> {
+        this.processLayout(store)
 
     });
 
@@ -51,13 +50,14 @@ export class SmartMenuDirective implements OnInit, AfterViewInit {
 
 
   ngAfterViewInit() {
-    console.log(this.$menu);
-    this.$menu.find('li:has( ul)').each((i, li)=> {
+    // console.log(this.$menu);
+    this.$menu.find('li:has(> ul)').each((i, li)=> {
       let $menuItem = $(li);
-      console.log($menuItem);
+      // console.log("found children li")
+      // console.log($menuItem);
       let $a = $menuItem.find('>a');
-      console.log('found a');
-      console.log($a);
+      // console.log('found a');
+      // console.log($a);
       let sign = $('<b class="collapse-sign"><em class="fa fa-plus-square-o"/></b>');
       $a.on('click', (e)=> {
         this.toggle($menuItem);

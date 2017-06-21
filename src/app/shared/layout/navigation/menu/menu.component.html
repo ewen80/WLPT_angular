@@ -1,9 +1,10 @@
-  <ul saSmartMenu>  
+  <ul #menu>  
     <li  *ngFor="let node of nodes">
         <a title="{{node.name}}">
             <i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">{{ node.name }}</span>
         </a>
-        <WLPT-Menu [nodes]="node.children" *ngIf="node.children.length > 0"></WLPT-Menu>
+        <!--<WLPT-Menu [nodes]="node.children" *ngIf="node.children.length > 0"></WLPT-Menu>-->
+        <my-child-view></my-child-view>
     </li>
   </ul>
 <!--
@@ -26,5 +27,4 @@
         </li>
     </ul>
 </li>
-</ul>
 -->
