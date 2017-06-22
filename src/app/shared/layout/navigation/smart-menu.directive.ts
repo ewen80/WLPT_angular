@@ -6,7 +6,8 @@ import {
 import {Subscription} from "rxjs/Rx";
 
 import {LayoutService} from "../../layout/layout.service";
-import {Router, NavigationEnd} from "@angular/router";
+import { Router, NavigationEnd } from "@angular/router";
+import { MenuRenderService } from "app/shared/layout/navigation/menu/menu-render.service";
 
 declare var $:any;
 
@@ -22,15 +23,17 @@ export class SmartMenuDirective implements OnInit, AfterViewInit {
   constructor(
     private menu:ElementRef,
     private router: Router,
-    public layoutService:LayoutService
+    public layoutService:LayoutService,
+    private menuRenderService: MenuRenderService
   ) {
     this.$menu = $(this.menu.nativeElement);
-  }
 
-    @HostListener("leafMenuInit")
-    onLeafMenuInit(){
-      this.ngAfterViewInit();
-    }
+    this.menuRenderService.foundLeaf$.subscribe(
+      ()=>{
+        console.log('found leaf menu');
+      }
+    );
+  }
 
     ngOnInit() {
       this.layoutSub = this.layoutService.subscribe((store)=> {

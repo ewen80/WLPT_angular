@@ -13,7 +13,7 @@ export class MenuComponent {
     //菜单数据源json格式
     @Input() nodes: Menu[];
 
-    leafEvent(){
-        console.log("received event");
-    }
+    // leafEvent(){
+    //     console.log("received event");
+    // }
 }
