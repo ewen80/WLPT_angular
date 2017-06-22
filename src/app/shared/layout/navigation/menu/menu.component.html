@@ -1,12 +1,14 @@
-  <ul #menu>  
-    <li  *ngFor="let node of nodes">
-        <a title="{{node.name}}">
-            <i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">{{ node.name }}</span>
-        </a>
-        <!--<WLPT-Menu [nodes]="node.children" *ngIf="node.children.length > 0"></WLPT-Menu>-->
-        <my-child-view></my-child-view>
-    </li>
-  </ul>
+
+<li  *ngFor="let node of nodes; let last = last" [ngForIsFinished]="last" [wlptMenuIsLeaf]="node.children.length==0" (onLeafMenuViewInit)="leafEvent()">
+    <a title="{{node.name}}">
+        <i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">{{ node.name }}</span>
+    </a>
+    <ul *ngIf="node.children.length>0">
+        <WLPT-Menu [nodes]="node.children"></WLPT-Menu>
+    </ul>
+</li>
+
+
 <!--
 <li routerLinkActive="active">
     <a title="Admin">

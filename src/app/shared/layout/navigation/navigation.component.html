@@ -9,8 +9,9 @@
     Please note that these links work a bit different than
     traditional href="" links. See documentation for details.
     -->
-        <WLPT-Menu [nodes]="menuNodes"></WLPT-Menu>
-
+        <ul saSmartMenu>
+            <WLPT-Menu [nodes]="menuNodes" *ngIf="menuNodes"></WLPT-Menu>
+        </ul>
         <!--<ul saSmartMenu>
             <li routerLinkActive="active">
                 <a routerLink="/home" title="Home">

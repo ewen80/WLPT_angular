@@ -9,7 +9,9 @@ import {NavigationComponent} from "./navigation.component";
 import {SmartMenuDirective} from "./smart-menu.directive";
 import {UserModule} from "../../user/user.module";
 import { RouterModule } from "@angular/router";
-import { MenuComponent, ChildViewComponent } from "app/shared/layout/navigation/menu/menu.component";
+import { MenuComponent } from "app/shared/layout/navigation/menu/menu.component";
+import { MySharedModule } from "app/shared/myShared.module";
+import { IsLeafMenuDirective } from "app/shared/layout/navigation/menu/isleafmenu.directive";
 // import {ChatModule} from "../../chat/chat.module";
 
 @NgModule({
@@ -17,7 +19,9 @@ import { MenuComponent, ChildViewComponent } from "app/shared/layout/navigation/
     CommonModule,
     RouterModule,
     I18nModule,
-    UserModule
+    UserModule,
+
+    MySharedModule
     // ChatModule
   ],
   declarations: [
@@ -27,8 +31,8 @@ import { MenuComponent, ChildViewComponent } from "app/shared/layout/navigation/
     SmartMenuDirective,
     MenuComponent,
 
-
-    ChildViewComponent
+    IsLeafMenuDirective
+    // ChildViewComponent
   ],
   exports: [
     BigBreadcrumbsComponent,

@@ -1,6 +1,7 @@
 import {
   Directive, ElementRef, OnInit,
-  AfterViewInit
+  AfterViewInit,
+  HostListener
 } from '@angular/core';
 import {Subscription} from "rxjs/Rx";
 
@@ -25,6 +26,11 @@ export class SmartMenuDirective implements OnInit, AfterViewInit {
   ) {
     this.$menu = $(this.menu.nativeElement);
   }
+
+    @HostListener("leafMenuInit")
+    onLeafMenuInit(){
+      this.ngAfterViewInit();
+    }
 
     ngOnInit() {
       this.layoutSub = this.layoutService.subscribe((store)=> {
