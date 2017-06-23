@@ -18,7 +18,8 @@ export class IsLeafMenuDirective {
             // this.onLeafMenuViewInit.emit();
             //通过服务发出通知
             this.menuRenderService.foundLeafMenu();
-            // console.log('emit found menu leaf event');
+            // var d = new Date();
+            // console.log('emit found menu leaf event at ' + d.getTime());
         }
     }
 

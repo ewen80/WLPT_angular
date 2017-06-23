@@ -4,9 +4,10 @@ import { Http, Response } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { User } from '../entity/user';
+
 import { AppConfig } from '../app.config';
 import { BasicAuthenticationHttp } from './basic-authentication-http.service';
+import { User } from "app/shared/entity/user";
 
 // import {JsonApiService} from "../../shared/api/json-api.service";
 

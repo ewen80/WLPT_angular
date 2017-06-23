@@ -4,8 +4,8 @@ import {GridOptions} from 'ag-grid/main';
 
 import { UserService } from '../../core/services/user.service';
 import { saveMode } from '../../core/enums';
-import { User } from '../../core/entity/user';
-import { Role } from "app/core/entity/role";
+import { User } from 'app/shared/entity/user';
+import { Role } from "app/shared/entity/role";
 import { RoleService } from "app/core/services/role.service";
 
 

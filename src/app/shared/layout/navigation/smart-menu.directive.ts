@@ -28,9 +28,13 @@ export class SmartMenuDirective implements OnInit, AfterViewInit {
   ) {
     this.$menu = $(this.menu.nativeElement);
 
-    this.menuRenderService.foundLeaf$.subscribe(
+    //至少等待10ms，没有新的数据流发送过来才执行（防止多个叶子节点事件发送过来导致执行多次ngAfterViewInit事件）
+    this.menuRenderService.foundLeaf$.debounceTime(10).subscribe(
       ()=>{
-        console.log('found leaf menu');
+        var d = new Date();
+        console.log('found leaf menu at ' + d.getTime());
+
+        this.ngAfterViewInit();
       }
     );
   }
@@ -59,14 +63,10 @@ export class SmartMenuDirective implements OnInit, AfterViewInit {
 
 
   ngAfterViewInit() {
-    // console.log(this.$menu);
     this.$menu.find('li:has(> ul)').each((i, li)=> {
       let $menuItem = $(li);
-      // console.log("found children li")
-      // console.log($menuItem);
       let $a = $menuItem.find('>a');
-      // console.log('found a');
-      // console.log($a);
+      //如果a后面已经有<b>则不再添加
       let sign = $('<b class="collapse-sign"><em class="fa fa-plus-square-o"/></b>');
       $a.on('click', (e)=> {
         this.toggle($menuItem);

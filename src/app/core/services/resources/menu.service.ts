@@ -6,7 +6,7 @@ import 'rxjs/add/operator/toPromise';
 
 import { AppConfig } from '../../app.config';
 import { BasicAuthenticationHttp } from '../basic-authentication-http.service';
-import { Menu } from "app/core/entity/resources/menu";
+import { Menu } from "app/shared/entity/resources/menu";
 
 @Injectable()
 export class MenuService {

@@ -10,7 +10,7 @@ import {GridOptions} from 'ag-grid/main';
 
 import { RoleService } from '../../core/services/role.service';
 import { saveMode } from '../../core/enums';
-import { Role } from '../../core/entity/role';
+import { Role } from 'app/shared/entity/role';
 
 
 declare var $: any;

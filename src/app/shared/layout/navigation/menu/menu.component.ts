@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
 
-import { Menu } from "app/core/entity/resources/menu";
+import { Menu } from "app/shared/entity/resources/menu";
 import { MenuService } from "app/core/services/resources/menu.service";
 
 

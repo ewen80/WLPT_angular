@@ -51,6 +51,15 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <label class="col-md-2 control-label">图标</label>
+                                            <div class="col-md-10">
+                                                <input formControlName="iconClass" class="form-control" type="text">
+                                                <div *ngIf="formErrors.iconClass" class="alert alert-danger">
+                                                    {{ formErrors.iconClass }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="col-md-2 control-label">排序号</label>
                                             <div class="col-md-10">
                                                 <input formControlName="orderId" class="form-control" type="text">

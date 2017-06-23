@@ -3,17 +3,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap';
 
 import { ResourceService } from '../../../core/services/resource.service';
-import { Resource } from '../../../core/entity/resource';
+import { Resource } from 'app/shared/entity/resource';
 import { saveMode, PermissionType } from '../../../core/enums';
 import { ResourceClassNameValidator } from '../../validators/resource-classname-validator';
-import { ResourceRange } from "../../../core/entity/resource-range";
+import { ResourceRange } from "app/shared/entity/resource-range";
 import { ResourceRangeService } from "../../../core/services/resource-range.service";
-import { Role } from "../../../core/entity/role";
+import { Role } from "app/shared/entity/role";
 import { RoleService } from "../../../core/services/role.service";
-import { PermissionWrapperDTO } from "app/core/entity/permission-wrapper-dto";
+import { PermissionWrapperDTO } from "app/shared/entity/permission-wrapper-dto";
 import { PermissionService } from "app/core/services/permission.service";
-import { Permission } from "app/core/entity/permission";
-import { PermissionWrapper } from "app/core/entity/permission-wrapper";
+import { Permission } from "app/shared/entity/permission";
+import { PermissionWrapper } from "app/shared/entity/permission-wrapper";
 
 @Component({
     selector: 'resource-range-detail',

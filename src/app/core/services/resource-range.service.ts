@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AppConfig } from "../app.config";
 import { BasicAuthenticationHttp } from "./basic-authentication-http.service";
-import { ResourceRange } from "../entity/resource-range";
+import { ResourceRange } from "app/shared/entity/resource-range";
 
 @Injectable()
 export class ResourceRangeService{

@@ -4,7 +4,7 @@ import { Http, Response } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Resource } from '../entity/resource';
+import { Resource } from 'app/shared/entity/resource';
 import { AppConfig } from '../app.config';
 import { BasicAuthenticationHttp } from './basic-authentication-http.service';
 import { SerializationHelper } from "../../shared/helper/serialize/serialization-helper";

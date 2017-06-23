@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { LoginInfoComponent } from "../../user/login-info/login-info.component";
-import { Menu } from "app/core/entity/resources/menu";
+import { Menu } from "app/shared/entity/resources/menu";
 import { MenuService } from "app/core/services/resources/menu.service";
 import { MenuRenderService } from "app/shared/layout/navigation/menu/menu-render.service";
 

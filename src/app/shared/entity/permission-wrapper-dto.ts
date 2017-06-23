@@ -1,8 +1,8 @@
 /**
  * 权限包装DTO
  */
-import { ResourceRange } from "app/core/entity/resource-range";
-import { Permission } from "app/core/entity/permission";
+import { ResourceRange } from "app/shared/entity/resource-range";
+import { Permission } from "app/shared/entity/permission";
 
 export class PermissionWrapperDTO {
     resourceRangeId: number;

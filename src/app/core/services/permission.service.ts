@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 
 import { AppConfig } from '../app.config';
 import { BasicAuthenticationHttp } from "app/core/services/basic-authentication-http.service";
-import { PermissionWrapperDTO } from "app/core/entity/permission-wrapper-dto";
+import { PermissionWrapperDTO } from "app/shared/entity/permission-wrapper-dto";
 
 
 @Injectable()

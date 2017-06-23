@@ -7,3 +7,17 @@
 .ng-invalid:not(form).ng-invalid:not([formgroupname]).ng-invalid:not(.ng-pristine)  {
   border-left: 5px solid #a94442;  
 }
+
+/*
+    没有的话,菜单不显示竖线
+*/
+nav>ul li>ul::before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 1;
+    left: 23px;
+    top: 0;
+    bottom: 0;
+    border-left: 1px solid #7A7A7A
+}

@@ -7,17 +7,17 @@ import { Component, OnInit, AfterViewInit, ViewChild, Input, EventEmitter } from
 import {GridOptions} from 'ag-grid/main';
 
 import { ResourceService } from '../../core/services/resource.service';
-import { Resource } from '../../core/entity/resource';
+import { Resource } from 'app/shared/entity/resource';
 import { saveMode } from '../../core/enums';
 import { AggridFilterSerialization } from "../../shared/helper/serialize/aggrid-filter.serialization";
 import { AgGridBooleanFilterComponent } from "../../shared/ag-grid-filters/boolean-filter.component";
 import { ResourceRangeService } from "../../core/services/resource-range.service";
-import { ResourceRange } from "../../core/entity/resource-range";
+import { ResourceRange } from "app/shared/entity/resource-range";
 import { RoleService } from "app/core/services/role.service";
-import { Role } from "app/core/entity/role";
+import { Role } from "app/shared/entity/role";
 import { PermissionService } from "app/core/services/permission.service";
-import { PermissionWrapper } from "app/core/entity/permission-wrapper";
-import { PermissionWrapperDTO } from "app/core/entity/permission-wrapper-dto";
+import { PermissionWrapper } from "app/shared/entity/permission-wrapper";
+import { PermissionWrapperDTO } from "app/shared/entity/permission-wrapper-dto";
 
 declare var $: any;
 

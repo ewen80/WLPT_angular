@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Menu } from "app/core/entity/resources/menu";
+import { Menu } from "app/shared/entity/resources/menu";
 import { MenuService } from "app/core/services/resources/menu.service";
 
 //菜单保存类型
@@ -40,6 +40,27 @@ export class MenusComponent implements OnInit {
         allowDrag: false,
         allDrop: false
     }
+
+    //需要进行验证的formControl
+    formErrors = {
+        'name': '',
+        'path': '',
+        'iconClass': '',
+        'orderId': ''
+    }
+
+    validationMessages = {
+        'name': {
+            'required': '菜单名不能为空'
+        },
+        'path': {
+            'required': '路径不能为空'
+        },
+        'orderId': {
+           'pattern': '请填写整数',
+           'required': '不能为空'
+        }
+    };
  
     constructor(private formBuilder: FormBuilder, private menuService: MenuService) {
       this.createForm();
@@ -50,16 +71,11 @@ export class MenusComponent implements OnInit {
         this.menuDetailForm = this.formBuilder.group({
             name: ['',Validators.required],
             path: ['', Validators.required],
+            iconClass: [''],
             orderId: ['',Validators.pattern("\\d+")]
         });
 
         this.menuDetailForm.valueChanges.subscribe(data => this.onValueChanged(data));
-
-    }
-
-    //form中字段发生变化
-    onValueChanged(data?: any){
-        this.validateControl();
     }
 
     //验证控件
@@ -80,25 +96,10 @@ export class MenusComponent implements OnInit {
         }
     }
 
-    //需要进行验证的formControl
-    formErrors = {
-        'name': '',
-        'path': '',
-        'orderId': ''
+    //form中字段发生变化
+    onValueChanged(data?: any){
+        this.validateControl();
     }
-
-    validationMessages = {
-        'name': {
-            'required': '菜单名不能为空'
-        },
-        'path': {
-            'required': '路径不能为空'
-        },
-        'orderId': {
-           'pattern': '请填写整数',
-           'required': '不能为空'
-        }
-    };
 
     ngOnInit(): void {
         this.loadMenuData();

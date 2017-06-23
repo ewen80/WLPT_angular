@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap';
 
 import { ResourceService } from '../../../core/services/resource.service';
-import { Resource } from '../../../core/entity/resource';
+import { Resource } from 'app/shared/entity/resource';
 import { saveMode } from '../../../core/enums';
 import { ResourceClassNameValidator } from '../../validators/resource-classname-validator';
 

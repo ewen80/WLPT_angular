@@ -4,7 +4,7 @@ import { Http, Response } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Role } from '../entity/role';
+import { Role } from 'app/shared/entity/role';
 import { AppConfig } from '../app.config';
 import { BasicAuthenticationHttp } from './basic-authentication-http.service';
 
