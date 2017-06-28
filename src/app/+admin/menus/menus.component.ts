@@ -6,9 +6,9 @@ import { MenuService } from "app/core/services/resources/menu.service";
 
 //菜单保存类型
 enum MenuSaveType{
-    addRootMenu,
-    addChildMenu,
-    modMenu
+    addRootMenu,    //添加根菜单
+    addChildMenu,   //添加子菜单
+    modMenu         //修改菜单
 }
 
 declare var $: any;
@@ -45,10 +45,10 @@ export class MenusComponent implements OnInit {
     formErrors = {
         'name': '',
         'path': '',
-        'iconClass': '',
         'orderId': ''
     }
 
+    //显示的错误信息
     validationMessages = {
         'name': {
             'required': '菜单名不能为空'
@@ -117,7 +117,7 @@ export class MenusComponent implements OnInit {
         if(event && event.treeModel){
             var treeModel = event.treeModel;
             if(treeModel.activeNodes.length > 0){
-                //当前有选中菜单节点
+                //当前有选中菜单节点，当前模式为修改选中菜单
                 this.curSaveMode = {
                                     title: this.MOD_MENU_TITLE, 
                                     saveType: MenuSaveType.modMenu,
@@ -127,10 +127,11 @@ export class MenusComponent implements OnInit {
                 this.menuDetailForm.reset({
                     name: event.node.data.name,
                     path: event.node.data.path,
+                    iconClass: event.node.data.iconClass,
                     orderId: event.node.data.orderId
                 })
             } else {
-                //当前没有选中菜单节点
+                //当前没有选中菜单节点,当前模式为添加根菜单
                 this.curSaveMode = {
                                     title: this.ADD_ROOT_MENU_TITLE,
                                     saveType: MenuSaveType.addRootMenu,
@@ -248,8 +249,13 @@ export class MenusComponent implements OnInit {
 
         saveMenu.name = formModel.name;
         saveMenu.path = formModel.path;
+        //如果没有填写orderId，则采用默认值
         if(formModel.orderId){
             saveMenu.orderId = formModel.orderId;
+        }
+        //如果没有填写iconClass,则采用默认值
+        if(formModel.iconClass){
+            saveMenu.iconClass = formModel.iconClass;
         }
         return saveMenu;
     }
