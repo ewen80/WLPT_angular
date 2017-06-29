@@ -1,7 +1,11 @@
 
 <li routerLinkActive="active" *ngFor="let node of nodes; let last = last" [ngForIsFinished]="last" [wlptMenuIsLeaf]="node.children.length==0" (onLeafMenuViewInit)="leafEvent()">
-    <a title="{{node.name}}">
-        <i class="fa fa-lg fa-fw {{node.iconClass}}"></i> <span class="menu-item-parent">{{ node.name }}</span>
+    <a *ngIf="node.children.length>0" title="{{node.name}}">
+        <i *ngIf="node.iconClass" class="fa fa-lg fa-fw {{node.iconClass}}"></i> <span class="menu-item-parent">{{ node.name }}</span>
+    </a>
+    <a *ngIf="node.children.length==0" routerLink="{{ node.path }}">
+       <i *ngIf="node.iconClass" class="fa fa-lg fa-fw {{node.iconClass}}"></i>
+        {{ node.name }}
     </a>
     <ul *ngIf="node.children.length>0">
         <WLPT-Menu [nodes]="node.children"></WLPT-Menu>
