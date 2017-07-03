@@ -32,6 +32,7 @@ export class SmartMenuDirective implements OnInit, AfterViewInit {
     this.menuRenderService.foundLeaf$.debounceTime(10).subscribe(
       ()=>{
         var d = new Date();
+        this.ngOnInit();
         this.ngAfterViewInit();
       }
     );
