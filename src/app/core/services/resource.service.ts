@@ -40,7 +40,8 @@ export class ResourceService {
 
   //获取单个资源信息
   getResource(className: string): Promise<Resource>{
-    return this.http.get(this.serverUrl+'/'+className)
+    //将className的.替换为$
+    return this.http.get(this.serverUrl+'/'+className.replace(/\./g,"$"))
                       .toPromise()
                       .then( response => {
                         //如果找不到，服务器端返回body为空转换json会报错

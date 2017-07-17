@@ -1,107 +1,95 @@
 <div id="content">
-  <div class="row">
-    <sa-big-breadcrumbs [items]="['后台管理', '资源管理']" icon="table" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
-  </div>
-
-  <sa-widgets-grid>
     <div class="row">
-      <article class="col-sm-12">
-        <sa-widget [editbutton]="false" [togglebutton]="false" [fullscreenbutton]="false" [deletebutton]="false">
-          <header>
-              <ul class="nav nav-tabs pull-left in">
-                <li [class.active]="activedTabIndex == 0">
-                  <a (click)="onTabSelected(0)"><i class="fa fa-tags"></i><span class="hidden-mobile hidden-tablet">资源类型</span></a>
-                </li>
-                <li *ngIf="activedTabIndex == 1" [class.active]="activedTabIndex == 1">
-                  <a (click)="onTabSelected(1)"><span class="hidden-mobile hidden-tablet">资源范围</span></a>
-                </li>
-              </ul>
-              <div *ngIf="activedTabIndex === 1" style="float:left;margin-left: 10px">
-                资源信息: 全限定名 {{selectedResource.className}}, 资源名 {{selectedResource.name}}
-              </div>
-              <div class="widget-toolbar">
-                <!--资源类型工具按钮-->
-                <button #addTypeButton *ngIf="addTypeButtonDisplay" class="btn btn-default" (click)="addResourceModalShow()">
+        <sa-big-breadcrumbs [items]="['后台管理', '资源管理']" icon="table" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+    </div>
+
+    <sa-widgets-grid>
+        <div class="row">
+            <article class="col-sm-12">
+                <sa-widget [editbutton]="false" [togglebutton]="false" [fullscreenbutton]="false" [deletebutton]="false">
+                    <header>
+                        <ul class="nav nav-tabs pull-left in">
+                            <li [class.active]="activedTabIndex == 0">
+                                <a (click)="onTabSelected(0)"><i class="fa fa-tags"></i><span class="hidden-mobile hidden-tablet">资源类型</span></a>
+                            </li>
+                            <li *ngIf="activedTabIndex == 1" [class.active]="activedTabIndex == 1">
+                                <a (click)="onTabSelected(1)"><span class="hidden-mobile hidden-tablet">资源范围</span></a>
+                            </li>
+                        </ul>
+                        <div *ngIf="activedTabIndex === 1" style="float:left;margin-left: 10px">
+                            资源信息: 全限定名 {{selectedResource.className}}, 资源名 {{selectedResource.name}}
+                        </div>
+                        <div class="widget-toolbar">
+                            <!--资源类型工具按钮-->
+                            <button #addTypeButton *ngIf="addTypeButtonDisplay" class="btn btn-default" (click)="addResourceModalShow()">
                   <i class="fa fa-plus"></i> <span class="hidden-mobile">添加资源类型</span>
                 </button>
-                <button #delTypeButton *ngIf="delTypeButtonDisplay" class="btn btn-default" (click)="deleteResourceButtonClick()" [disabled]="delTypeButtonDisabled">
+                            <button #delTypeButton *ngIf="delTypeButtonDisplay" class="btn btn-default" (click)="deleteResourceButtonClick()" [disabled]="delTypeButtonDisabled">
                   <i class="fa fa-minus"></i> <span class="hidden-mobile">删除资源类型</span>
                 </button>
-                <button #rangeButton *ngIf="rangeButtonDisplay" class="btn btn-default" (click)="rangeButtonClick()" [disabled]="rangeButtonDisabled">
+                            <button #rangeButton *ngIf="rangeButtonDisplay" class="btn btn-default" (click)="rangeButtonClick()" [disabled]="rangeButtonDisabled">
                   <span class="hidden-mobile">范围管理</span>
                 </button>
-                <!--资源范围工具按钮-->
-                <button  *ngIf="addRangeButtonDisplay" class="btn btn-default" (click)="addRangeModalShow()">
+                            <!--资源范围工具按钮-->
+                            <button *ngIf="addRangeButtonDisplay" class="btn btn-default" (click)="addRangeModalShow()">
                   <i class="fa fa-plus"></i><span class="hidden-mobile">添加资源范围</span>
                 </button>
-                <button  *ngIf="delRangeButtonDisplay" class="btn btn-default" [disabled]="delRangeButtonDisabled" (click)="deleteRangeButtonClick()">
+                            <button *ngIf="delRangeButtonDisplay" class="btn btn-default" [disabled]="delRangeButtonDisabled" (click)="deleteRangeButtonClick()">
                   <i class="fa fa-minus"></i> <span class="hidden-mobile">删除资源范围</span>
                 </button>
-              </div>
-          </header>
-          <div>
-            <div class="widget-body no-padding">
-              <!--Tabs-->
-              <tabset>
-                <!--资源类型列表-->
-                <tab [active]="activedTabIndex == 0" >
-                  <ag-grid-angular #resourcesGrid style="width: 100%; height: 350px;" class="ag-fresh"    
-                      [gridOptions]="typesGridOptions" 
-                      [columnDefs]="typesColumnDefs"  
-                      (rowDoubleClicked)="dblClickTypesRow($event)"
-                      (rowSelected)="setTypesButtonsStatus()"
-                      (modelUpdated)="setTypesButtonsStatus()"></ag-grid-angular>
-                </tab>
-                <!--资源范围列表-->
-                <tab [active]="activedTabIndex == 1" >
-                  <ag-grid-angular #rangesGrid style="width: 100%; height: 350px;" class="ag-fresh"    
-                      [gridOptions]="rangesGridOptions" 
-                      [rowData]="rangeRowData"
-                      [columnDefs]="rangesColumnDefs"  
-                      (rowDoubleClicked)="dblClickRangesRow($event)"
-                      (rowSelected)="setRangesButtonsStatus()"
-                      (modelUpdated)="setRangesButtonsStatus()"></ag-grid-angular>
-                </tab>
-              </tabset>
+                        </div>
+                    </header>
+                    <div>
+                        <div class="widget-body no-padding">
+                            <!--Tabs-->
+                            <tabset>
+                                <!--资源类型列表-->
+                                <tab [active]="activedTabIndex == 0">
+                                    <ag-grid-angular #resourcesGrid style="width: 100%; height: 350px;" class="ag-fresh" [gridOptions]="typesGridOptions" [columnDefs]="typesColumnDefs" (rowDoubleClicked)="dblClickTypesRow($event)" (rowSelected)="setTypesButtonsStatus()" (modelUpdated)="setTypesButtonsStatus()"></ag-grid-angular>
+                                </tab>
+                                <!--资源范围列表-->
+                                <tab [active]="activedTabIndex == 1">
+                                    <ag-grid-angular #rangesGrid style="width: 100%; height: 350px;" class="ag-fresh" [gridOptions]="rangesGridOptions" [rowData]="rangeRowData" [columnDefs]="rangesColumnDefs" (rowDoubleClicked)="dblClickRangesRow($event)" (rowSelected)="setRangesButtonsStatus()"
+                                        (modelUpdated)="setRangesButtonsStatus()"></ag-grid-angular>
+                                </tab>
+                            </tabset>
+                        </div>
+                    </div>
+                </sa-widget>
+            </article>
+        </div>
+    </sa-widgets-grid>
+
+    <!--资源添加修改对话框-->
+    <div class="modal fade" bsModal #resourceDetailModal="bs-modal" [config]="{backdrop: true}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-label="Close" (click)="resourceDetailModal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                    <h4 class="modal-title">{{resourceModalTitle}}</h4>
+                </div>
+                <div class="modal-body">
+                    <resource-detail *ngIf="resourceDetailModal && selectedResource" #resourceDetail [resource]="selectedResource" [saveMode]="resourceSaveMode" (onSaveFinished)="saveFinished($event)"></resource-detail>
+                </div>
             </div>
-          </div>
-        </sa-widget>
-      </article>
+        </div>
     </div>
-  </sa-widgets-grid>
 
-  <!--资源添加修改对话框-->
-  <div class="modal fade" bsModal #resourceDetailModal="bs-modal" [config]="{backdrop: true}"
-      tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" aria-label="Close" (click)="resourceDetailModal.hide()">
+    <!--资源范围详情对话框-->
+    <div class="modal fade" bsModal #rangeDetailModal="bs-modal" [config]="{backdrop: true}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-label="Close" (click)="rangeDetailModal.hide()">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title">{{resourceModalTitle}}</h4>
+                    <h4 class="modal-title">{{rangeModalTitle}}</h4>
+                </div>
+                <div class="modal-body">
+                    <resource-range-detail *ngIf="selectedPermissionWrapper" #rangeDetail [wrapper]="selectedPermissionWrapper" [saveMode]="rangeSaveMode" (onSaveFinished)="saveFinished($event)"></resource-range-detail>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <resource-detail *ngIf="rangeDetailModalIsShown && selectedResource" #resourceDetail [resource]="selectedResource" [saveMode]="resourceSaveMode"  (onSaveFinished)="saveFinished($event)"></resource-detail>
-        </div>
-      </div>
     </div>
-  </div>
-
-  <!--资源范围详情对话框-->
-  <div class="modal fade" bsModal #rangeDetailModal="bs-modal" [config]="{backdrop: true}"
-      tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" aria-label="Close" (click)="rangeDetailModal.hide()">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h4 class="modal-title">{{rangeModalTitle}}</h4>
-        </div>
-        <div class="modal-body">
-          <resource-range-detail *ngIf="selectedPermissionWrapper" #rangeDetail [wrapper]="selectedPermissionWrapper" [saveMode]="rangeSaveMode"  (onSaveFinished)="saveFinished($event)"></resource-range-detail>
-        </div>
-      </div>
-    </div>
-  </div>

@@ -109,17 +109,23 @@ export class ResourceDetailComponent implements OnChanges {
         //调用UserService服务添加用户,激活保存完成事件
         this.resourceService.save(this.resource).
             then(response => {
-                if(response){
+                // if(response){
                     this.onSaveFinished.emit({
                                             saveMode: this.saveMode,
                                             sucess: true, 
                                             message: '保存成功'})
-                }else{
-                    this.onSaveFinished.emit({
+                // }else{
+                //     this.onSaveFinished.emit({
+                //                             saveMode: this.saveMode,
+                //                             sucess: false, 
+                //                             message: '保存失败'})
+                // }
+            })
+            .catch( reason => {
+                this.onSaveFinished.emit({
                                             saveMode: this.saveMode,
                                             sucess: false, 
                                             message: '保存失败'})
-                }
             });
     }
 

@@ -188,6 +188,12 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
                                             sucess: false, 
                                             message: '保存失败'})
                 }
+            })
+            .catch( reason => {
+                this.onSaveFinished.emit({
+                                            saveMode: this.saveMode,
+                                            sucess: false, 
+                                            message: '保存失败'})
             });
     }
 
