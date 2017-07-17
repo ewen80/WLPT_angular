@@ -32,7 +32,7 @@ export class UserDetailComponent implements OnInit, OnChanges {
     private createForm():void{
         this.userDetailForm = this.fb.group({
             // When you reference a method you lose the object it's attached on. You can force this using the bind method
-            id: ['',Validators.required,(new UseridValidator(this.userService)).validate.bind(this)],
+            userId: ['',Validators.required,(new UseridValidator(this.userService)).validate.bind(this)],
             name: ['', Validators.required],
             password: ['', Validators.required],
             roleId: ['', Validators.required]
@@ -72,16 +72,16 @@ export class UserDetailComponent implements OnInit, OnChanges {
     }
     //需要进行验证的formControl
     formErrors = {
-        'id': '',
+        'userId': '',
         'name': '',
         'password': '',
         'roleId': ''
     }
 
     validationMessages = {
-        'id': {
-            'required': 'id不能为空',
-            'userExist': 'id已经存在'
+        'userId': {
+            'required': 'userId不能为空',
+            'userExist': 'userId已经存在'
         },
         'name': {
             'required': '姓名不能为空'
@@ -100,7 +100,7 @@ export class UserDetailComponent implements OnInit, OnChanges {
             this.user = user;
         }
         this.userDetailForm.reset({
-            id: this.user.id,
+            userId: this.user.userId,
             name: this.user.name,
             password: this.user.password,
             roleId: this.user.roleId
@@ -162,14 +162,14 @@ export class UserDetailComponent implements OnInit, OnChanges {
     private prepareSaveUser(): User {
         const formModel = this.userDetailForm.value;
         const saveUser: User = {
-            id: formModel.id,
+            userId: formModel.userId,
             password: formModel.password as string,
             name: formModel.name as string,
             roleId: formModel.roleId
         };
 
         if(this.saveMode !== saveMode.add){
-            saveUser.id = this.user.id;
+            saveUser.userId = this.user.userId;
         }
         return saveUser;
     }

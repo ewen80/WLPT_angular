@@ -233,7 +233,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
                     id: range.id,
                     filter: range.filter,
                     roleId: range.roleId,
-                    roleName: allRole.find( value => value.id === range.roleId).name,
+                    roleName: allRole.find( value => value.roleId === range.roleId).name,
                     resource: range.resourceTypeClassName,
                     matchAll: range.matchAll
                   })

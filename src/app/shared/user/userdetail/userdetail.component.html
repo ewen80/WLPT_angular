@@ -27,15 +27,15 @@
               <form [formGroup]="userDetailForm" (ngSubmit)="onSubmit()" novalidate>
                 <fieldset>  
                   <div class="form-group">  
-                    <label for="id">用户名：</label> 
+                    <label for="userId">用户名：</label> 
                     <div *ngIf="saveMode === 1">
-                        <input formControlName="id" id="id" class="form-control"  type="text">
-                        <div *ngIf="formErrors.id" class="alert alert-danger">
-                          {{ formErrors.id }}
+                        <input formControlName="userId" id="userId" class="form-control"  type="text">
+                        <div *ngIf="formErrors.userId" class="alert alert-danger">
+                          {{ formErrors.userId }}
                         </div>
                     </div> 
                     <div *ngIf="user && saveMode != 1">
-                        {{user.id}}
+                        {{user.userId}}
                     </div> 
                   </div>            
                   <div class="form-group" *ngIf = "saveMode !== 0" >

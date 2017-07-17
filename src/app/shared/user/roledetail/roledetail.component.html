@@ -27,20 +27,20 @@
               <form  #roleDetailForm="ngForm" novalidate (ngSubmit)="onSubmit()">
                 <fieldset>
                   <div class="form-group">
-                    <label for="id">角色Id：</label>
+                    <label for="roleId">角色Id：</label>
                     <div *ngIf="saveMode === 1">
-                      <input name="id" class="form-control"  type="text" [(ngModel)]="role.id" #id="ngModel"  validateRoleId >
-                      <div *ngIf="id.errors && (id.dirty)" class="alert alert-danger">
-                          <div [hidden]="!id.errors.roleIdEmpty">
+                      <input name="roleId" class="form-control"  type="text" [(ngModel)]="role.roleId" #id="ngModel"  validateRoleId >
+                      <div *ngIf="roleId.errors && (roleId.dirty)" class="alert alert-danger">
+                          <div [hidden]="!roleId.errors.roleIdEmpty">
                             角色Id不能为空
                           </div>
-                          <div [hidden]="!id.errors.roleExist">
+                          <div [hidden]="!roleId.errors.roleExist">
                             角色Id已存在，请尝试其他角色Id
                           </div>
                       </div>
                     </div>
                     <div *ngIf="saveMode != 1">
-                      {{role.id}}
+                      {{role.roleId}}
                     </div>
                   </div>
                  

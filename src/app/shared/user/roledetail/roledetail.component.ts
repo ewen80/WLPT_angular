@@ -52,23 +52,8 @@ export class RoleDetailComponent implements OnInit{
             });
     }
 
-    // private updateRole(){
-    //     this.roleService.updateRole(this.role).
-    //         then(response => this.onSaveFinished.emit({
-    //                                                 saveMode: this.saveMode,
-    //                                                 sucess: response.sucess, 
-    //                                                 message: response.message}));
-    // }
 
     onSubmit(){
-        // switch(this.saveMode){
-        //     case saveMode.add:
-        //         this.addRole();
-        //         break;
-        //     case saveMode.update:
-        //         this.updateRole();
-        //         break;
-        // }
         this.saveRole();
     }
 }

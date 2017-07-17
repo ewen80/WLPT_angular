@@ -1,5 +1,6 @@
 export class Role{
-    public id:string;
+    public id: string;
+    public roleId: string;
     public name: string;
 
     // clone(role:Role){

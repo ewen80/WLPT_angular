@@ -90,7 +90,7 @@ export class UsersComponent implements OnInit,  AfterViewInit{
             var newRows:Array<any> = new Array<any>();
             //将角色名加入数据源
             data.rows.forEach(user => {
-              newRows.push(Object.assign({},{ roleName:this.allRoles.find(role=>role.id === user.roleId).name},user));
+              newRows.push(Object.assign({},{ roleName:this.allRoles.find(role=>role.roleId === user.roleId).name},user));
             });
             params.successCallback(newRows, data.rowCount);
           });
