@@ -45,11 +45,27 @@
                             <tabset>
                                 <!--资源类型列表-->
                                 <tab [active]="activedTabIndex == 0">
-                                    <ag-grid-angular #resourcesGrid style="width: 100%; height: 350px;" class="ag-fresh" [gridOptions]="typesGridOptions" [columnDefs]="typesColumnDefs" (rowDoubleClicked)="dblClickTypesRow($event)" (rowSelected)="setTypesButtonsStatus()" (modelUpdated)="setTypesButtonsStatus()"></ag-grid-angular>
+                                    <ag-grid-angular #resourcesGrid style="width: 100%; height: 350px;" class="ag-fresh" 
+                                        [gridOptions]="typesGridOptions" 
+                                        [rowData]="typeRowData" 
+                                        [columnDefs]="typesColumnDefs" 
+                                        enableColResize
+                                        enableFilter
+                                        (gridReady)="gridReady($event)"
+                                        (rowDoubleClicked)="dblClickTypesRow($event)" 
+                                        (rowSelected)="setTypesButtonsStatus()" 
+                                        (modelUpdated)="setTypesButtonsStatus()"></ag-grid-angular>
                                 </tab>
                                 <!--资源范围列表-->
                                 <tab [active]="activedTabIndex == 1">
-                                    <ag-grid-angular #rangesGrid style="width: 100%; height: 350px;" class="ag-fresh" [gridOptions]="rangesGridOptions" [rowData]="rangeRowData" [columnDefs]="rangesColumnDefs" (rowDoubleClicked)="dblClickRangesRow($event)" (rowSelected)="setRangesButtonsStatus()"
+                                    <ag-grid-angular #rangesGrid style="width: 100%; height: 350px;" class="ag-fresh" 
+                                        enableColResize
+                                        enableFilter
+                                        [gridOptions]="rangesGridOptions" 
+                                        [rowData]="rangeRowData" 
+                                        [columnDefs]="rangesColumnDefs" 
+                                        (rowDoubleClicked)="dblClickRangesRow($event)" 
+                                        (rowSelected)="setRangesButtonsStatus()"
                                         (modelUpdated)="setRangesButtonsStatus()"></ag-grid-angular>
                                 </tab>
                             </tabset>
@@ -71,7 +87,7 @@
                     <h4 class="modal-title">{{resourceModalTitle}}</h4>
                 </div>
                 <div class="modal-body">
-                    <resource-detail *ngIf="resourceDetailModal && selectedResource" #resourceDetail [resource]="selectedResource" [saveMode]="resourceSaveMode" (onSaveFinished)="saveFinished($event)"></resource-detail>
+                    <resource-detail *ngIf="resourceDetailModalIsShown && selectedResource" #resourceDetail [resource]="selectedResource" [saveMode]="resourceSaveMode" (onSaveFinished)="saveFinished($event)"></resource-detail>
                 </div>
             </div>
         </div>
@@ -88,7 +104,7 @@
                     <h4 class="modal-title">{{rangeModalTitle}}</h4>
                 </div>
                 <div class="modal-body">
-                    <resource-range-detail *ngIf="selectedPermissionWrapper" #rangeDetail [wrapper]="selectedPermissionWrapper" [saveMode]="rangeSaveMode" (onSaveFinished)="saveFinished($event)"></resource-range-detail>
+                    <resource-range-detail *ngIf="rangeDetailModalIsShown && selectedPermissionWrapper" #rangeDetail [wrapper]="selectedPermissionWrapper" [saveMode]="rangeSaveMode" (onSaveFinished)="saveFinished($event)"></resource-range-detail>
                 </div>
             </div>
         </div>

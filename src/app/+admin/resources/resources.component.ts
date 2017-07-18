@@ -66,6 +66,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
 
   //数据源
   public rangeRowData: any[];
+  public typeRowData: any[];
 
   public selectedResource: Resource;
   public selectedPermissionWrapper: PermissionWrapper;
@@ -85,20 +86,21 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
     this.typesGridOptions = <GridOptions>{
       floatingFilter:false,
       rowSelection:"multiple",
-      rowModelType:'pagination',
-      paginationPageSize:20,
-      enableServerSideFilter: true,
+      // 不采用服务器端分页、排序、过滤
+      // rowModelType:'pagination',
+      // paginationPageSize:20,
+      // enableServerSideFilter: true,
     };
-
+    //初始化资源范围表格
     this.rangesGridOptions = <GridOptions>{
       floatingFilter:false,
       rowSelection:"multiple",
-      //range不采用服务器端分页和排序,过滤
+      // range不采用服务器端分页和排序,过滤
       // rowModelType:'pagination',
       // paginationPageSize:20,
       // enableServerSideFilter: true,
     }
-    
+    //资源类型表的列定义
     this.typesColumnDefs = [
       {
         headerName: '#',
@@ -115,16 +117,31 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
         } 
       },
       {
-        headerName: '资源类型名',  field: "name", filter: 'text', filterParams: {newRowsAction: 'keep'}
+        headerName: '资源类型名',
+        width:200,  
+        field: "name", 
+        filter: 'text', 
+        filterParams: {newRowsAction: 'keep'}
       },
       {
-        headerName:'类全限定名', field: "className",filter: 'text', filterParams: {newRowsAction: 'keep'}
+        headerName:'类全限定名',
+        width:400, 
+        field: "className",
+        filter: 'text', 
+        filterParams: {newRowsAction: 'keep'}
       },
       {
-        headerName:'描述', field: "description",suppressFilter:true
+        headerName:'描述', 
+        width:100,
+        field: "description",
+        suppressFilter:true
       },
       {
-        headerName: '已删除', field: 'deleted',filter: 'text', filterParams: {newRowsAction: 'keep'},
+        headerName: '已删除', 
+        width:100,
+        field: 'deleted',
+        filter: 'text', 
+        filterParams: {newRowsAction: 'keep'},
         cellRenderer: (params:any) => {
           return params.data.deleted ? '是':'否';
         },
@@ -154,10 +171,10 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
         field: 'filter'
       },
       {
-        headerName: '角色id',
+        headerName: '角色名',
         suppressFilter:true,
         cellRenderer: (params:any) => {
-          return '<a title=\'角色名: '+params.data.roleName+'\'>'+params.data.roleId+'</a>'
+          return '<a title=\'id: '+params.data.roleId+' &#10;roleId: '+params.data.roleRoleId+'\'>'+params.data.roleName+'</a>'
         }
       },
       {
@@ -201,22 +218,44 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
     this.checkButtonsDisplay();
   }
 
-   //资源类型数据源
+  //资源类型表格准备完毕事件
+  gridReady(event){
+    event.api.sizeColumnsToFit();
+  }
+
+   //资源类型数据源(服务器端分页)
+  // setTypesDataSource(){
+  //   let dataSource = {
+  //     getRows:(params: any) => {
+  //       let pageIndex = Math.floor(params.startRow / this.typesGridOptions.paginationPageSize);
+  //       this.aggridFilterSerialization.filterModel = params.filterModel;
+  //       this.resourceService.getResourcesWithPage(pageIndex,this.typesGridOptions.paginationPageSize,this.aggridFilterSerialization)
+  //         .then( data => {
+  //           params.successCallback(data.rows, data.rowCount);
+  //         });
+  //         this.startRow = params.startRow;
+  //     }
+  //   }
+  //   this.typesGridOptions.api.setDatasource(dataSource);
+  // } 
+
+  //资源类型数据源
   setTypesDataSource(){
-    let dataSource = {
-      getRows:(params: any) => {
-        let pageIndex = Math.floor(params.startRow / this.typesGridOptions.paginationPageSize);
-        this.aggridFilterSerialization.filterModel = params.filterModel;
-        this.resourceService.getResourcesWithPage(pageIndex,this.typesGridOptions.paginationPageSize,this.aggridFilterSerialization)
+    this.resourceService.getResources()
           .then( data => {
-            params.successCallback(data.rows, data.rowCount);
+            let resourceData = new Array<any>();
+            data.map ( resource => {
+              resourceData.push({
+                id: resource.id,
+                className: resource.className,
+                name: resource.name,
+                description: resource.description,
+                deleted: resource.deleted
+              })
+            });
+            this.typeRowData = resourceData;
           });
-          this.startRow = params.startRow;
-      }
-                  
-    }
-    this.typesGridOptions.api.setDatasource(dataSource);
-  } 
+  }
 
   //资源范围数据源
   setRangesDataSource(className:string){
@@ -233,7 +272,8 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
                     id: range.id,
                     filter: range.filter,
                     roleId: range.roleId,
-                    roleName: allRole.find( value => value.roleId === range.roleId).name,
+                    roleRoleId: allRole.find( role => role.id === range.roleId).roleId,
+                    roleName: allRole.find( role => role.id === range.roleId).name,
                     resource: range.resourceTypeClassName,
                     matchAll: range.matchAll
                   })
@@ -346,11 +386,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
   public dblClickRangesRow(event){
     this.rangeModalTitle = "编辑资源范围";
     this.rangeSaveMode = saveMode.update;
-
-    console.log(event.data);
-
     this.selectedPermissionWrapper = this.getPermissionWrapperFromDataSource(event.data);
-
     this.rangeDetailModal.show();
     this.rangeDetailModalIsShown = true;
   }

@@ -54,8 +54,7 @@ export class ResourceDetailComponent implements OnChanges {
             //清除之前的错误信息
             this.formErrors[field] = '';
             const control = form.get(field);
-            // console.log(field + ": constrolstatus=" + control.status);
-            if(control && control.dirty && !control.valid){
+            if(control && control.enabled && control.dirty && !control.valid){
                 const messages = this.validationMessages[field];
                 for(const key in control.errors){
                     this.formErrors[field] += messages[key] + '';
@@ -84,6 +83,14 @@ export class ResourceDetailComponent implements OnChanges {
         if(resource){
             this.resource = resource;
         }
+
+        const classNameControl = this.resourceDetailForm.get('className');
+        if(this.saveMode === saveMode.add){
+            classNameControl.enable();
+        }else{
+            classNameControl.disable();
+        }
+
         this.resourceDetailForm.reset({
             name: this.resource.name,
             className: this.resource.className,
@@ -91,12 +98,7 @@ export class ResourceDetailComponent implements OnChanges {
             deleted: String(this.resource.deleted)
         });
 
-        const idControl = this.resourceDetailForm.get('className');
-        if(this.saveMode === saveMode.add){
-            idControl.enable();
-        }else{
-            idControl.disable();
-        }
+
     }
 
     //@Input属性发生变化

@@ -38,6 +38,14 @@ export class ResourceService {
                       .catch(this.handleError);   
   }
 
+  getResources(): Promise<Resource[]>{
+    return this.http.get(this.serverUrl)
+                      .toPromise()
+                      .then( response => {
+                        return response.json();
+                      })
+                      .catch(this.handleError);
+  }
   //获取单个资源信息
   getResource(className: string): Promise<Resource>{
     //将className的.替换为$

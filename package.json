@@ -86,8 +86,8 @@
     "to-markdown": "3.0.4",
     "ts-helpers": "1.1.2",
     "zone.js": "0.8.5",
-    "ag-grid": "8.2.x",
-    "ag-grid-angular": "8.2.x",
+    "ag-grid": "^11.0.0",
+    "ag-grid-angular": "^11.0.0",
     "angular-tree-component": "^3.5.0"
   },
   "devDependencies": {

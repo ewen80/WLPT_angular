@@ -2,7 +2,8 @@
  * 资源类型
  */
 export class Resource{
-    className:string; //主键不可重复
+    id?: number; //资源id
+    className:string;
     name:string;
     description:string;
     deleted:boolean = false;
