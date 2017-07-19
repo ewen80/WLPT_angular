@@ -67,7 +67,7 @@ export class ResourceService {
     return this.http.post(this.serverUrl,JSON.stringify(resource))
                       .toPromise()
                       .then( response => response.json())
-                      .catch(this.handleError);
+                      .catch( response => this.handleError(response));
   }
 
   //删除
@@ -84,8 +84,7 @@ export class ResourceService {
   }
 
   private handleError(error: any): Promise<any>{
-    // console.error('发生一个错误：', error);
-    return Promise.reject(error.message || error);
+    return Promise.reject(error.json() || error);
   }
 
 }

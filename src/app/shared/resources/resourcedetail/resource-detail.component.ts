@@ -124,10 +124,11 @@ export class ResourceDetailComponent implements OnChanges {
                 // }
             })
             .catch( reason => {
+                var errorMessage = reason.message || '';
                 this.onSaveFinished.emit({
                                             saveMode: this.saveMode,
                                             sucess: false, 
-                                            message: '保存失败'})
+                                            message: '保存失败: '+errorMessage})
             });
     }
 
