@@ -136,14 +136,17 @@ export class ResourceDetailComponent implements OnChanges {
         const formModel = this.resourceDetailForm.value;
 
         const saveResource: Resource = {
-            name: formModel.name,
+            id: 0,
             className: formModel.className,
+            name: formModel.name,
             description: formModel.description,
             deleted: formModel.deleted
         };
 
         if(this.saveMode !== saveMode.add){
+            saveResource.id = this.resource.id;
             saveResource.className = this.resource.className;
+
         }
 
         return saveResource;
