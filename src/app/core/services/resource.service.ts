@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from "rxjs/Rx";
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestOptions } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -72,12 +72,12 @@ export class ResourceService {
 
   //删除
   delete(resources:Resource[]): Promise<{sucess:boolean,message:string}>{
-    let classNames = "";
+    var arrIds = [];
     for(let i=0;i<resources.length;i++){
-      classNames += resources[i].className + ',';
+      arrIds.push(resources[i].id);
     }
-    classNames = classNames.substring(0,classNames.length-1);
-    return this.http.delete(this.serverUrl+"/"+classNames)
+    
+    return this.http.delete(this.serverUrl, arrIds)
                     .toPromise()
                     // .then(response => response.json())
                     .catch(this.handleError);

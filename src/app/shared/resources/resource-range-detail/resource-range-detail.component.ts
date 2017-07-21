@@ -141,7 +141,6 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
                 permissionsObject[permission.controlName] = false;
             }
         }
-        console.log(permissionsObject);
         this.permissionsForm.reset(permissionsObject);
     }
 
@@ -193,7 +192,7 @@ export class ResourceRangeDetailComponent implements OnInit, OnChanges {
                 this.onSaveFinished.emit({
                                             saveMode: this.saveMode,
                                             sucess: false, 
-                                            message: '保存失败'})
+                                            message: '保存失败: '+ reason.message})
             });
     }
 

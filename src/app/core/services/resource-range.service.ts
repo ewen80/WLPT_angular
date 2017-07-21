@@ -39,6 +39,19 @@ export class ResourceRangeService{
                     .catch(this.handleError);
     }
 
+    //根据资源类型id和角色获取范围
+    getByResourceId(resourceId:number):Promise<{rows:any[]}>{
+        return this.http.get(this.serverUrl+"?resourceId="+resourceId)
+                    .toPromise()
+                    .then( response =>{
+                                let returnData = response.json();
+                                return {
+                                    rows:returnData,
+                                }
+                    })
+                    .catch(this.handleError);
+    }
+
     //保存
     save(range:any): any{
         return this.http.post(this.serverUrl,JSON.stringify(range))
@@ -49,18 +62,17 @@ export class ResourceRangeService{
 
     //删除
     delete(ranges:ResourceRange[]): Promise<{sucess:boolean,message:string}>{
-    let rangeIds = "";
-    for(let i=0;i<ranges.length;i++){
-      rangeIds += ranges[i].id + ',';
-    }
-    rangeIds = rangeIds.substring(0,rangeIds.length-1);
-    return this.http.delete(this.serverUrl+"/"+rangeIds)
-                    .toPromise()
-                    // .then(response => response.json())
-                    .catch(this.handleError);
+        var arrIds = [];
+        for(let i=0;i<ranges.length;i++){
+            arrIds.push(ranges[i].id);
+        }
+        return this.http.delete(this.serverUrl, arrIds)
+                        .toPromise()
+                        // .then(response => response.json())
+                        .catch(this.handleError);
   }
 
     private handleError(error: any): Promise<any>{
-        return Promise.reject(error.message || error);
+        return Promise.reject(error.json() || error);
     }
 }

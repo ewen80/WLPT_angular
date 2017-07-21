@@ -3,7 +3,7 @@
     用于BasicAuthentication的HTTP服务
 
 */
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, RequestOptionsArgs } from '@angular/http';
 import {Observable} from "rxjs/Rx";
 import {Injectable} from '@angular/core';
 
@@ -32,7 +32,9 @@ export class BasicAuthenticationHttp {
         return this.http.post(url,body,{headers:this.headers});
     }
 
-    delete(url:string):Observable<any>{
-        return this.http.delete(url,{headers:this.headers});
+    delete(url:string, body?:any):Observable<any>{
+        return this.http.delete(url,{
+            headers:this.headers,
+            body: body});
     }
 }

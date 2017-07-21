@@ -258,13 +258,13 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
   }
 
   //资源范围数据源
-  setRangesDataSource(className:string){
+  setRangesDataSource(resourceId:number){
         var allRole: Role[];
         this.roleService.getAllRoles()
           .then( response => {
             allRole = response;
             this.rangeRowData = new Array<any>();
-            this.resourceRangeService.getByClassName(className)
+            this.resourceRangeService.getByResourceId(resourceId)
               .then( data => {
                 let rangeData = new Array<any>();
                 data.rows.map( range => {
@@ -328,7 +328,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
         this.rangeDetail.reset(new PermissionWrapper(new ResourceRange(), null));
       }
       //刷新列表
-      this.refreshRangeList(this.selectedResource.className);
+      this.refreshRangeList(this.selectedResource.id);
     }
     //提示保存成功或失败
     let boxTitle: string;
@@ -415,11 +415,13 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
     if(confirm("确认删除选中的"+selectedRows.length.toString()+"条记录吗？")){
       this.resourceService.delete(selectedRows)
         .then(() => this.refreshResourceList())
-        .catch((reason) => $.SmartMessageBox({
-					title : "出现错误",
-					content : JSON.parse(reason.text()).message,
-          buttons : "[OK]",
-				}));
+        .catch((reason) => {
+          $.SmartMessageBox({
+            title : "出现错误",
+            content : JSON.parse(reason.text()).message,
+            buttons : "[OK]",
+          })
+        });
     }
   }
 
@@ -429,7 +431,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
     var selectedRows = this.rangesGridOptions.api.getSelectedRows();
     if(confirm("确认删除选中的"+selectedRows.length.toString()+"条记录吗？")){
       this.resourceRangeService.delete(selectedRows)
-        .then(() => this.refreshRangeList(this.selectedResource.className))
+        .then(() => this.refreshRangeList(this.selectedResource.id))
         .catch((reason) => $.SmartMessageBox({
 					title : "出现错误",
 					content : JSON.parse(reason.text()).message,
@@ -446,7 +448,7 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
       return;
     }else{
       this.selectedResource = selectedRows[0];
-      this.setRangesDataSource(this.selectedResource.className);
+      this.setRangesDataSource(this.selectedResource.id);
       this.activedTabIndex = 1;
       this.checkButtonsDisplay();
     }
@@ -457,8 +459,8 @@ export class ResourceComponent implements OnInit,  AfterViewInit{
     this.setTypesDataSource();
   }
   //刷新资源范围列表
-  private refreshRangeList(resourceClassName:string){
-    this.setRangesDataSource(resourceClassName);
+  private refreshRangeList(resourceId:number){
+    this.setRangesDataSource(resourceId);
   }
 
   //设置工具栏按钮状态
