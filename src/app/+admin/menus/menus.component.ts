@@ -108,8 +108,10 @@ export class MenusComponent implements OnInit {
     //加载菜单数据
     private loadMenuData(): void{
         //读取菜单数据
-        this.menuService.getAll()
-            .then( response => this.nodes = response);
+        // this.menuService.getAll()
+        //     .then( response => this.nodes = response);
+        this.menuService.getAuthorizedMenuTree()
+            .then( response => this.nodes = response );
     }
 
     //点击菜单节点
@@ -206,6 +208,9 @@ export class MenusComponent implements OnInit {
                         this.showFailureHint();
                     }
 
+                })
+                .catch(error => {
+                    this.showFailureHint(error.message);
                 });
     }
 
@@ -221,6 +226,9 @@ export class MenusComponent implements OnInit {
                     }else{
                         this.showFailureHint();
                     }
+                })
+                .catch(error => {
+                    this.showFailureHint(error.message);
                 });
     }
 
@@ -239,7 +247,9 @@ export class MenusComponent implements OnInit {
                     }else{
                         this.showFailureHint();
                     }
-
+                })
+                .catch(error => {
+                    this.showFailureHint(error.message);
                 });
     }
 
@@ -264,8 +274,12 @@ export class MenusComponent implements OnInit {
     private showSuccessHint(){
         this.showHint("提示", "#296191", "保存成功");
     }
-    private showFailureHint(){
-        this.showHint("错误", "##c00", "保存失败");
+    private showFailureHint(message?:string){
+        var showInfo:string = "保存失败";
+        if(message){
+            showInfo += ": "+message;
+        }
+        this.showHint("错误", "##c00", showInfo);
     }
     private showHint(boxTitle, boxColor, message){
         $.smallBox({

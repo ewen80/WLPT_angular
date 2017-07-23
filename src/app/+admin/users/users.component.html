@@ -1,58 +1,53 @@
 <div id="content">
-  <div class="row">
-    <sa-big-breadcrumbs [items]="['后台管理', '用户管理']" icon="table" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
-  </div>
-
-  <sa-widgets-grid>
     <div class="row">
-      <article class="col-sm-12">
-        <sa-widget [editbutton]="false" [togglebutton]="false" [fullscreenbutton]="false" [deletebutton]="false" color="blueDark">
-          <header>
-            <span class="widget-icon"> <i class="fa fa-users"></i> </span>
-            <h2>用户管理</h2>
-            <div class="widget-toolbar">
-              <button class="btn btn-default" (click)="addUserModalShow()">
+        <sa-big-breadcrumbs [items]="['后台管理', '用户管理']" icon="table" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+    </div>
+
+    <sa-widgets-grid>
+        <div class="row">
+            <article class="col-sm-12">
+                <sa-widget [editbutton]="false" [togglebutton]="false" [fullscreenbutton]="false" [deletebutton]="false" color="blueDark">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-users"></i> </span>
+                        <h2>用户管理</h2>
+                        <div class="widget-toolbar">
+                            <button class="btn btn-default" (click)="addUserModalShow()">
                 <i class="fa fa-plus"></i> <span class="hidden-mobile">添加用户</span>
               </button>
-              <button #delUsersButton class="btn btn-default" (click)="deleteButtonClick()" [disabled]="delUsersButtonDisabled">
+                            <button #delUsersButton class="btn btn-default" (click)="deleteButtonClick()" [disabled]="delUsersButtonDisabled">
                 <i class="fa fa-minus"></i> <span class="hidden-mobile">删除用户</span>
               </button>
-            </div>
-          </header>
-          <div>
-            <div class="widget-body no-padding">
-              <ag-grid-angular #usersGrid style="width: 100%; height: 350px;" class="ag-fresh"    
-                  [gridOptions]="gridOptions" 
-                  [columnDefs]="columnDefs"  
-                  (rowDoubleClicked)="dblClickRow($event)"
-                  (rowSelected)="setDelUserButtonStatus()"
-                  (modelUpdated)="setDelUserButtonStatus()">
-              </ag-grid-angular>
-            </div>
-          </div>
-        </sa-widget>
-      </article>
-    </div>
-  </sa-widgets-grid>
+                        </div>
+                    </header>
+                    <div>
+                        <div class="widget-body no-padding">
+                            <ag-grid-angular #usersGrid style="width: 100%; height: 350px;" class="ag-fresh" [gridOptions]="gridOptions" [columnDefs]="columnDefs" [rowData]="userRowData" enableColResize enableFilter (rowDoubleClicked)="dblClickRow($event)" (rowSelected)="setDelUserButtonStatus()"
+                                (modelUpdated)="setDelUserButtonStatus()">
+                            </ag-grid-angular>
+                        </div>
+                    </div>
+                </sa-widget>
+            </article>
+        </div>
+    </sa-widgets-grid>
 
- <!--用户信息对话框-->
-  <div class="modal fade" bsModal #userDetailModal="bs-modal" [config]="{backdrop: true}"
-      tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" aria-label="Close" (click)="userDetailModal.hide()">
+    <!--用户信息对话框-->
+    <div class="modal fade" bsModal #userDetailModal="bs-modal" [config]="{backdrop: true}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-label="Close" (click)="userDetailModal.hide()">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title">{{modalTitle}}</h4>
+                    <h4 class="modal-title">{{modalTitle}}</h4>
+                </div>
+                <div class="modal-body">
+                    <user-detail *ngIf="selectedUser" #userDetail [user]="selectedUser" [saveMode]="userSaveMode" (onSaveFinished)="saveFinished($event)"></user-detail>
+                </div>
+
+            </div>
         </div>
-        <div class="modal-body">
-          <user-detail *ngIf="selectedUser" #userDetail [user]="selectedUser" [saveMode]="userSaveMode"  (onSaveFinished)="saveFinished($event)"></user-detail>
-        </div>
-        
-      </div>
+
     </div>
-    
-  </div>
 
 </div>

@@ -18,25 +18,25 @@ export class ResourceService {
     console.log('ResourceService created');
   }
 
-  //获取信息（分页）
-  getResourcesWithPage(pageIndex:number,pageSize:number,serialization:SerializationHelper): Promise<{rows:Resource[],rowCount:number}>{
-    var queryString:string = this.serverUrl+'?pageIndex='+pageIndex.toString()+"&pageSize="+pageSize.toString();
-    var filterString = serialization.serialize();
-    if(filterString){
-      queryString += "&filter=" + filterString;
-    }
-    // console.log(queryString);
-    return this.http.get(queryString)
-                      .toPromise()
-                      .then( response => {
-                                let returnData = response.json();
-                                return {
-                                  rows:returnData.content,
-                                  rowCount:returnData.totalElements
-                                }
-                      })   
-                      .catch(this.handleError);   
-  }
+  // //获取信息（分页）
+  // getResourcesWithPage(pageIndex:number,pageSize:number,serialization:SerializationHelper): Promise<{rows:Resource[],rowCount:number}>{
+  //   var queryString:string = this.serverUrl+'?pageIndex='+pageIndex.toString()+"&pageSize="+pageSize.toString();
+  //   var filterString = serialization.serialize();
+  //   if(filterString){
+  //     queryString += "&filter=" + filterString;
+  //   }
+  //   // console.log(queryString);
+  //   return this.http.get(queryString)
+  //                     .toPromise()
+  //                     .then( response => {
+  //                               let returnData = response.json();
+  //                               return {
+  //                                 rows:returnData.content,
+  //                                 rowCount:returnData.totalElements
+  //                               }
+  //                     })   
+  //                     .catch(this.handleError);   
+  // }
 
   getResources(): Promise<Resource[]>{
     return this.http.get(this.serverUrl)

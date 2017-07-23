@@ -24,7 +24,7 @@ export class NavigationComponent implements OnInit {
   }
 
   private loadMenus(){
-      this.menuService.getAuthorizedMenuTree('admin')
+      this.menuService.getAuthorizedMenuTree()
           .then( response => {
             this.menuNodes = response;
           });

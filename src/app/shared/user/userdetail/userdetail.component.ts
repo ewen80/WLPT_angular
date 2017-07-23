@@ -35,7 +35,7 @@ export class UserDetailComponent implements OnInit, OnChanges {
             userId: ['',Validators.required,(new UseridValidator(this.userService)).validate.bind(this)],
             name: ['', Validators.required],
             password: ['', Validators.required],
-            roleId: ['', Validators.required]
+            roleId: ['', Validators.required],
         });
         this.userDetailForm.valueChanges.subscribe(data => this.onValueChanged(data));
         this.userDetailForm.statusChanges.subscribe(status => this.onValidatorStatusChanged(status));
@@ -103,10 +103,10 @@ export class UserDetailComponent implements OnInit, OnChanges {
             userId: this.user.userId,
             name: this.user.name,
             password: this.user.password,
-            roleId: this.user.roleId
+            roleId: this.user.roleId,
         });
     
-        const idControl = this.userDetailForm.get('id');
+        const idControl = this.userDetailForm.get('userId');
         if(this.saveMode === saveMode.add){
             idControl.enable();
         }else{
@@ -167,16 +167,19 @@ export class UserDetailComponent implements OnInit, OnChanges {
 
     private prepareSaveUser(): User {
         const formModel = this.userDetailForm.value;
-        const saveUser: User = {
+        var saveUser: User = {
             userId: formModel.userId,
             password: formModel.password as string,
             name: formModel.name as string,
-            roleId: formModel.roleId
+            roleId: formModel.roleId,
+            deleted: false
         };
 
         if(this.saveMode !== saveMode.add){
             saveUser.userId = this.user.userId;
-        }
+            saveUser.deleted = this.user.deleted;
+            saveUser = Object.assign({}, saveUser, {id: this.user.id});
+        } 
         return saveUser;
     }
 

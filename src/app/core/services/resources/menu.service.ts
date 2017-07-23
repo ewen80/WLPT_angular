@@ -26,7 +26,7 @@ export class MenuService {
   }
 
   //获取有权限的菜单树
-  getAuthorizedMenuTree(userId:string): Promise<Menu[]>{
+  getAuthorizedMenuTree(): Promise<Menu[]>{
     return this.http.get(this.serverUrl+"/authorized")
                       .toPromise()
                       .then( response => response.json())
@@ -46,7 +46,7 @@ export class MenuService {
 
   private handleError(error: any): Promise<any>{
     // console.error('发生一个错误：', error);
-    return Promise.reject(error.message || error);
+    return Promise.reject(error.json() || error);
   }
 
 }

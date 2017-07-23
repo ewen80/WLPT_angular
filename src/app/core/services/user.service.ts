@@ -66,18 +66,25 @@ export class UserService {
     //   return this.handleError("Found no Logged User");
   }
 
-  //获取用户信息（分页）
-  getUsersWithPage(pageIndex:number,pageSize:number): Promise<{rows:User[],rowCount:number}>{
-    return this.http.get(this.serverUrl+'?pageIndex='+pageIndex.toString()+"&pageSize="+pageSize.toString())
-                      .toPromise()
-                      .then( response => {
-                                let returnData = response.json();
-                                return {
-                                  rows:returnData.content,
-                                  rowCount:returnData.totalElements
-                                }
-                      })
-                      .catch(this.handleError);
+  // //获取用户信息（分页）
+  // getUsersWithPage(pageIndex:number,pageSize:number): Promise<{rows:User[],rowCount:number}>{
+  //   return this.http.get(this.serverUrl+'?pageIndex='+pageIndex.toString()+"&pageSize="+pageSize.toString())
+  //                     .toPromise()
+  //                     .then( response => {
+  //                               let returnData = response.json();
+  //                               return {
+  //                                 rows:returnData.content,
+  //                                 rowCount:returnData.totalElements
+  //                               }
+  //                     })
+  //                     .catch(this.handleError);
+  // }
+
+  getUsers(): Promise<User[]>{
+    return this.http.get(this.serverUrl)
+            .toPromise()
+            .then( response => response.json())
+            .catch( this.handleError );
   }
 
   //获取用户信息
@@ -107,19 +114,19 @@ export class UserService {
 
   //删除用户
   deleteUsers(users:User[]): Promise<{sucess:boolean,message:string}>{
-    let ids = "";
+    var arrIds = [];
     for(let i=0;i<users.length;i++){
-      ids += users[i].id + ',';
+      arrIds.push(users[i].id);
     }
-    ids = ids.substring(0,ids.length-1);
-    return this.http.delete(this.serverUrl+'/'+ids)
+
+    return this.http.delete(this.serverUrl, arrIds)
                     .toPromise()
                     .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any>{
     // console.error('发生一个错误：', error);
-    return Promise.reject(error.message || error);
+    return Promise.reject(error.json() || error);
   }
 
 }

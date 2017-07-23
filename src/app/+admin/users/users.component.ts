@@ -7,6 +7,7 @@ import { saveMode } from '../../core/enums';
 import { User } from 'app/shared/entity/user';
 import { Role } from "app/shared/entity/role";
 import { RoleService } from "app/core/services/role.service";
+import { AgGridBooleanFilterComponent } from "app/shared/ag-grid-filters/boolean-filter.component";
 
 
 declare var $: any;
@@ -32,47 +33,57 @@ export class UsersComponent implements OnInit,  AfterViewInit{
 
   private allRoles:Role[];
 
+  //用户数据源
+  public userRowData:any[];
+
 
   constructor(private userService:UserService, private roleService:RoleService) { 
     // console.log('users.components created:'+userService);
   }
 
   ngOnInit() {
-    this.roleService.getAllRoles()
-      .then(response =>this.allRoles = response);
-
     //初始化用户表格
     this.gridOptions = <GridOptions>{
-      rowSelection:"multiple",
-      rowModelType:'pagination',
-      paginationPageSize:20
+      // rowSelection:"multiple",
+      // rowModelType:'pagination',
+      // paginationPageSize:20
     };
     
     this.columnDefs = [
       {
         headerName: '#',
-        width:30,
+        width:50,
         checkboxSelection: true
       },
       {
         headerName: '序号',
-        width:50,
+        width:60,
         cellRenderer: (params:any) => {
           return this.startRow + params.rowIndex + 1;
         } 
       },
       {
-        headerName: '用户名', field: "id"
+        headerName: '用户名', field: "userId"
       },
       {
         headerName: '姓名',  field: "name"
       },
       {
-        headerName: '角色id',
+        headerName: '角色名',
         cellRenderer: (params:any) => {
-          return '<a title=\'角色名: '+params.data.roleName+'\'>'+params.data.roleId+'</a>'
+          return '<a title=\'id: '+params.data.roleId+' &#10;roleId: '+params.data.roleRoleId+'\'>'+params.data.roleName+'</a>'
         }
-      }
+      },
+      {
+        headerName: '已删除', 
+        width:100,
+        field: 'deleted',
+        filter: 'text', 
+        cellRenderer: (params:any) => {
+          return params.data.deleted ? '是':'否';
+        },
+        filterFramework: AgGridBooleanFilterComponent,
+      },
     ];
   }
 
@@ -81,25 +92,45 @@ export class UsersComponent implements OnInit,  AfterViewInit{
   }
 
    //用户列表数据源
+  // setUserDataSource(){
+  //   let userDataSource = {
+  //     getRows:(params: any) => {
+  //       let pageIndex = Math.floor(params.startRow / this.gridOptions.paginationPageSize);
+  //       this.userService.getUsersWithPage(pageIndex,this.gridOptions.paginationPageSize)
+  //         .then( data => {
+  //           var newRows:Array<any> = new Array<any>();
+  //           //将角色名加入数据源
+  //           data.rows.forEach(user => {
+  //             newRows.push(Object.assign({},{ roleName:this.allRoles.find(role=>role.roleId === user.roleId).name},user));
+  //           });
+  //           params.successCallback(newRows, data.rowCount);
+  //         });
+  //         this.startRow = params.startRow;
+  //     }
+                  
+  //   }
+  //   this.gridOptions.api.setDatasource(userDataSource);
+  // } 
+
   setUserDataSource(){
-    let userDataSource = {
-      getRows:(params: any) => {
-        let pageIndex = Math.floor(params.startRow / this.gridOptions.paginationPageSize);
-        this.userService.getUsersWithPage(pageIndex,this.gridOptions.paginationPageSize)
+    this.roleService.getAllRoles()
+      .then(response => {
+        this.allRoles = response;
+        this.userService.getUsers()
           .then( data => {
             var newRows:Array<any> = new Array<any>();
-            //将角色名加入数据源
-            data.rows.forEach(user => {
-              newRows.push(Object.assign({},{ roleName:this.allRoles.find(role=>role.roleId === user.roleId).name},user));
+            //将角色加入数据源
+            data.forEach( user => {
+              newRows.push(Object.assign({}, {
+                roleName: this.allRoles.find(role => role.id === user.roleId).name,
+                roleRoleId: this.allRoles.find(role => role.id === user.roleId).roleId
+              }, user));
             });
-            params.successCallback(newRows, data.rowCount);
-          });
-          this.startRow = params.startRow;
-      }
-                  
-    }
-    this.gridOptions.api.setDatasource(userDataSource);
-  } 
+            this.userRowData = newRows;
+          })
+      });
+    
+  }
 
   public addUserModalShow():void{
     this.modalTitle = "添加用户";
